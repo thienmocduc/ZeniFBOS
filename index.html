@@ -886,6 +886,7 @@ section {
       <a href="#model" class="nav-link">Mô hình</a>
       <a href="#pricing" class="nav-link">Pricing</a>
       <a href="#roadmap" class="nav-link">Roadmap</a>
+      <a href="#install" class="nav-link">Cài app</a>
     </div>
 
     <div class="nav-cta-group">
@@ -3913,6 +3914,212 @@ section {
   letter-spacing: 0.05em;
 }
 
+/* ============ INSTALL APP ============ */
+.install-section {
+  padding: 140px 0;
+  background: linear-gradient(180deg, var(--obsidian) 0%, var(--onyx) 50%, var(--obsidian) 100%);
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  position: relative;
+  overflow: hidden;
+}
+.install-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 15% 30%, rgba(212, 166, 90, 0.08), transparent 45%),
+    radial-gradient(circle at 85% 70%, rgba(0, 229, 212, 0.06), transparent 45%);
+  pointer-events: none;
+}
+.install-grid {
+  display: grid;
+  grid-template-columns: minmax(280px, 360px) 1fr;
+  gap: 64px;
+  align-items: center;
+  max-width: 1080px;
+  margin: 72px auto 0;
+  position: relative;
+  z-index: 1;
+}
+@media (max-width: 860px) {
+  .install-grid { grid-template-columns: 1fr; gap: 48px; margin-top: 48px; }
+}
+.install-qr-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+.install-qr-frame {
+  position: relative;
+  width: 100%;
+  max-width: 320px;
+  aspect-ratio: 1 / 1;
+  padding: 20px;
+  background: var(--cream);
+  border-radius: 28px;
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.4),
+    0 0 0 1px var(--line-bright),
+    inset 0 0 0 2px rgba(212, 166, 90, 0.25);
+}
+.install-qr-svg { display: block; width: 100%; height: 100%; }
+.install-qr-logo {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 64px; height: 64px;
+  background: var(--obsidian);
+  border-radius: 14px;
+  display: grid;
+  place-items: center;
+  box-shadow: 0 0 0 4px var(--cream);
+}
+.install-qr-logo svg { width: 40px; height: 40px; }
+.install-qr-caption { text-align: center; }
+.install-qr-url {
+  font-family: var(--mono);
+  font-size: 15px;
+  color: var(--gold-bright);
+  letter-spacing: 0.04em;
+  font-weight: 500;
+}
+.install-qr-sub {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--mist);
+  letter-spacing: 0.08em;
+  margin-top: 6px;
+  text-transform: uppercase;
+}
+.install-steps-col { display: flex; flex-direction: column; gap: 20px; }
+.install-step {
+  padding: 24px 28px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: rgba(30, 30, 46, 0.4);
+  backdrop-filter: blur(8px);
+  transition: border-color .3s, transform .3s;
+}
+.install-step:hover { border-color: var(--line-bright); transform: translateY(-2px); }
+.install-step-head {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+.install-step-icon {
+  width: 40px; height: 40px;
+  border-radius: 10px;
+  display: grid; place-items: center;
+  background: var(--gold-soft);
+  color: var(--gold-bright);
+  border: 1px solid rgba(212, 166, 90, 0.3);
+}
+.install-step[data-platform="android"] .install-step-icon {
+  background: var(--token-soft);
+  color: var(--token-bright);
+  border-color: rgba(0, 229, 212, 0.3);
+}
+.install-step-title {
+  font-family: var(--serif);
+  font-size: 20px;
+  font-weight: 500;
+  color: var(--cream);
+  line-height: 1.2;
+}
+.install-step-meta {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--mist);
+  letter-spacing: 0.08em;
+  margin-top: 2px;
+  text-transform: uppercase;
+}
+.install-step-list {
+  margin: 0;
+  padding-left: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.install-step-list li {
+  font-size: 14px;
+  color: var(--cream);
+  opacity: 0.88;
+  line-height: 1.55;
+}
+.install-step-list li::marker { color: var(--gold); font-weight: 600; }
+.install-step-list code {
+  font-family: var(--mono);
+  font-size: 12px;
+  padding: 2px 7px;
+  background: rgba(0, 229, 212, 0.1);
+  color: var(--token-bright);
+  border-radius: 4px;
+  border: 1px solid rgba(0, 229, 212, 0.2);
+}
+.install-icn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px; height: 18px;
+  background: rgba(245, 242, 235, 0.08);
+  border-radius: 4px;
+  font-size: 11px;
+}
+.install-cta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  align-items: center;
+  margin-top: 8px;
+}
+.install-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 26px;
+  background: linear-gradient(135deg, var(--gold), var(--gold-bright));
+  color: var(--obsidian);
+  font-family: var(--sans);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  transition: transform .2s, box-shadow .3s;
+  box-shadow: 0 8px 24px rgba(212, 166, 90, 0.3);
+}
+.install-btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(212, 166, 90, 0.45); }
+.install-btn-primary svg { width: 14px; height: 14px; }
+.install-btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 22px;
+  background: transparent;
+  color: var(--token-bright);
+  font-family: var(--sans);
+  font-size: 14px;
+  font-weight: 500;
+  border: 1px solid var(--token);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background .2s;
+}
+.install-btn-secondary:hover { background: var(--token-soft); }
+.install-cta-note {
+  width: 100%;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--mist);
+  letter-spacing: 0.04em;
+  margin-top: 4px;
+}
+
 /* ============ CTA SECTION ============ */
 .cta-section {
   padding: 140px 0;
@@ -4725,10 +4932,101 @@ section {
   </div>
 </section>
 
+<!-- ============ INSTALL APP ============ -->
+<section class="install-section" id="install">
+  <div class="container">
+    <div class="section-head center">
+      <div class="eyebrow" style="justify-content: center;">[11] · Captain App</div>
+      <h2 class="section-title">
+        Cài Zeni Captain<br>
+        <em>lên điện thoại</em> trong 10 giây.
+      </h2>
+      <p class="section-lede">
+        Một lần cài &mdash; mở trực tiếp từ màn hình chính, chạy full-screen như app native. Không App Store, không Google Play, không wait review.
+      </p>
+    </div>
+
+    <div class="install-grid">
+      <div class="install-qr-card">
+        <div class="install-qr-frame">
+          <svg class="install-qr-svg" viewBox="0 0 29 29" xmlns="http://www.w3.org/2000/svg" aria-label="QR code app.zenifb.com">
+            <rect width="29" height="29" fill="#F5F2EB"/>
+            <path fill="#0C0C14" d="M2,2H3V3H2zM3,2H4V3H3zM4,2H5V3H4zM5,2H6V3H5zM6,2H7V3H6zM7,2H8V3H7zM8,2H9V3H8zM11,2H12V3H11zM14,2H15V3H14zM15,2H16V3H15zM16,2H17V3H16zM20,2H21V3H20zM21,2H22V3H21zM22,2H23V3H22zM23,2H24V3H23zM24,2H25V3H24zM25,2H26V3H25zM26,2H27V3H26zM2,3H3V4H2zM8,3H9V4H8zM10,3H11V4H10zM11,3H12V4H11zM15,3H16V4H15zM20,3H21V4H20zM26,3H27V4H26zM2,4H3V5H2zM4,4H5V5H4zM5,4H6V5H5zM6,4H7V5H6zM8,4H9V5H8zM10,4H11V5H10zM11,4H12V5H11zM12,4H13V5H12zM14,4H15V5H14zM18,4H19V5H18zM20,4H21V5H20zM22,4H23V5H22zM23,4H24V5H23zM24,4H25V5H24zM26,4H27V5H26zM2,5H3V6H2zM4,5H5V6H4zM5,5H6V6H5zM6,5H7V6H6zM8,5H9V6H8zM10,5H11V6H10zM11,5H12V6H11zM13,5H14V6H13zM15,5H16V6H15zM16,5H17V6H16zM18,5H19V6H18zM20,5H21V6H20zM22,5H23V6H22zM23,5H24V6H23zM24,5H25V6H24zM26,5H27V6H26zM2,6H3V7H2zM4,6H5V7H4zM5,6H6V7H5zM6,6H7V7H6zM8,6H9V7H8zM11,6H12V7H11zM13,6H14V7H13zM15,6H16V7H15zM18,6H19V7H18zM20,6H21V7H20zM22,6H23V7H22zM23,6H24V7H23zM24,6H25V7H24zM26,6H27V7H26zM2,7H3V8H2zM8,7H9V8H8zM12,7H13V8H12zM14,7H15V8H14zM15,7H16V8H15zM16,7H17V8H16zM18,7H19V8H18zM20,7H21V8H20zM26,7H27V8H26zM2,8H3V9H2zM3,8H4V9H3zM4,8H5V9H4zM5,8H6V9H5zM6,8H7V9H6zM7,8H8V9H7zM8,8H9V9H8zM10,8H11V9H10zM12,8H13V9H12zM14,8H15V9H14zM16,8H17V9H16zM18,8H19V9H18zM20,8H21V9H20zM21,8H22V9H21zM22,8H23V9H22zM23,8H24V9H23zM24,8H25V9H24zM25,8H26V9H25zM26,8H27V9H26zM10,9H11V10H10zM11,9H12V10H11zM12,9H13V10H12zM13,9H14V10H13zM2,10H3V11H2zM8,10H9V11H8zM10,10H11V11H10zM11,10H12V11H11zM14,10H15V11H14zM15,10H16V11H15zM16,10H17V11H16zM19,10H20V11H19zM20,10H21V11H20zM23,10H24V11H23zM24,10H25V11H24zM25,10H26V11H25zM2,11H3V12H2zM5,11H6V12H5zM7,11H8V12H7zM9,11H10V12H9zM10,11H11V12H10zM12,11H13V12H12zM13,11H14V12H13zM16,11H17V12H16zM17,11H18V12H17zM19,11H20V12H19zM21,11H22V12H21zM22,11H23V12H22zM23,11H24V12H23zM24,11H25V12H24zM25,11H26V12H25zM3,12H4V13H3zM4,12H5V13H4zM7,12H8V13H7zM8,12H9V13H8zM9,12H10V13H9zM15,12H16V13H15zM17,12H18V13H17zM20,12H21V13H20zM21,12H22V13H21zM23,12H24V13H23zM25,12H26V13H25zM26,12H27V13H26zM2,13H3V14H2zM3,13H4V14H3zM5,13H6V14H5zM6,13H7V14H6zM7,13H8V14H7zM11,13H12V14H11zM12,13H13V14H12zM16,13H17V14H16zM17,13H18V14H17zM18,13H19V14H18zM20,13H21V14H20zM23,13H24V14H23zM26,13H27V14H26zM3,14H4V15H3zM4,14H5V15H4zM5,14H6V15H5zM6,14H7V15H6zM8,14H9V15H8zM9,14H10V15H9zM11,14H12V15H11zM13,14H14V15H13zM18,14H19V15H18zM20,14H21V15H20zM21,14H22V15H21zM26,14H27V15H26zM2,15H3V16H2zM9,15H10V16H9zM11,15H12V16H11zM12,15H13V16H12zM14,15H15V16H14zM15,15H16V16H15zM17,15H18V16H17zM18,15H19V16H18zM19,15H20V16H19zM21,15H22V16H21zM25,15H26V16H25zM2,16H3V17H2zM4,16H5V17H4zM7,16H8V17H7zM8,16H9V17H8zM15,16H16V17H15zM16,16H17V17H16zM17,16H18V17H17zM18,16H19V17H18zM20,16H21V17H20zM21,16H22V17H21zM22,16H23V17H22zM23,16H24V17H23zM25,16H26V17H25zM26,16H27V17H26zM2,17H3V18H2zM4,17H5V18H4zM5,17H6V18H5zM6,17H7V18H6zM7,17H8V18H7zM10,17H11V18H10zM12,17H13V18H12zM14,17H15V18H14zM20,17H21V18H20zM21,17H22V18H21zM23,17H24V18H23zM24,17H25V18H24zM26,17H27V18H26zM2,18H3V19H2zM5,18H6V19H5zM6,18H7V19H6zM8,18H9V19H8zM9,18H10V19H9zM10,18H11V19H10zM11,18H12V19H11zM14,18H15V19H14zM15,18H16V19H15zM16,18H17V19H16zM17,18H18V19H17zM18,18H19V19H18zM19,18H20V19H19zM20,18H21V19H20zM21,18H22V19H21zM22,18H23V19H22zM24,18H25V19H24zM10,19H11V20H10zM11,19H12V20H11zM12,19H13V20H12zM15,19H16V20H15zM18,19H19V20H18zM22,19H23V20H22zM2,20H3V21H2zM3,20H4V21H3zM4,20H5V21H4zM5,20H6V21H5zM6,20H7V21H6zM7,20H8V21H7zM8,20H9V21H8zM11,20H12V21H11zM14,20H15V21H14zM15,20H16V21H15zM18,20H19V21H18zM20,20H21V21H20zM22,20H23V21H22zM26,20H27V21H26zM2,21H3V22H2zM8,21H9V22H8zM11,21H12V22H11zM12,21H13V22H12zM13,21H14V22H13zM16,21H17V22H16zM17,21H18V22H17zM18,21H19V22H18zM22,21H23V22H22zM2,22H3V23H2zM4,22H5V23H4zM5,22H6V23H5zM6,22H7V23H6zM8,22H9V23H8zM11,22H12V23H11zM12,22H13V23H12zM13,22H14V23H13zM17,22H18V23H17zM18,22H19V23H18zM19,22H20V23H19zM20,22H21V23H20zM21,22H22V23H21zM22,22H23V23H22zM24,22H25V23H24zM25,22H26V23H25zM26,22H27V23H26zM2,23H3V24H2zM4,23H5V24H4zM5,23H6V24H5zM6,23H7V24H6zM8,23H9V24H8zM12,23H13V24H12zM14,23H15V24H14zM15,23H16V24H15zM16,23H17V24H16zM20,23H21V24H20zM25,23H26V24H25zM26,23H27V24H26zM2,24H3V25H2zM4,24H5V25H4zM5,24H6V25H5zM6,24H7V25H6zM8,24H9V25H8zM11,24H12V25H11zM15,24H16V25H15zM16,24H17V25H16zM17,24H18V25H17zM18,24H19V25H18zM23,24H24V25H23zM24,24H25V25H24zM26,24H27V25H26zM2,25H3V26H2zM8,25H9V26H8zM11,25H12V26H11zM14,25H15V26H14zM15,25H16V26H15zM17,25H18V26H17zM18,25H19V26H18zM19,25H20V26H19zM21,25H22V26H21zM22,25H23V26H22zM26,25H27V26H26zM2,26H3V27H2zM3,26H4V27H3zM4,26H5V27H4zM5,26H6V27H5zM6,26H7V27H6zM7,26H8V27H7zM8,26H9V27H8zM10,26H11V27H10zM12,26H13V27H12zM13,26H14V27H13zM14,26H15V27H14zM15,26H16V27H15zM18,26H19V27H18zM19,26H20V27H19zM23,26H24V27H23zM26,26H27V27H26z"/>
+          </svg>
+          <div class="install-qr-logo" aria-hidden="true">
+            <svg viewBox="0 0 36 36" fill="none">
+              <path d="M18 3 L31 10 L31 26 L18 33 L5 26 L5 10 Z" stroke="url(#qrGrad)" stroke-width="1.6"/>
+              <circle cx="18" cy="18" r="7" stroke="url(#qrGrad)" stroke-width="1.6"/>
+              <circle cx="18" cy="18" r="2.4" fill="#D4A65A"/>
+              <defs>
+                <linearGradient id="qrGrad" x1="0" y1="0" x2="36" y2="36">
+                  <stop offset="0" stop-color="#D4A65A"/>
+                  <stop offset="1" stop-color="#00E5D4"/>
+                </linearGradient>
+              </defs>
+            </svg>
+          </div>
+        </div>
+        <div class="install-qr-caption">
+          <div class="install-qr-url">app.zenifb.com</div>
+          <div class="install-qr-sub">Khách quét QR &middot; mở thẳng app</div>
+        </div>
+      </div>
+
+      <div class="install-steps-col">
+        <div class="install-step" data-platform="ios">
+          <div class="install-step-head">
+            <div class="install-step-icon">
+              <svg viewBox="0 0 20 24" fill="currentColor" width="22" height="22"><path d="M15.5 12.5c0-2.4 1.9-3.5 2-3.5-1.1-1.6-2.8-1.8-3.4-1.8-1.4-.1-2.8.9-3.5.9s-1.8-.9-3-.8c-1.5 0-3 .9-3.8 2.3-1.6 2.8-.4 7 1.2 9.3.8 1.1 1.7 2.4 2.9 2.3 1.2-.1 1.6-.8 3-.8s1.8.8 3 .8 2-1.1 2.8-2.3c.9-1.3 1.3-2.5 1.3-2.6 0-.1-2.5-1-2.5-3.8zM13.1 5.3c.7-.8 1.1-1.9 1-3-1 0-2.1.7-2.8 1.5-.6.7-1.2 1.8-1 2.9 1.1.1 2.2-.6 2.8-1.4z"/></svg>
+            </div>
+            <div>
+              <div class="install-step-title">Trên iPhone</div>
+              <div class="install-step-meta">Safari · iOS 14+</div>
+            </div>
+          </div>
+          <ol class="install-step-list">
+            <li><strong>Mở Safari</strong>, vào <code>app.zenifb.com</code></li>
+            <li>Bấm nút <strong>Chia sẻ</strong> <span class="install-icn">⬆</span> phía dưới</li>
+            <li>Chọn <strong>Thêm vào Màn hình chính</strong> → <strong>Thêm</strong></li>
+          </ol>
+        </div>
+
+        <div class="install-step" data-platform="android">
+          <div class="install-step-head">
+            <div class="install-step-icon">
+              <svg viewBox="0 0 24 24" fill="currentColor" width="22" height="22"><path d="M17.6 9.5l1.4-2.4c.1-.2 0-.4-.1-.4-.2-.1-.4 0-.4.1l-1.4 2.4C15.8 8.6 13.9 8.1 12 8.1s-3.8.5-5.1 1.1L5.5 6.8c-.1-.2-.3-.2-.4-.1-.2.1-.2.3-.1.4L6.4 9.5C4 11 2.4 13.5 2 16.4h20c-.4-2.9-2-5.4-4.4-6.9zM7 13.9c-.5 0-.9-.4-.9-.9s.4-.9.9-.9.9.4.9.9-.4.9-.9.9zm10 0c-.5 0-.9-.4-.9-.9s.4-.9.9-.9.9.4.9.9-.4.9-.9.9z"/></svg>
+            </div>
+            <div>
+              <div class="install-step-title">Trên Android</div>
+              <div class="install-step-meta">Chrome / Edge · Android 8+</div>
+            </div>
+          </div>
+          <ol class="install-step-list">
+            <li><strong>Mở Chrome</strong>, vào <code>app.zenifb.com</code></li>
+            <li>Bấm menu <strong>⋮</strong> góc phải trên</li>
+            <li>Chọn <strong>Cài đặt ứng dụng</strong> hoặc <strong>Thêm vào Màn hình chính</strong></li>
+          </ol>
+        </div>
+
+        <div class="install-cta-row">
+          <a href="https://app.zenifb.com" class="install-btn-primary" id="installBtnPrimary">
+            <span>Mở app ngay</span>
+            <svg viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 6.5 L11 6.5 M7 3 L11 6.5 L7 10"/></svg>
+          </a>
+          <button type="button" class="install-btn-secondary" id="installBtnPWA" hidden>
+            <span>Cài thẳng vào máy</span>
+          </button>
+          <div class="install-cta-note">Miễn phí &middot; không cần đăng ký &middot; full-screen như native</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ============ DUAL CTA ============ -->
 <section class="cta-section" id="cta">
   <div class="cta-inner">
-    <div class="eyebrow" style="justify-content: center;">[11] · Hành động</div>
+    <div class="eyebrow" style="justify-content: center;">[12] · Hành động</div>
 
     <h2 class="cta-title">
       Sẵn sàng<br>
@@ -4901,6 +5199,28 @@ const io = new IntersectionObserver(entries => {
   });
 }, { threshold: 0.12, rootMargin: '-40px 0px' });
 fadeEls.forEach(el => io.observe(el));
+
+/* ============ PWA install prompt ============ */
+let deferredPrompt = null;
+const installBtn = document.getElementById('installBtnPWA');
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  if (installBtn) installBtn.hidden = false;
+});
+if (installBtn) {
+  installBtn.addEventListener('click', async () => {
+    if (!deferredPrompt) { window.location.href = 'https://app.zenifb.com'; return; }
+    deferredPrompt.prompt();
+    await deferredPrompt.userChoice;
+    deferredPrompt = null;
+    installBtn.hidden = true;
+  });
+}
+window.addEventListener('appinstalled', () => {
+  if (installBtn) installBtn.hidden = true;
+  deferredPrompt = null;
+});
 </script>
 </body>
 </html>
