@@ -1,0 +1,8 @@
+# Subdomain-to-path mapping (Cloudflare Pages alternative: dùng Transform Rules)
+# Nếu 1 project serve cả 2 subdomain, uncomment các dòng sau:
+# https://app.zeni.holdings/*   /app/:splat   200
+# https://docs.zeni.holdings/*  /docs/:splat  200
+
+# Redirect old prototype paths
+/prototype   /app/   301
+/landing     /       301

@@ -1,0 +1,4906 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0C0C14">
+<meta name="description" content="Zeni F&B OS — Hệ điều hành cho tương lai ngành F&B Việt Nam. Một nền tảng. Tám vai trò. Một hệ sinh thái.">
+<meta name="robots" content="index, follow">
+<meta name="author" content="Zeni Holdings">
+<link rel="canonical" href="https://zeni.holdings/">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Zeni F&B OS">
+<meta property="og:url" content="https://zeni.holdings/">
+<meta property="og:title" content="Zeni F&B OS — Operating System for Vietnamese Hospitality">
+<meta property="og:description" content="Một nền tảng. Tám vai trò. Một hệ sinh thái. Hệ điều hành cho tương lai ngành F&B Việt Nam.">
+<meta property="og:image" content="https://zeni.holdings/assets/og-image.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="vi_VN">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Zeni F&B OS — Operating System for Vietnamese Hospitality">
+<meta name="twitter:description" content="Một nền tảng. Tám vai trò. Một hệ sinh thái.">
+<meta name="twitter:image" content="https://zeni.holdings/assets/og-image.png">
+
+<link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="manifest" href="/manifest.webmanifest">
+
+<title>Zeni F&B OS — Operating System for Vietnamese Hospitality</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..700,0..100;1,9..144,300..700,0..100&family=Inter+Tight:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ================================================================
+ * DESIGN TOKENS
+ * ================================================================ */
+:root {
+  --obsidian: #0C0C14;
+  --onyx: #141420;
+  --graphite: #1E1E2E;
+  --smoke: #2A2A3A;
+  --fog: #3D3D4E;
+  --mist: #6A6A7E;
+  --cream: #F5F2EB;
+  --paper: #FAF7F0;
+
+  --gold: #D4A65A;
+  --gold-bright: #F0C072;
+  --gold-dim: #8A6B32;
+  --gold-soft: rgba(212, 166, 90, 0.1);
+
+  --token: #00E5D4;
+  --token-bright: #5FFFEE;
+  --token-soft: rgba(0, 229, 212, 0.08);
+
+  --rose: #FF6B8A;
+  --violet: #8B5CF6;
+  --indigo: #6B8AFF;
+  --emerald: #4ADE9B;
+
+  --success: #4ADE9B;
+  --warn: #FFB547;
+  --danger: #FF6B5E;
+
+  --line: rgba(245, 242, 235, 0.08);
+  --line-bright: rgba(245, 242, 235, 0.16);
+  --line-soft: rgba(245, 242, 235, 0.04);
+
+  --serif: 'Fraunces', Georgia, serif;
+  --sans: 'Inter Tight', -apple-system, BlinkMacSystemFont, sans-serif;
+  --mono: 'JetBrains Mono', 'Courier New', monospace;
+
+  --max-w: 1320px;
+  --gutter: 32px;
+}
+
+@media (max-width: 768px) {
+  :root { --gutter: 20px; }
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+::selection { background: var(--gold); color: var(--obsidian); }
+
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: var(--obsidian); }
+::-webkit-scrollbar-thumb { background: var(--smoke); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--fog); }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--obsidian);
+  color: var(--cream);
+  font-family: var(--sans);
+  font-size: 15px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* Grain overlay global */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  pointer-events: none;
+  opacity: 0.025;
+  background-image:
+    repeating-conic-gradient(var(--cream) 0% 0.0001%, transparent 0% 0.0002%),
+    repeating-conic-gradient(var(--cream) 0% 0.0001%, transparent 0% 0.0003%);
+  background-size: 3px 3px, 7px 7px;
+  mix-blend-mode: overlay;
+}
+
+/* Aurora ambient backdrop */
+body::before {
+  content: '';
+  position: fixed;
+  inset: -20%;
+  z-index: -1;
+  background:
+    radial-gradient(ellipse 45% 35% at 15% 20%, rgba(212, 166, 90, 0.08) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 30% at 85% 70%, rgba(0, 229, 212, 0.06) 0%, transparent 65%),
+    radial-gradient(ellipse 50% 40% at 50% 95%, rgba(139, 92, 246, 0.04) 0%, transparent 70%),
+    var(--obsidian);
+  filter: blur(50px);
+  pointer-events: none;
+}
+
+img, svg { display: block; max-width: 100%; }
+
+a { color: inherit; text-decoration: none; }
+
+/* ================================================================
+ * TYPOGRAPHY UTILITIES
+ * ================================================================ */
+.eyebrow {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+}
+.eyebrow::before {
+  content: '';
+  width: 28px; height: 1px;
+  background: var(--gold);
+}
+.eyebrow.no-dash::before { display: none; }
+.eyebrow.center::before { display: none; }
+.eyebrow.muted { color: var(--mist); }
+.eyebrow.muted::before { background: var(--mist); }
+.eyebrow.token { color: var(--token); }
+.eyebrow.token::before { background: var(--token); }
+
+.label-mono {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--mist);
+  font-weight: 500;
+}
+
+.h-display {
+  font-family: var(--serif);
+  font-weight: 300;
+  font-variation-settings: "SOFT" 60, "opsz" 144;
+  line-height: 0.94;
+  letter-spacing: -0.028em;
+}
+
+.italic-accent {
+  font-style: italic;
+  color: var(--gold-bright);
+  font-variation-settings: "SOFT" 100, "opsz" 144;
+}
+
+.italic-token {
+  font-style: italic;
+  color: var(--token-bright);
+  font-variation-settings: "SOFT" 100, "opsz" 144;
+}
+
+.lede {
+  font-family: var(--serif);
+  font-size: 22px;
+  line-height: 1.45;
+  font-weight: 300;
+  color: rgba(245, 242, 235, 0.82);
+  font-variation-settings: "SOFT" 40, "opsz" 32;
+  max-width: 620px;
+}
+@media (max-width: 768px) { .lede { font-size: 18px; } }
+
+/* ================================================================
+ * LAYOUT
+ * ================================================================ */
+.container {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+  position: relative;
+}
+
+.container-wide {
+  max-width: 1480px;
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+  position: relative;
+}
+
+section {
+  position: relative;
+  padding: 120px 0;
+}
+@media (max-width: 768px) { section { padding: 72px 0; } }
+
+/* ================================================================
+ * TOP NAV
+ * ================================================================ */
+.topnav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  padding: 16px var(--gutter);
+  background: rgba(12, 12, 20, 0.5);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--line-soft);
+  transition: all 0.3s;
+}
+
+.topnav.scrolled {
+  background: rgba(12, 12, 20, 0.88);
+  border-bottom-color: var(--line);
+}
+
+.topnav-inner {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+}
+.brand-mark { width: 32px; height: 32px; flex-shrink: 0; }
+.brand-text strong {
+  font-family: var(--serif);
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1;
+  font-variation-settings: "SOFT" 50, "opsz" 32;
+  display: block;
+}
+.brand-text small {
+  font-family: var(--mono);
+  font-size: 8px;
+  letter-spacing: 0.3em;
+  color: var(--mist);
+  text-transform: uppercase;
+  margin-top: 3px;
+  display: block;
+}
+@media (max-width: 600px) { .brand-text small { display: none; } }
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+}
+.nav-link {
+  font-size: 13px;
+  color: rgba(245, 242, 235, 0.7);
+  transition: color 0.15s;
+  font-weight: 400;
+}
+.nav-link:hover { color: var(--gold-bright); }
+
+@media (max-width: 900px) { .nav-links { display: none; } }
+
+.nav-cta-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  border-radius: 999px;
+  font-size: 12.5px;
+  font-weight: 500;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.2s cubic-bezier(0.2, 0.9, 0.3, 1);
+  border: 1px solid transparent;
+  white-space: nowrap;
+  text-decoration: none;
+}
+.btn svg { width: 13px; height: 13px; }
+
+.btn-primary {
+  background: var(--gold);
+  color: var(--obsidian);
+  font-weight: 600;
+}
+.btn-primary:hover {
+  background: var(--gold-bright);
+  transform: translateY(-1px);
+  box-shadow: 0 8px 20px rgba(212, 166, 90, 0.3);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--cream);
+  border-color: var(--line-bright);
+}
+.btn-ghost:hover {
+  border-color: var(--cream);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.btn-token {
+  background: rgba(0, 229, 212, 0.12);
+  color: var(--token-bright);
+  border-color: rgba(0, 229, 212, 0.3);
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+.btn-token:hover {
+  background: rgba(0, 229, 212, 0.2);
+  border-color: var(--token);
+}
+
+.btn-lg {
+  padding: 14px 26px;
+  font-size: 13.5px;
+}
+.btn-lg svg { width: 14px; height: 14px; }
+
+/* ================================================================
+ * HERO SECTION
+ * ================================================================ */
+.hero {
+  min-height: 100vh;
+  padding-top: 140px;
+  padding-bottom: 80px;
+  display: flex;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-aurora {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.hero-aurora::before,
+.hero-aurora::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.6;
+}
+.hero-aurora::before {
+  top: -20%; left: -10%;
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, rgba(212, 166, 90, 0.25) 0%, transparent 70%);
+  animation: auroraFloat 14s ease-in-out infinite;
+}
+.hero-aurora::after {
+  bottom: -20%; right: -10%;
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(0, 229, 212, 0.18) 0%, transparent 70%);
+  animation: auroraFloat 18s ease-in-out infinite reverse;
+}
+
+@keyframes auroraFloat {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(40px, -30px) scale(1.1); }
+}
+
+.hero-inner {
+  position: relative;
+  z-index: 2;
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 80px;
+  align-items: center;
+}
+@media (max-width: 1100px) {
+  .hero-inner { grid-template-columns: 1fr; gap: 60px; }
+}
+
+.hero-left { max-width: 680px; }
+
+.hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  padding: 8px 18px;
+  background: rgba(212, 166, 90, 0.08);
+  border: 1px solid rgba(212, 166, 90, 0.25);
+  border-radius: 999px;
+  margin-bottom: 32px;
+}
+.hero-eyebrow-dot {
+  width: 6px; height: 6px;
+  background: var(--gold);
+  border-radius: 50%;
+  box-shadow: 0 0 10px var(--gold);
+  animation: pulse 2s infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+.hero-eyebrow-text {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.24em;
+  color: var(--gold-bright);
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.hero-title {
+  font-family: var(--serif);
+  font-size: clamp(44px, 7.5vw, 110px);
+  font-weight: 300;
+  line-height: 0.92;
+  letter-spacing: -0.03em;
+  font-variation-settings: "SOFT" 50, "opsz" 144;
+  margin-bottom: 32px;
+}
+.hero-title em {
+  font-style: italic;
+  color: var(--gold-bright);
+  font-variation-settings: "SOFT" 120, "opsz" 144;
+}
+
+.hero-lede {
+  font-family: var(--serif);
+  font-size: clamp(17px, 2vw, 22px);
+  line-height: 1.55;
+  font-weight: 300;
+  color: rgba(245, 242, 235, 0.78);
+  font-variation-settings: "SOFT" 40, "opsz" 32;
+  max-width: 540px;
+  margin-bottom: 44px;
+}
+.hero-lede strong {
+  color: var(--gold-bright);
+  font-style: italic;
+  font-weight: 500;
+  font-variation-settings: "SOFT" 80, "opsz" 32;
+}
+
+.hero-cta-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 56px;
+  flex-wrap: wrap;
+}
+
+.hero-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+  padding-top: 32px;
+  border-top: 1px solid var(--line);
+  max-width: 540px;
+}
+.hero-stat-val {
+  font-family: var(--serif);
+  font-size: 32px;
+  font-weight: 400;
+  font-style: italic;
+  color: var(--gold-bright);
+  line-height: 1;
+  margin-bottom: 6px;
+  font-variation-settings: "SOFT" 80, "opsz" 144;
+}
+.hero-stat-lbl {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  color: var(--mist);
+  text-transform: uppercase;
+  line-height: 1.4;
+}
+
+/* Hero right - orbit visualization */
+.hero-orbit {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1;
+  max-width: 520px;
+  margin: 0 auto;
+}
+@media (max-width: 1100px) { .hero-orbit { max-width: 420px; } }
+
+.orbit-svg {
+  width: 100%;
+  height: 100%;
+}
+
+.orbit-ring {
+  fill: none;
+  stroke: var(--line-bright);
+  stroke-width: 0.5;
+}
+
+.orbit-ring.dashed {
+  stroke-dasharray: 2 6;
+  opacity: 0.5;
+}
+
+.orbit-center-grp {
+  transform-origin: center;
+  animation: orbitRotate 60s linear infinite;
+}
+
+@keyframes orbitRotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.orbit-node {
+  fill: var(--onyx);
+  stroke: var(--gold);
+  stroke-width: 0.8;
+}
+.orbit-node-token {
+  fill: var(--obsidian);
+  stroke: var(--token);
+  stroke-width: 0.8;
+}
+
+.orbit-core {
+  fill: url(#coreGrad);
+  stroke: var(--gold);
+  stroke-width: 0.5;
+}
+
+.orbit-label {
+  font-family: var(--mono);
+  font-size: 8px;
+  letter-spacing: 0.15em;
+  fill: var(--cream);
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.orbit-connect {
+  stroke: var(--gold);
+  stroke-width: 0.3;
+  stroke-dasharray: 1 3;
+  opacity: 0.3;
+  fill: none;
+}
+
+/* Stakeholder badges around orbit */
+.stakeholder-badges {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.sh-badge {
+  position: absolute;
+  padding: 8px 14px;
+  background: rgba(20, 20, 32, 0.85);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--line-bright);
+  border-radius: 999px;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 600;
+  white-space: nowrap;
+  animation: badgeFloat 4s ease-in-out infinite;
+}
+.sh-badge-dot {
+  display: inline-block;
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  margin-right: 8px;
+  vertical-align: middle;
+}
+
+.sh-badge.owner { top: 5%; left: 50%; transform: translateX(-50%); color: var(--gold-bright); }
+.sh-badge.owner .sh-badge-dot { background: var(--gold); }
+
+.sh-badge.diner { top: 25%; right: -5%; color: var(--token-bright); animation-delay: -0.8s; }
+.sh-badge.diner .sh-badge-dot { background: var(--token); }
+
+.sh-badge.manager { bottom: 30%; right: -8%; color: var(--indigo); animation-delay: -1.6s; }
+.sh-badge.manager .sh-badge-dot { background: var(--indigo); }
+
+.sh-badge.staff { bottom: 5%; right: 25%; color: var(--emerald); animation-delay: -2.4s; }
+.sh-badge.staff .sh-badge-dot { background: var(--emerald); }
+
+.sh-badge.affiliate { bottom: 5%; left: 25%; color: var(--rose); animation-delay: -3.2s; }
+.sh-badge.affiliate .sh-badge-dot { background: var(--rose); }
+
+.sh-badge.supplier { bottom: 30%; left: -8%; color: var(--warn); animation-delay: -0.4s; }
+.sh-badge.supplier .sh-badge-dot { background: var(--warn); }
+
+.sh-badge.investor { top: 25%; left: -5%; color: var(--violet); animation-delay: -1.2s; }
+.sh-badge.investor .sh-badge-dot { background: var(--violet); }
+
+.sh-badge.franchisee { top: 50%; left: -15%; transform: translateY(-50%); color: var(--gold); animation-delay: -2s; }
+.sh-badge.franchisee .sh-badge-dot { background: var(--gold-bright); }
+
+@media (max-width: 600px) {
+  .sh-badge { font-size: 8px; padding: 5px 10px; }
+  .sh-badge.franchisee { left: -5%; }
+}
+
+@keyframes badgeFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+.sh-badge.owner { transform: translateX(-50%); }
+.sh-badge.owner { animation-name: ownerFloat; }
+@keyframes ownerFloat {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(-6px); }
+}
+.sh-badge.franchisee { animation-name: franchiseeFloat; }
+@keyframes franchiseeFloat {
+  0%, 100% { transform: translateY(-50%); }
+  50% { transform: translateY(-56%); }
+}
+
+/* Scroll hint */
+.scroll-hint {
+  position: absolute;
+  bottom: 40px; left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.3em;
+  color: var(--mist);
+  text-transform: uppercase;
+  animation: scrollBounce 2s ease-in-out infinite;
+}
+@keyframes scrollBounce {
+  0%, 100% { transform: translate(-50%, 0); opacity: 0.5; }
+  50% { transform: translate(-50%, 8px); opacity: 1; }
+}
+.scroll-hint-line {
+  width: 1px; height: 30px;
+  background: linear-gradient(180deg, var(--mist) 0%, transparent 100%);
+}
+
+/* ================================================================
+ * SECTION HEADERS (shared)
+ * ================================================================ */
+.section-head {
+  margin-bottom: 72px;
+  max-width: 820px;
+}
+.section-head.center { margin-left: auto; margin-right: auto; text-align: center; }
+
+.section-title {
+  font-family: var(--serif);
+  font-size: clamp(36px, 5.5vw, 72px);
+  font-weight: 300;
+  line-height: 0.98;
+  letter-spacing: -0.024em;
+  font-variation-settings: "SOFT" 50, "opsz" 144;
+  margin-top: 20px;
+  margin-bottom: 24px;
+}
+.section-title em {
+  font-style: italic;
+  color: var(--gold-bright);
+  font-variation-settings: "SOFT" 100, "opsz" 144;
+}
+.section-title em.token {
+  color: var(--token-bright);
+}
+
+.section-lede {
+  font-family: var(--serif);
+  font-size: clamp(16px, 1.8vw, 20px);
+  line-height: 1.55;
+  font-weight: 300;
+  color: rgba(245, 242, 235, 0.72);
+  font-variation-settings: "SOFT" 40, "opsz" 24;
+  max-width: 620px;
+}
+.section-head.center .section-lede { margin: 0 auto; }
+
+/* ================================================================
+ * PROBLEM SECTION - 24 pains
+ * ================================================================ */
+.problem-section {
+  background: linear-gradient(180deg, var(--obsidian) 0%, #08080F 100%);
+  position: relative;
+}
+
+.problem-banner {
+  max-width: var(--max-w);
+  margin: 0 auto 60px;
+  padding: 24px var(--gutter);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
+  align-items: baseline;
+  justify-content: space-between;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+.problem-stat {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+}
+.problem-stat-num {
+  font-family: var(--serif);
+  font-size: 48px;
+  font-weight: 300;
+  font-style: italic;
+  color: var(--danger);
+  line-height: 1;
+  font-variation-settings: "SOFT" 100, "opsz" 144;
+}
+.problem-stat-lbl {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  color: var(--mist);
+  text-transform: uppercase;
+  max-width: 180px;
+  line-height: 1.4;
+}
+
+.pain-groups {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+@media (max-width: 1100px) { .pain-groups { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 600px) { .pain-groups { grid-template-columns: 1fr; } }
+
+.pain-group {
+  padding: 36px 28px;
+  border-right: 1px solid var(--line);
+  transition: background 0.2s;
+  cursor: default;
+}
+.pain-group:last-child { border-right: none; }
+.pain-group:hover { background: rgba(255, 107, 94, 0.02); }
+
+@media (max-width: 1100px) {
+  .pain-group:nth-child(2n) { border-right: none; }
+  .pain-group { border-bottom: 1px solid var(--line); }
+}
+@media (max-width: 600px) {
+  .pain-group { border-right: none; }
+}
+
+.pain-group-num {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  color: var(--danger);
+  text-transform: uppercase;
+  font-weight: 600;
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.pain-group-num::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, var(--danger) 0%, transparent 100%);
+  max-width: 60px;
+}
+
+.pain-group-title {
+  font-family: var(--serif);
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.25;
+  font-variation-settings: "SOFT" 50, "opsz" 14;
+  margin-bottom: 18px;
+  letter-spacing: -0.005em;
+}
+
+.pain-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.pain-item {
+  font-size: 12px;
+  line-height: 1.5;
+  color: rgba(245, 242, 235, 0.58);
+  padding-left: 18px;
+  position: relative;
+}
+.pain-item::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 8px;
+  width: 8px; height: 1px;
+  background: var(--danger);
+  opacity: 0.5;
+}
+</style>
+</head>
+<body>
+
+<!-- ============ TOP NAV ============ -->
+<nav class="topnav" id="topnav">
+  <div class="topnav-inner">
+    <div class="brand" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+      <svg class="brand-mark" viewBox="0 0 32 32" fill="none">
+        <path d="M16 2 L28 9 L28 23 L16 30 L4 23 L4 9 Z" stroke="url(#bmGrad)" stroke-width="1.2"/>
+        <circle cx="16" cy="16" r="5" stroke="url(#bmGrad)" stroke-width="1.2"/>
+        <circle cx="16" cy="16" r="1.8" fill="#D4A65A"/>
+        <defs>
+          <linearGradient id="bmGrad" x1="0" y1="0" x2="32" y2="32">
+            <stop offset="0" stop-color="#D4A65A"/>
+            <stop offset="1" stop-color="#00E5D4"/>
+          </linearGradient>
+        </defs>
+      </svg>
+      <div class="brand-text">
+        <strong>Zeni F&amp;B OS</strong>
+        <small>The Operating System</small>
+      </div>
+    </div>
+
+    <div class="nav-links">
+      <a href="#problem" class="nav-link">Vấn đề</a>
+      <a href="#solution" class="nav-link">Giải pháp</a>
+      <a href="#stakeholders" class="nav-link">Vai trò</a>
+      <a href="#model" class="nav-link">Mô hình</a>
+      <a href="#pricing" class="nav-link">Pricing</a>
+      <a href="#roadmap" class="nav-link">Roadmap</a>
+    </div>
+
+    <div class="nav-cta-group">
+      <a href="zeni-fb-os-prototype.html" class="btn btn-ghost">Xem prototype</a>
+      <a href="#cta" class="btn btn-primary">Đặt lịch demo
+        <svg viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 6.5 L11 6.5 M7.5 3 L11 6.5 L7.5 10"/></svg>
+      </a>
+    </div>
+  </div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<section class="hero" id="hero">
+  <div class="hero-aurora"></div>
+
+  <div class="hero-inner">
+    <div class="hero-left">
+      <div class="hero-eyebrow">
+        <span class="hero-eyebrow-dot"></span>
+        <span class="hero-eyebrow-text">Đang tuyển 3 đồng sáng lập</span>
+      </div>
+
+      <h1 class="hero-title">
+        Hệ điều hành cho<br>
+        <em>tương lai</em><br>
+        ngành F&amp;B Việt.
+      </h1>
+
+      <p class="hero-lede">
+        Một nền tảng. <strong>Tám vai trò.</strong> Một hệ sinh thái. Zeni thay thế 14 phần mềm rời rạc bằng một hệ điều hành chạy bằng AI agent, hướng đến SGX IPO 2031.
+      </p>
+
+      <div class="hero-cta-group">
+        <a href="#stakeholders" class="btn btn-primary btn-lg">
+          Tôi thuộc vai trò nào?
+          <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 7 L12 7 M8 3 L12 7 L8 11"/></svg>
+        </a>
+        <a href="zeni-fb-os-prototype.html" class="btn btn-ghost btn-lg">
+          <svg viewBox="0 0 14 14" fill="currentColor"><path d="M4 3 L11 7 L4 11 Z"/></svg>
+          Xem live prototype
+        </a>
+      </div>
+
+      <div class="hero-stats">
+        <div>
+          <div class="hero-stat-val">5.000+</div>
+          <div class="hero-stat-lbl">Nhà hàng<br>ecosystem</div>
+        </div>
+        <div>
+          <div class="hero-stat-val">12.4k</div>
+          <div class="hero-stat-lbl">Thực khách<br>active</div>
+        </div>
+        <div>
+          <div class="hero-stat-val">2031</div>
+          <div class="hero-stat-lbl">SGX IPO<br>target</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <div class="hero-orbit">
+        <!-- SVG orbit -->
+        <svg class="orbit-svg" viewBox="0 0 400 400">
+          <defs>
+            <linearGradient id="coreGrad" x1="0" y1="0" x2="400" y2="400">
+              <stop offset="0" stop-color="#D4A65A" stop-opacity="0.3"/>
+              <stop offset="1" stop-color="#00E5D4" stop-opacity="0.3"/>
+            </linearGradient>
+            <radialGradient id="glowGrad">
+              <stop offset="0" stop-color="#F0C072" stop-opacity="0.8"/>
+              <stop offset="1" stop-color="#F0C072" stop-opacity="0"/>
+            </radialGradient>
+          </defs>
+
+          <!-- outer ring -->
+          <circle cx="200" cy="200" r="180" class="orbit-ring dashed"/>
+          <circle cx="200" cy="200" r="140" class="orbit-ring"/>
+          <circle cx="200" cy="200" r="100" class="orbit-ring dashed"/>
+          <circle cx="200" cy="200" r="60" class="orbit-ring"/>
+
+          <!-- Rotating layer -->
+          <g class="orbit-center-grp">
+            <!-- 8 dots around orbit representing 8 roles -->
+            <circle cx="200" cy="20" r="4" class="orbit-node"/>
+            <circle cx="335" cy="65" r="4" class="orbit-node-token"/>
+            <circle cx="380" cy="200" r="4" class="orbit-node"/>
+            <circle cx="335" cy="335" r="4" class="orbit-node"/>
+            <circle cx="200" cy="380" r="4" class="orbit-node-token"/>
+            <circle cx="65" cy="335" r="4" class="orbit-node"/>
+            <circle cx="20" cy="200" r="4" class="orbit-node-token"/>
+            <circle cx="65" cy="65" r="4" class="orbit-node"/>
+
+            <!-- Inner connections -->
+            <line x1="200" y1="20" x2="200" y2="380" class="orbit-connect"/>
+            <line x1="20" y1="200" x2="380" y2="200" class="orbit-connect"/>
+            <line x1="65" y1="65" x2="335" y2="335" class="orbit-connect"/>
+            <line x1="335" y1="65" x2="65" y2="335" class="orbit-connect"/>
+          </g>
+
+          <!-- Center hexagon logo static -->
+          <circle cx="200" cy="200" r="50" fill="url(#glowGrad)"/>
+          <path d="M200 160 L240 180 L240 220 L200 240 L160 220 L160 180 Z"
+                fill="#141420" stroke="url(#coreGrad)" stroke-width="1.5"/>
+          <circle cx="200" cy="200" r="16" fill="none" stroke="#D4A65A" stroke-width="1"/>
+          <circle cx="200" cy="200" r="5" fill="#F0C072"/>
+
+          <!-- Label -->
+          <text x="200" y="275" text-anchor="middle" class="orbit-label">ZENI CORE</text>
+        </svg>
+
+        <!-- Stakeholder badges positioned around orbit -->
+        <div class="stakeholder-badges">
+          <div class="sh-badge owner"><span class="sh-badge-dot"></span>Chủ nhà hàng</div>
+          <div class="sh-badge diner"><span class="sh-badge-dot"></span>Thực khách</div>
+          <div class="sh-badge manager"><span class="sh-badge-dot"></span>Manager</div>
+          <div class="sh-badge staff"><span class="sh-badge-dot"></span>Staff</div>
+          <div class="sh-badge affiliate"><span class="sh-badge-dot"></span>KOC / Affiliate</div>
+          <div class="sh-badge supplier"><span class="sh-badge-dot"></span>Nhà cung cấp</div>
+          <div class="sh-badge investor"><span class="sh-badge-dot"></span>Investor</div>
+          <div class="sh-badge franchisee"><span class="sh-badge-dot"></span>Franchisee</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="scroll-hint">
+    Scroll
+    <div class="scroll-hint-line"></div>
+  </div>
+</section>
+
+<!-- ============ PROBLEM SECTION - 24 PAINS ============ -->
+<section class="problem-section" id="problem">
+  <div class="container">
+    <div class="section-head">
+      <div class="eyebrow">[01] · Vấn đề</div>
+      <h2 class="section-title">
+        Ngành F&amp;B Việt Nam<br>
+        đang <em>chảy máu</em> trên 24 vết thương.
+      </h2>
+      <p class="section-lede">
+        Mỗi nhà hàng trung bình dùng 14 phần mềm rời rạc. Dữ liệu phân mảnh, không ai nhìn thấy toàn cảnh. Staff rotate nhanh, training lại từ đầu. Khách đến 1 lần rồi quên. Marketing đốt tiền, không đo được ROI.
+      </p>
+    </div>
+  </div>
+
+  <div class="problem-banner">
+    <div class="problem-stat">
+      <span class="problem-stat-num">83%</span>
+      <span class="problem-stat-lbl">Nhà hàng F&amp;B<br>đóng cửa sau 3 năm</span>
+    </div>
+    <div class="problem-stat">
+      <span class="problem-stat-num">68%</span>
+      <span class="problem-stat-lbl">Turnover staff<br>trong ngành</span>
+    </div>
+    <div class="problem-stat">
+      <span class="problem-stat-num">22%</span>
+      <span class="problem-stat-lbl">Waste nguyên liệu<br>trung bình</span>
+    </div>
+    <div class="problem-stat">
+      <span class="problem-stat-num">14</span>
+      <span class="problem-stat-lbl">Phần mềm rời rạc<br>mỗi nhà hàng</span>
+    </div>
+    <div class="problem-stat">
+      <span class="problem-stat-num">3.2%</span>
+      <span class="problem-stat-lbl">ROI marketing<br>trung bình</span>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="pain-groups">
+      <div class="pain-group">
+        <div class="pain-group-num">Nhóm 01</div>
+        <h3 class="pain-group-title">Khách hàng<br>vô hình</h3>
+        <ul class="pain-list">
+          <li class="pain-item">Không biết khách là ai</li>
+          <li class="pain-item">Khách đến 1 lần rồi biến mất</li>
+          <li class="pain-item">Không có CRM thật</li>
+          <li class="pain-item">Không remind khách dị ứng</li>
+          <li class="pain-item">No-show rate 15%</li>
+        </ul>
+      </div>
+      <div class="pain-group">
+        <div class="pain-group-num">Nhóm 02</div>
+        <h3 class="pain-group-title">Marketing<br>đốt tiền</h3>
+        <ul class="pain-list">
+          <li class="pain-item">ROI không đo được</li>
+          <li class="pain-item">Content thủ công, chậm</li>
+          <li class="pain-item">Campaign không segment</li>
+          <li class="pain-item">Phụ thuộc agency</li>
+          <li class="pain-item">Review xấu không phản hồi</li>
+        </ul>
+      </div>
+      <div class="pain-group">
+        <div class="pain-group-num">Nhóm 03</div>
+        <h3 class="pain-group-title">Vận hành<br>rời rạc</h3>
+        <ul class="pain-list">
+          <li class="pain-item">POS + booking + kho = 3 app</li>
+          <li class="pain-item">Kho tay, hao hụt không kiểm soát</li>
+          <li class="pain-item">Shift schedule manual</li>
+          <li class="pain-item">ATTP checklist giấy</li>
+          <li class="pain-item">Không traceability nguyên liệu</li>
+        </ul>
+      </div>
+      <div class="pain-group">
+        <div class="pain-group-num">Nhóm 04</div>
+        <h3 class="pain-group-title">Nhân sự<br>xoay như chong chóng</h3>
+        <ul class="pain-list">
+          <li class="pain-item">Turnover 68% mỗi năm</li>
+          <li class="pain-item">Training lại từ đầu</li>
+          <li class="pain-item">Kiến thức chuyên gia mất theo người nghỉ</li>
+          <li class="pain-item">Payroll + thuế TNCN thủ công</li>
+        </ul>
+      </div>
+      <div class="pain-group">
+        <div class="pain-group-num">Nhóm 05</div>
+        <h3 class="pain-group-title">Mở rộng<br>không scale được</h3>
+        <ul class="pain-list">
+          <li class="pain-item">Chủ = điểm nghẽn</li>
+          <li class="pain-item">Playbook trong đầu, không số hóa</li>
+          <li class="pain-item">Franchise audit bằng đi lại</li>
+          <li class="pain-item">Quality drop khi mở chi nhánh 2</li>
+          <li class="pain-item">Không data cho IPO/M&amp;A</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- ============ VISION SECTION ============ -->
+<style>
+.vision-section {
+  padding: 160px 0;
+  position: relative;
+  overflow: hidden;
+}
+.vision-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 70% 50% at 50% 50%, rgba(139, 92, 246, 0.06) 0%, transparent 70%),
+    radial-gradient(ellipse 60% 40% at 30% 80%, rgba(212, 166, 90, 0.05) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.vision-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+  text-align: center;
+  position: relative;
+  z-index: 2;
+}
+
+.vision-philosophy {
+  font-family: var(--serif);
+  font-size: clamp(28px, 4.5vw, 58px);
+  line-height: 1.18;
+  font-weight: 300;
+  letter-spacing: -0.02em;
+  font-variation-settings: "SOFT" 50, "opsz" 144;
+  margin-bottom: 44px;
+}
+.vision-philosophy em {
+  font-style: italic;
+  font-variation-settings: "SOFT" 120, "opsz" 144;
+}
+.vision-philosophy em.gold { color: var(--gold-bright); }
+.vision-philosophy em.token { color: var(--token-bright); }
+.vision-philosophy em.rose { color: var(--rose); }
+
+.vision-author {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.28em;
+  color: var(--mist);
+  text-transform: uppercase;
+  margin-top: 60px;
+}
+.vision-author strong { color: var(--gold-bright); font-weight: 600; }
+
+.vision-etym {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 48px;
+  margin: 80px 0 0;
+  padding-top: 60px;
+  border-top: 1px solid var(--line);
+}
+@media (max-width: 768px) { .vision-etym { grid-template-columns: 1fr; gap: 32px; } }
+
+.vision-etym-item {
+  text-align: left;
+}
+
+.vision-etym-char {
+  font-family: var(--serif);
+  font-size: 72px;
+  font-weight: 300;
+  font-style: italic;
+  line-height: 1;
+  font-variation-settings: "SOFT" 120, "opsz" 144;
+  margin-bottom: 16px;
+}
+.vision-etym-item:nth-child(1) .vision-etym-char { color: var(--token-bright); }
+.vision-etym-item:nth-child(2) .vision-etym-char { color: var(--gold-bright); }
+.vision-etym-item:nth-child(3) .vision-etym-char { color: var(--rose); }
+
+.vision-etym-hanyu {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  color: var(--mist);
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+.vision-etym-meaning {
+  font-family: var(--serif);
+  font-size: 18px;
+  font-weight: 500;
+  font-variation-settings: "SOFT" 50, "opsz" 14;
+  line-height: 1.4;
+  margin-bottom: 10px;
+}
+
+.vision-etym-desc {
+  font-size: 13px;
+  color: rgba(245, 242, 235, 0.65);
+  line-height: 1.5;
+}
+
+/* ============ SOLUTION OVERVIEW ============ */
+.solution-section {
+  padding: 120px 0;
+  background: linear-gradient(180deg, transparent 0%, rgba(212, 166, 90, 0.03) 50%, transparent 100%);
+}
+
+.solution-dual {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  margin-top: 80px;
+  align-items: center;
+}
+@media (max-width: 1000px) {
+  .solution-dual { grid-template-columns: 1fr; gap: 60px; }
+}
+
+.sol-side {
+  position: relative;
+}
+
+.sol-side-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 600;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.sol-side-label::before {
+  content: '';
+  width: 8px; height: 8px;
+  background: var(--gold);
+  border-radius: 50%;
+  box-shadow: 0 0 8px var(--gold);
+}
+
+.sol-side.right .sol-side-label { color: var(--token); }
+.sol-side.right .sol-side-label::before {
+  background: var(--token);
+  box-shadow: 0 0 8px var(--token);
+}
+
+.sol-side-title {
+  font-family: var(--serif);
+  font-size: 42px;
+  font-weight: 300;
+  line-height: 1.02;
+  letter-spacing: -0.02em;
+  font-variation-settings: "SOFT" 60, "opsz" 144;
+  margin-bottom: 24px;
+}
+.sol-side-title em {
+  font-style: italic;
+  font-variation-settings: "SOFT" 120, "opsz" 144;
+  color: var(--gold-bright);
+}
+.sol-side.right .sol-side-title em { color: var(--token-bright); }
+
+.sol-side-desc {
+  font-size: 15px;
+  line-height: 1.65;
+  color: rgba(245, 242, 235, 0.7);
+  margin-bottom: 30px;
+  max-width: 480px;
+}
+
+.sol-side-features {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.sol-feat {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--line-soft);
+}
+
+.sol-feat-num {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  color: var(--gold);
+  font-weight: 600;
+  margin-top: 3px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.sol-side.right .sol-feat-num { color: var(--token); }
+
+.sol-feat-body {
+  flex: 1;
+}
+.sol-feat-title {
+  font-family: var(--serif);
+  font-size: 15px;
+  font-weight: 500;
+  font-variation-settings: "SOFT" 50, "opsz" 14;
+  margin-bottom: 4px;
+}
+.sol-feat-desc {
+  font-size: 12.5px;
+  color: rgba(245, 242, 235, 0.6);
+  line-height: 1.5;
+}
+
+/* ============ STAKEHOLDER SECTIONS ============ */
+.stakeholders-section {
+  padding: 140px 0 60px;
+}
+
+.stakeholder-nav {
+  max-width: var(--max-w);
+  margin: 0 auto 80px;
+  padding: 0 var(--gutter);
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+@media (max-width: 900px) { .stakeholder-nav { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 500px) { .stakeholder-nav { grid-template-columns: 1fr; } }
+
+.sh-nav-item {
+  padding: 16px 18px;
+  background: var(--onyx);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: left;
+  color: var(--cream);
+  font-family: inherit;
+}
+.sh-nav-item:hover { border-color: var(--gold); transform: translateY(-2px); }
+
+.sh-nav-num {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  color: var(--mist);
+  text-transform: uppercase;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.sh-nav-name {
+  font-family: var(--serif);
+  font-size: 14px;
+  font-weight: 500;
+  font-variation-settings: "SOFT" 50, "opsz" 14;
+  margin-bottom: 4px;
+  letter-spacing: -0.005em;
+}
+
+.sh-nav-pain {
+  font-size: 11px;
+  color: var(--mist);
+  line-height: 1.4;
+}
+
+/* Individual stakeholder section */
+.sh-block {
+  padding: 120px 0;
+  border-top: 1px solid var(--line);
+  position: relative;
+}
+.sh-block:nth-child(even) {
+  background: linear-gradient(180deg, transparent 0%, rgba(20, 20, 32, 0.4) 50%, transparent 100%);
+}
+
+.sh-inner {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+  display: grid;
+  grid-template-columns: 5fr 6fr;
+  gap: 80px;
+  align-items: center;
+}
+@media (max-width: 1000px) {
+  .sh-inner { grid-template-columns: 1fr; gap: 48px; }
+}
+
+.sh-block.reversed .sh-inner {
+  grid-template-columns: 6fr 5fr;
+}
+@media (max-width: 1000px) {
+  .sh-block.reversed .sh-inner { grid-template-columns: 1fr; }
+}
+
+.sh-left { position: relative; }
+
+.sh-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 14px;
+  background: var(--graphite);
+  border: 1px solid var(--line-bright);
+  border-radius: 999px;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-weight: 600;
+  margin-bottom: 24px;
+}
+.sh-tag-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+}
+
+.sh-title {
+  font-family: var(--serif);
+  font-size: clamp(32px, 4.5vw, 56px);
+  font-weight: 300;
+  line-height: 0.98;
+  letter-spacing: -0.022em;
+  font-variation-settings: "SOFT" 60, "opsz" 144;
+  margin-bottom: 20px;
+}
+.sh-title em {
+  font-style: italic;
+  font-variation-settings: "SOFT" 120, "opsz" 144;
+}
+
+.sh-subtitle {
+  font-family: var(--serif);
+  font-size: 17px;
+  line-height: 1.55;
+  font-weight: 300;
+  color: rgba(245, 242, 235, 0.72);
+  font-variation-settings: "SOFT" 40, "opsz" 20;
+  margin-bottom: 32px;
+  max-width: 540px;
+}
+
+.sh-kpi-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  padding: 24px 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 32px;
+}
+@media (max-width: 500px) { .sh-kpi-row { grid-template-columns: 1fr 1fr; } }
+
+.sh-kpi-val {
+  font-family: var(--serif);
+  font-size: 28px;
+  font-weight: 400;
+  font-style: italic;
+  line-height: 1;
+  margin-bottom: 6px;
+  font-variation-settings: "SOFT" 80, "opsz" 144;
+}
+.sh-kpi-lbl {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  color: var(--mist);
+  text-transform: uppercase;
+  line-height: 1.4;
+}
+
+.sh-benefits {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.sh-benefit {
+  display: flex;
+  gap: 14px;
+  padding: 16px 0;
+  align-items: flex-start;
+  border-bottom: 1px solid var(--line-soft);
+}
+.sh-benefit:last-child { border-bottom: none; }
+
+.sh-benefit-icon {
+  width: 36px; height: 36px;
+  border-radius: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.sh-benefit-icon svg { width: 16px; height: 16px; }
+
+.sh-benefit-body {
+  flex: 1;
+}
+.sh-benefit-title {
+  font-family: var(--serif);
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.3;
+  font-variation-settings: "SOFT" 50, "opsz" 14;
+  margin-bottom: 4px;
+}
+.sh-benefit-desc {
+  font-size: 13px;
+  color: rgba(245, 242, 235, 0.62);
+  line-height: 1.55;
+}
+
+/* Visualization card on right side */
+.sh-viz {
+  position: relative;
+  padding: 32px;
+  background: linear-gradient(135deg, var(--onyx) 0%, var(--graphite) 100%);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  min-height: 480px;
+  overflow: hidden;
+}
+
+.sh-viz::before {
+  content: '';
+  position: absolute;
+  top: -50%; right: -20%;
+  width: 60%; height: 120%;
+  border-radius: 50%;
+  filter: blur(80px);
+  pointer-events: none;
+}
+
+.sh-viz-owner::before { background: rgba(212, 166, 90, 0.15); }
+.sh-viz-manager::before { background: rgba(107, 138, 255, 0.12); }
+.sh-viz-staff::before { background: rgba(74, 222, 155, 0.12); }
+.sh-viz-diner::before { background: rgba(0, 229, 212, 0.12); }
+.sh-viz-affiliate::before { background: rgba(255, 107, 138, 0.12); }
+.sh-viz-franchisee::before { background: rgba(212, 166, 90, 0.12); }
+.sh-viz-supplier::before { background: rgba(255, 181, 71, 0.12); }
+.sh-viz-investor::before { background: rgba(139, 92, 246, 0.14); }
+
+.sh-viz-inner {
+  position: relative;
+  z-index: 2;
+}
+
+/* Dashboard mini preview */
+.mini-dashboard {
+  border-radius: 12px;
+  background: var(--obsidian);
+  border: 1px solid var(--line-bright);
+  overflow: hidden;
+}
+.mini-dash-top {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--graphite);
+}
+.mini-dash-dots {
+  display: flex;
+  gap: 6px;
+}
+.mini-dash-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--smoke);
+}
+.mini-dash-title {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  color: var(--mist);
+  text-transform: uppercase;
+}
+
+.mini-dash-body {
+  padding: 18px;
+}
+
+.mini-kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.mini-kpi-card {
+  padding: 12px;
+  background: var(--onyx);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+.mini-kpi-card-label {
+  font-family: var(--mono);
+  font-size: 8px;
+  letter-spacing: 0.18em;
+  color: var(--mist);
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.mini-kpi-card-val {
+  font-family: var(--serif);
+  font-size: 22px;
+  font-weight: 500;
+  font-style: italic;
+  color: var(--gold-bright);
+  line-height: 1;
+  font-variation-settings: "SOFT" 80, "opsz" 24;
+}
+.mini-kpi-card-val.token { color: var(--token-bright); }
+.mini-kpi-card-val.success { color: var(--success); }
+
+.mini-chart {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  height: 80px;
+  margin-bottom: 12px;
+}
+
+.mini-bar {
+  flex: 1;
+  background: linear-gradient(180deg, var(--gold) 0%, var(--gold-dim) 100%);
+  border-radius: 2px 2px 0 0;
+  min-height: 10%;
+}
+.mini-bar.token { background: linear-gradient(180deg, var(--token) 0%, rgba(0, 229, 212, 0.3) 100%); }
+
+.mini-chart-labels {
+  display: flex;
+  justify-content: space-around;
+  font-family: var(--mono);
+  font-size: 8px;
+  color: var(--mist);
+  letter-spacing: 0.05em;
+}
+
+/* Phone mockup mini for diner */
+.mini-phone {
+  width: 220px;
+  height: 440px;
+  margin: 0 auto;
+  background: #1a1a1a;
+  border-radius: 32px;
+  padding: 10px;
+  box-shadow:
+    0 0 0 1.5px #2a2a2a,
+    inset 0 0 0 1px rgba(255,255,255,0.05),
+    0 20px 50px rgba(0,0,0,0.5);
+  position: relative;
+}
+
+.mini-phone-screen {
+  width: 100%;
+  height: 100%;
+  background: var(--obsidian);
+  border-radius: 24px;
+  overflow: hidden;
+  padding: 24px 16px 16px;
+  position: relative;
+}
+
+.mini-phone-notch {
+  position: absolute;
+  top: 6px; left: 50%;
+  transform: translateX(-50%);
+  width: 70px; height: 18px;
+  background: #000;
+  border-radius: 999px;
+  z-index: 2;
+}
+
+.mini-phone-content {
+  padding-top: 14px;
+}
+
+.mini-phone-greeting {
+  font-family: var(--mono);
+  font-size: 8px;
+  letter-spacing: 0.2em;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 4px;
+  font-weight: 600;
+}
+
+.mini-phone-name {
+  font-family: var(--serif);
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.1;
+  font-variation-settings: "SOFT" 50, "opsz" 20;
+  margin-bottom: 14px;
+}
+.mini-phone-name em { font-style: italic; color: var(--gold-bright); }
+
+.mini-phone-card {
+  padding: 10px 12px;
+  background: var(--graphite);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+.mini-phone-card-label {
+  font-family: var(--mono);
+  font-size: 7px;
+  letter-spacing: 0.15em;
+  color: var(--token);
+  text-transform: uppercase;
+  margin-bottom: 4px;
+  font-weight: 600;
+}
+
+.mini-phone-card-val {
+  font-family: var(--serif);
+  font-size: 20px;
+  font-weight: 500;
+  font-style: italic;
+  color: var(--token-bright);
+  line-height: 1;
+  font-variation-settings: "SOFT" 80, "opsz" 24;
+}
+
+.mini-phone-action-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 6px;
+}
+.mini-phone-action {
+  padding: 10px 8px;
+  background: var(--onyx);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  text-align: center;
+  font-size: 9px;
+  color: rgba(245, 242, 235, 0.7);
+}
+.mini-phone-action-ico {
+  width: 14px; height: 14px;
+  margin: 0 auto 4px;
+  color: var(--gold);
+}
+
+/* Revenue flow diagram (for Owner) */
+.revenue-flow {
+  padding: 24px;
+  background: var(--obsidian);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+}
+
+.revenue-flow-title {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  color: var(--gold);
+  text-transform: uppercase;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.revenue-flow-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px dashed var(--line);
+}
+.revenue-flow-row:last-child { border-bottom: none; }
+
+.revenue-flow-label {
+  flex: 1;
+  font-size: 12px;
+}
+
+.revenue-flow-bar {
+  height: 6px;
+  background: var(--graphite);
+  border-radius: 3px;
+  overflow: hidden;
+  max-width: 160px;
+  flex: 1;
+}
+.revenue-flow-fill {
+  height: 100%;
+  border-radius: 3px;
+  background: var(--gold);
+}
+.revenue-flow-fill.token { background: var(--token); }
+.revenue-flow-fill.rose { background: var(--rose); }
+
+.revenue-flow-val {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 500;
+  color: var(--gold-bright);
+  font-size: 15px;
+  width: 90px;
+  text-align: right;
+  font-variation-settings: "SOFT" 60, "opsz" 14;
+}
+</style>
+
+<!-- ============ VISION SECTION ============ -->
+<section class="vision-section" id="vision">
+  <div class="vision-inner">
+    <div class="eyebrow" style="justify-content: center;">[02] · Tầm nhìn</div>
+
+    <h2 class="vision-philosophy" style="margin-top: 32px;">
+      "Zeni không phải phần mềm.<br>
+      Zeni là <em class="gold">sự phục hưng</em><br>
+      của ngành F&amp;B Việt &mdash; nơi<br>
+      <em class="token">công nghệ gặp thủ công</em>,<br>
+      nơi <em class="rose">data gặp linh hồn</em>."
+    </h2>
+
+    <div class="vision-author">
+      &mdash;&nbsp; <strong>Thiên Mộc Đức</strong>, Founder &amp; Chairman
+    </div>
+
+    <div style="margin-top: 40px; padding: 20px; background: rgba(212, 166, 90, 0.04); border: 1px dashed rgba(212, 166, 90, 0.2); border-radius: 10px; max-width: 680px; margin-left: auto; margin-right: auto;">
+      <div style="font-family: var(--mono); font-size: 10px; letter-spacing: 0.2em; color: var(--gold); text-transform: uppercase; font-weight: 600; margin-bottom: 10px;">◊ Triết lý nền</div>
+      <div style="font-family: var(--serif); font-size: 17px; font-weight: 400; line-height: 1.55; font-variation-settings: 'SOFT' 50, 'opsz' 20; color: rgba(245, 242, 235, 0.82);">
+        Zeni = <strong style="font-style: italic; color: var(--gold-bright);">phục hưng sự sống toàn diện</strong>: body (nhà hàng khỏe) &middot; mind (data thông minh) &middot; spirit (cộng đồng nuôi dưỡng nhau).
+      </div>
+    </div>
+
+    <div class="vision-etym">
+      <div class="vision-etym-item">
+        <div class="vision-etym-char">禪</div>
+        <div class="vision-etym-hanyu">Zen · Thiền</div>
+        <div class="vision-etym-meaning">Tĩnh tại trong vận động</div>
+        <div class="vision-etym-desc">Nhà hàng vận hành như thiền viện: đông khách nhưng không loạn, bận rộn nhưng không hối hả. AI lo nền, người tập trung vào vị và cảm xúc.</div>
+      </div>
+      <div class="vision-etym-item">
+        <div class="vision-etym-char">己</div>
+        <div class="vision-etym-hanyu">Self · Bản thể</div>
+        <div class="vision-etym-meaning">Mỗi vai trò một bản ngã</div>
+        <div class="vision-etym-desc">Chủ nhà hàng, manager, staff, thực khách — mỗi người có giao diện riêng, quyền riêng, giá trị riêng. Không áp một format lên mọi người.</div>
+      </div>
+      <div class="vision-etym-item">
+        <div class="vision-etym-char">德</div>
+        <div class="vision-etym-hanyu">Virtue · Đức</div>
+        <div class="vision-etym-meaning">Giữ gìn, không khai thác</div>
+        <div class="vision-etym-desc">Holdings = holding virtue, not assets. Zeni không bán data khách, không lock-in nhà hàng, không exploit KOC. Giá trị từ việc làm tốt hơn.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SOLUTION OVERVIEW ============ -->
+<section class="solution-section" id="solution">
+  <div class="container">
+    <div class="section-head center">
+      <div class="eyebrow" style="justify-content: center;">[03] · Giải pháp</div>
+      <h2 class="section-title">
+        Một hệ điều hành.<br>
+        <em>Hai trải nghiệm</em>. Tám vai trò.
+      </h2>
+      <p class="section-lede">
+        Một nền tảng duy nhất, nhưng trình diễn khác nhau với mỗi vai trò. Chủ nhà hàng thấy dashboard quản trị đầy đủ. Thực khách thấy app loyalty xuyên 50+ nhà hàng. Staff thấy công cụ phục vụ bàn. Đều từ cùng một core.
+      </p>
+    </div>
+
+    <div class="solution-dual">
+      <!-- B2B side -->
+      <div class="sol-side">
+        <div class="sol-side-label">B2B · Cho nhà hàng</div>
+        <h3 class="sol-side-title">
+          Dashboard<br>
+          <em>vận hành bằng AI</em>
+        </h3>
+        <p class="sol-side-desc">
+          15 module tích hợp, 6 AI agent làm việc 24/7. Chủ nhà hàng không cần team 15 người, không cần 14 phần mềm riêng lẻ. Một giao diện nhìn thấy toàn cảnh.
+        </p>
+
+        <div class="sol-side-features">
+          <div class="sol-feat">
+            <div class="sol-feat-num">M-01</div>
+            <div class="sol-feat-body">
+              <div class="sol-feat-title">CRM Khách hàng 360°</div>
+              <div class="sol-feat-desc">Mọi khách có hồ sơ, mọi hồ sơ có lịch sử, mọi lịch sử sinh insight.</div>
+            </div>
+          </div>
+          <div class="sol-feat">
+            <div class="sol-feat-num">M-05</div>
+            <div class="sol-feat-body">
+              <div class="sol-feat-title">6 AI Agent · Swarm</div>
+              <div class="sol-feat-desc">Thủy concierge, Hải content, Phong marketing, Lâm inventory, Minh intelligence, Ngọc loyalty.</div>
+            </div>
+          </div>
+          <div class="sol-feat">
+            <div class="sol-feat-num">M-11</div>
+            <div class="sol-feat-body">
+              <div class="sol-feat-title">Inventory AI forecast</div>
+              <div class="sol-feat-desc">Dự đoán order 7 ngày · multi-supplier bidding · giảm waste từ 22% xuống 9%.</div>
+            </div>
+          </div>
+          <div class="sol-feat">
+            <div class="sol-feat-num">M-15</div>
+            <div class="sol-feat-body">
+              <div class="sol-feat-title">Franchise Engine</div>
+              <div class="sol-feat-desc">Số hóa playbook · location scoring · remote audit qua AI vision camera.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- B2C side -->
+      <div class="sol-side right">
+        <div class="sol-side-label">B2C · Cho thực khách</div>
+        <h3 class="sol-side-title">
+          App loyalty<br>
+          <em>xuyên 50+ nhà hàng</em>
+        </h3>
+        <p class="sol-side-desc">
+          Thực khách không cần 50 thẻ VIP khác nhau. Một ứng dụng tích $ZENI, một tier Captain Club, một bộ sưu tập badge, xuyên mọi nhà hàng trong ecosystem.
+        </p>
+
+        <div class="sol-side-features">
+          <div class="sol-feat">
+            <div class="sol-feat-num">C-01</div>
+            <div class="sol-feat-body">
+              <div class="sol-feat-title">Discover ecosystem</div>
+              <div class="sol-feat-desc">50+ nhà hàng trong tay · đề xuất theo sở thích · đặt bàn 1-tap.</div>
+            </div>
+          </div>
+          <div class="sol-feat">
+            <div class="sol-feat-num">C-02</div>
+            <div class="sol-feat-body">
+              <div class="sol-feat-title">Captain Club 3 tier</div>
+              <div class="sol-feat-desc">Thủy Thủ → Hoa Tiêu → Thuyền Trưởng · xuyên mọi brand trong ecosystem.</div>
+            </div>
+          </div>
+          <div class="sol-feat">
+            <div class="sol-feat-num">C-03</div>
+            <div class="sol-feat-body">
+              <div class="sol-feat-title">$ZENI Wallet cá nhân</div>
+              <div class="sol-feat-desc">Tích điểm xuyên nhà hàng · swap VNĐ · tặng bạn · pay platform.</div>
+            </div>
+          </div>
+          <div class="sol-feat">
+            <div class="sol-feat-num">C-04</div>
+            <div class="sol-feat-body">
+              <div class="sol-feat-title">Gamification: Quest · Badge · Streak</div>
+              <div class="sol-feat-desc">Quest hàng ngày · 12+ badges collectible · streak bonus · squad missions.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ STAKEHOLDERS INTRO ============ -->
+<section class="stakeholders-section" id="stakeholders">
+  <div class="container">
+    <div class="section-head center">
+      <div class="eyebrow" style="justify-content: center;">[04] · Vai trò</div>
+      <h2 class="section-title">
+        Tám vai trò.<br>
+        <em>Một hệ sinh thái</em> cộng sinh.
+      </h2>
+      <p class="section-lede">
+        Nhà hàng không tồn tại một mình. Thực khách, manager, staff, KOC, supplier, franchisee, investor — mỗi mắt xích có pain riêng và được Zeni phục vụ khác nhau. Khi tất cả cùng có lợi, ecosystem tự lớn.
+      </p>
+    </div>
+  </div>
+
+  <!-- Stakeholder navigation -->
+  <div class="stakeholder-nav">
+    <a href="#sh-owner" class="sh-nav-item">
+      <div class="sh-nav-num">[01]</div>
+      <div class="sh-nav-name">Chủ nhà hàng</div>
+      <div class="sh-nav-pain">Đốt tiền vì không thấy</div>
+    </a>
+    <a href="#sh-manager" class="sh-nav-item">
+      <div class="sh-nav-num">[02]</div>
+      <div class="sh-nav-name">Manager</div>
+      <div class="sh-nav-pain">Làm việc của 3 người</div>
+    </a>
+    <a href="#sh-staff" class="sh-nav-item">
+      <div class="sh-nav-num">[03]</div>
+      <div class="sh-nav-name">Staff / Server</div>
+      <div class="sh-nav-pain">Nhớ không nổi, training lại</div>
+    </a>
+    <a href="#sh-diner" class="sh-nav-item">
+      <div class="sh-nav-num">[04]</div>
+      <div class="sh-nav-name">Thực khách</div>
+      <div class="sh-nav-pain">50 thẻ VIP, nhớ 0</div>
+    </a>
+    <a href="#sh-affiliate" class="sh-nav-item">
+      <div class="sh-nav-num">[05]</div>
+      <div class="sh-nav-name">KOC / Affiliate</div>
+      <div class="sh-nav-pain">Content không tracking</div>
+    </a>
+    <a href="#sh-franchisee" class="sh-nav-item">
+      <div class="sh-nav-num">[06]</div>
+      <div class="sh-nav-name">Franchisee</div>
+      <div class="sh-nav-pain">Playbook không có</div>
+    </a>
+    <a href="#sh-supplier" class="sh-nav-item">
+      <div class="sh-nav-num">[07]</div>
+      <div class="sh-nav-name">Nhà cung cấp</div>
+      <div class="sh-nav-pain">Báo giá thủ công, chậm</div>
+    </a>
+    <a href="#sh-investor" class="sh-nav-item">
+      <div class="sh-nav-num">[08]</div>
+      <div class="sh-nav-name">Investor</div>
+      <div class="sh-nav-pain">Due diligence 6 tháng</div>
+    </a>
+  </div>
+
+  <!-- Stakeholder 1: OWNER -->
+  <div class="sh-block" id="sh-owner">
+    <div class="sh-inner">
+      <div class="sh-left">
+        <div class="sh-tag">
+          <span class="sh-tag-dot" style="background: var(--gold);"></span>
+          Vai trò 01 · Chủ nhà hàng
+        </div>
+        <h3 class="sh-title">
+          Biến founder<br>
+          thành <em style="color: var(--gold-bright);">CEO của chuỗi</em>.
+        </h3>
+        <p class="sh-subtitle">
+          Trước Zeni: chủ nhà hàng là điểm nghẽn mọi thứ. Sau Zeni: 6 AI agent chạy operations, chủ chỉ duyệt quyết định quan trọng. Số hóa toàn bộ know-how, sẵn sàng mở 10 chi nhánh — hoặc M&amp;A, hoặc IPO.
+        </p>
+
+        <div class="sh-kpi-row">
+          <div>
+            <div class="sh-kpi-val" style="color: var(--success);">+42%</div>
+            <div class="sh-kpi-lbl">Revenue<br>6 tháng</div>
+          </div>
+          <div>
+            <div class="sh-kpi-val" style="color: var(--success);">-35%</div>
+            <div class="sh-kpi-lbl">Cost<br>vận hành</div>
+          </div>
+          <div>
+            <div class="sh-kpi-val" style="color: var(--gold-bright);">48M</div>
+            <div class="sh-kpi-lbl">LTV Captain<br>3 năm</div>
+          </div>
+        </div>
+
+        <div class="sh-benefits">
+          <div class="sh-benefit">
+            <div class="sh-benefit-icon" style="background: var(--gold-soft); color: var(--gold);">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="10" height="9" rx="2"/><path d="M8 1 L8 4"/><circle cx="6" cy="8" r="0.5" fill="currentColor"/><circle cx="10" cy="8" r="0.5" fill="currentColor"/></svg>
+            </div>
+            <div class="sh-benefit-body">
+              <div class="sh-benefit-title">6 AI agent thay 15 người team</div>
+              <div class="sh-benefit-desc">Thủy (concierge) · Hải (content) · Phong (marketing) · Lâm (inventory) · Minh (analytics) · Ngọc (loyalty). Tất cả 24/7, không nghỉ phép, không tăng lương.</div>
+            </div>
+          </div>
+          <div class="sh-benefit">
+            <div class="sh-benefit-icon" style="background: var(--gold-soft); color: var(--gold);">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 2 L2 14 L14 14"/><path d="M5 11 L5 8 M8 11 L8 5 M11 11 L11 7"/></svg>
+            </div>
+            <div class="sh-benefit-body">
+              <div class="sh-benefit-title">P&amp;L realtime, không đợi kế toán</div>
+              <div class="sh-benefit-desc">Mỗi ngày biết margin từng món, từng cơ sở, từng agent. Cash flow forecast 30/60/90 ngày. Data room sẵn sàng cho IPO/M&amp;A bất kỳ lúc nào.</div>
+            </div>
+          </div>
+          <div class="sh-benefit">
+            <div class="sh-benefit-icon" style="background: var(--gold-soft); color: var(--gold);">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 1 L8 15 M1 8 L15 8"/><circle cx="8" cy="8" r="5"/></svg>
+            </div>
+            <div class="sh-benefit-body">
+              <div class="sh-benefit-title">Số hóa know-how của founder</div>
+              <div class="sh-benefit-desc">SOP bằng video · recipe bằng AI · voice của chef lưu thành training module. Khi mở chi nhánh, quality không drop.</div>
+            </div>
+          </div>
+          <div class="sh-benefit">
+            <div class="sh-benefit-icon" style="background: var(--gold-soft); color: var(--gold);">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 2 L14 5 L14 11 L8 14 L2 11 L2 5 Z"/></svg>
+            </div>
+            <div class="sh-benefit-body">
+              <div class="sh-benefit-title">Trả phí platform bằng $ZENI · tiết kiệm 20%</div>
+              <div class="sh-benefit-desc">Thay vì VNĐ, thanh toán phí bằng token → discount 20%. Stake $ZENI để share doanh thu platform. Biến chi phí thành tài sản.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sh-viz sh-viz-owner">
+        <div class="sh-viz-inner">
+          <div class="mini-dashboard">
+            <div class="mini-dash-top">
+              <div class="mini-dash-dots">
+                <div class="mini-dash-dot"></div>
+                <div class="mini-dash-dot"></div>
+                <div class="mini-dash-dot"></div>
+              </div>
+              <div class="mini-dash-title">Chinh Thủy HN · Owner</div>
+            </div>
+            <div class="mini-dash-body">
+              <div class="mini-kpi-grid">
+                <div class="mini-kpi-card">
+                  <div class="mini-kpi-card-label">Revenue 7d</div>
+                  <div class="mini-kpi-card-val">487M</div>
+                </div>
+                <div class="mini-kpi-card">
+                  <div class="mini-kpi-card-label">Retention 60d</div>
+                  <div class="mini-kpi-card-val success">34%</div>
+                </div>
+                <div class="mini-kpi-card">
+                  <div class="mini-kpi-card-label">AOV / bàn</div>
+                  <div class="mini-kpi-card-val">2.1M</div>
+                </div>
+                <div class="mini-kpi-card">
+                  <div class="mini-kpi-card-label">$ZENI stake</div>
+                  <div class="mini-kpi-card-val token">20k</div>
+                </div>
+              </div>
+
+              <div class="mini-chart">
+                <div class="mini-bar" style="height: 45%;"></div>
+                <div class="mini-bar" style="height: 58%;"></div>
+                <div class="mini-bar" style="height: 38%;"></div>
+                <div class="mini-bar" style="height: 62%;"></div>
+                <div class="mini-bar" style="height: 78%;"></div>
+                <div class="mini-bar" style="height: 92%;"></div>
+                <div class="mini-bar" style="height: 40%;"></div>
+              </div>
+              <div class="mini-chart-labels">
+                <span>T2</span><span>T3</span><span>T4</span><span>T5</span><span>T6</span><span>T7</span><span>CN</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="revenue-flow" style="margin-top: 20px;">
+            <div class="revenue-flow-title">Doanh thu theo nguồn</div>
+            <div class="revenue-flow-row">
+              <span class="revenue-flow-label">Walk-in / Organic</span>
+              <div class="revenue-flow-bar"><div class="revenue-flow-fill" style="width: 45%;"></div></div>
+              <span class="revenue-flow-val">218M</span>
+            </div>
+            <div class="revenue-flow-row">
+              <span class="revenue-flow-label">B2B Corporate</span>
+              <div class="revenue-flow-bar"><div class="revenue-flow-fill" style="width: 30%;"></div></div>
+              <span class="revenue-flow-val">145M</span>
+            </div>
+            <div class="revenue-flow-row">
+              <span class="revenue-flow-label">Via campaigns</span>
+              <div class="revenue-flow-bar"><div class="revenue-flow-fill rose" style="width: 25%;"></div></div>
+              <span class="revenue-flow-val">124M</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STAKEHOLDER 2: MANAGER -->
+  <div class="sh-block reversed" id="sh-manager">
+    <div class="sh-inner">
+      <div class="sh-viz sh-viz-manager">
+        <div class="sh-viz-inner">
+          <div style="font-family: var(--mono); font-size: 10px; letter-spacing: 0.2em; color: var(--indigo); text-transform: uppercase; font-weight: 600; margin-bottom: 16px;">Manager daily briefing</div>
+
+          <div style="display: flex; flex-direction: column; gap: 10px;">
+            <div style="padding: 14px; background: var(--obsidian); border: 1px solid var(--line); border-left: 2px solid var(--indigo); border-radius: 8px;">
+              <div style="font-family: var(--mono); font-size: 9px; color: var(--indigo); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 6px;">Shift hôm nay</div>
+              <div style="font-family: var(--serif); font-size: 17px; font-weight: 500;">28 staff · 0 vắng</div>
+              <div style="font-size: 11px; color: var(--mist); margin-top: 4px;">2 người ốm đã tự đổi ca · không cần approve</div>
+            </div>
+            <div style="padding: 14px; background: var(--obsidian); border: 1px solid var(--line); border-left: 2px solid var(--gold); border-radius: 8px;">
+              <div style="font-family: var(--mono); font-size: 9px; color: var(--gold); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 6px;">VIP tối nay</div>
+              <div style="font-family: var(--serif); font-size: 17px; font-weight: 500;">12 khách VIP</div>
+              <div style="font-size: 11px; color: var(--mist); margin-top: 4px;">5 Captain · 7 Helmsman · 1 kỷ niệm đặc biệt</div>
+            </div>
+            <div style="padding: 14px; background: var(--obsidian); border: 1px solid var(--line); border-left: 2px solid var(--warn); border-radius: 8px;">
+              <div style="font-family: var(--mono); font-size: 9px; color: var(--warn); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 6px;">Cảnh báo từ Lâm</div>
+              <div style="font-family: var(--serif); font-size: 15px; font-weight: 500;">Cua hoàng đế size L · còn 3 con · hết hạn hôm nay</div>
+              <div style="font-size: 11px; color: var(--mist); margin-top: 4px;">Đề xuất: giảm 20% từ 18:00 · đẩy set đôi</div>
+            </div>
+            <div style="padding: 14px; background: var(--obsidian); border: 1px solid var(--line); border-left: 2px solid var(--success); border-radius: 8px;">
+              <div style="font-family: var(--mono); font-size: 9px; color: var(--success); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 6px;">Review hôm qua</div>
+              <div style="font-family: var(--serif); font-size: 17px; font-weight: 500;">4.8 ★ · 24 review</div>
+              <div style="font-size: 11px; color: var(--mist); margin-top: 4px;">18 · 5★ &middot; 5 · 4★ &middot; 1 · 3★ (đã phản hồi)</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sh-left">
+        <div class="sh-tag">
+          <span class="sh-tag-dot" style="background: var(--indigo);"></span>
+          Vai trò 02 · Manager
+        </div>
+        <h3 class="sh-title">
+          Thôi "phòng cháy<br>
+          chữa cháy" &mdash;<br>
+          bắt đầu <em style="color: #A3B5FF;">điều phối</em>.
+        </h3>
+        <p class="sh-subtitle">
+          Manager không phải người chạy từ bàn này sang bàn kia nữa. AI đã handle 80% vấn đề routine. Manager dành 100% thời gian cho VIP experience, staff coaching, và strategic calls.
+        </p>
+
+        <div class="sh-kpi-row">
+          <div>
+            <div class="sh-kpi-val" style="color: #A3B5FF;">80%</div>
+            <div class="sh-kpi-lbl">Routine tasks<br>auto-handled</div>
+          </div>
+          <div>
+            <div class="sh-kpi-val" style="color: var(--success);">-60%</div>
+            <div class="sh-kpi-lbl">Escalation<br>tới Owner</div>
+          </div>
+          <div>
+            <div class="sh-kpi-val" style="color: var(--gold-bright);">3x</div>
+            <div class="sh-kpi-lbl">Thời gian<br>cho VIP</div>
+          </div>
+        </div>
+
+        <div class="sh-benefits">
+          <div class="sh-benefit">
+            <div class="sh-benefit-icon" style="background: rgba(107, 138, 255, 0.1); color: var(--indigo);">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="12" height="10" rx="1"/><path d="M2 6 L14 6"/></svg>
+            </div>
+            <div class="sh-benefit-body">
+              <div class="sh-benefit-title">Daily briefing tự động lúc 9:00</div>
+              <div class="sh-benefit-desc">VIP tối nay · Shift đủ chưa · Cảnh báo inventory · Review hôm qua. Không cần họp sáng nửa tiếng mỗi ngày.</div>
+            </div>
+          </div>
+          <div class="sh-benefit">
+            <div class="sh-benefit-icon" style="background: rgba(107, 138, 255, 0.1); color: var(--indigo);">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="5" cy="5" r="2"/><circle cx="11" cy="5" r="2"/><path d="M2 13 Q 2 9 5 9 Q 8 9 8 13 M8 13 Q 8 9 11 9 Q 14 9 14 13"/></svg>
+            </div>
+            <div class="sh-benefit-body">
+              <div class="sh-benefit-title">Staff self-service, không escalate</div>
+              <div class="sh-benefit-desc">Đổi ca · xin nghỉ · đăng ký OT · payroll check — đều tự service trên mobile app. Manager không trả lời 50 Zalo/ngày.</div>
+            </div>
+          </div>
+          <div class="sh-benefit">
+            <div class="sh-benefit-icon" style="background: rgba(107, 138, 255, 0.1); color: var(--indigo);">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 6 A5 5 0 0 1 13 6 L13 10 L14 12 L2 12 L3 10 Z"/></svg>
+            </div>
+            <div class="sh-benefit-body">
+              <div class="sh-benefit-title">Cảnh báo sớm, không reactive</div>
+              <div class="sh-benefit-desc">AI Lâm phát hiện cua sắp hết hạn trước 6 tiếng. AI Minh phát hiện customer complain pattern. AI Thủy phát hiện no-show có xu hướng.</div>
+            </div>
+          </div>
+          <div class="sh-benefit">
+            <div class="sh-benefit-icon" style="background: rgba(107, 138, 255, 0.1); color: var(--indigo);">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="10" height="8" rx="1"/><path d="M6 4 L6 2 L10 2 L10 4"/></svg>
+            </div>
+            <div class="sh-benefit-body">
+              <div class="sh-benefit-title">Performance scoring công bằng</div>
+              <div class="sh-benefit-desc">Staff được đánh giá qua data thật (tip, review, attendance, training progress) — không phải cảm tính. Top performer được nhận diện, coach được sát sao.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- STAKEHOLDER 3: STAFF -->
+<div class="sh-block" id="sh-staff">
+  <div class="sh-inner">
+    <div class="sh-left">
+      <div class="sh-tag">
+        <span class="sh-tag-dot" style="background: var(--emerald);"></span>
+        Vai trò 03 · Staff / Server
+      </div>
+      <h3 class="sh-title">
+        Không phải<br>
+        "người phục vụ" &mdash;<br>
+        là <em style="color: var(--emerald);">người kể chuyện</em>.
+      </h3>
+      <p class="sh-subtitle">
+        AI lo việc nhớ tên khách, nhớ món, nhớ dị ứng. Server trở thành người kể câu chuyện về món ăn, chăm sóc cảm xúc khách — việc mà máy không bao giờ làm được. Tip tăng, công việc ý nghĩa hơn.
+      </p>
+
+      <div class="sh-kpi-row">
+        <div>
+          <div class="sh-kpi-val" style="color: var(--emerald);">+28%</div>
+          <div class="sh-kpi-lbl">Tip<br>trung bình</div>
+        </div>
+        <div>
+          <div class="sh-kpi-val" style="color: var(--success);">72h</div>
+          <div class="sh-kpi-lbl">Onboarding<br>vs 4 tuần</div>
+        </div>
+        <div>
+          <div class="sh-kpi-val" style="color: var(--gold-bright);">4.9 ★</div>
+          <div class="sh-kpi-lbl">Avg perf<br>rating</div>
+        </div>
+      </div>
+
+      <div class="sh-benefits">
+        <div class="sh-benefit">
+          <div class="sh-benefit-icon" style="background: rgba(74, 222, 155, 0.1); color: var(--emerald);">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="2" width="10" height="12" rx="1"/><path d="M3 6 L13 6"/></svg>
+          </div>
+          <div class="sh-benefit-body">
+            <div class="sh-benefit-title">Mobile app trên tay · Scan QR bàn</div>
+            <div class="sh-benefit-desc">Đi đến bàn, scan QR, thấy ngay: khách là ai, tier gì, lần thứ mấy đến, dị ứng gì, món ưa thích. Không phải hỏi, không phải nhớ.</div>
+          </div>
+        </div>
+        <div class="sh-benefit">
+          <div class="sh-benefit-icon" style="background: rgba(74, 222, 155, 0.1); color: var(--emerald);">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 13 L6 7 L9 10 L13 3"/><circle cx="13" cy="3" r="1.5"/></svg>
+          </div>
+          <div class="sh-benefit-body">
+            <div class="sh-benefit-title">AI Teacher onboard 72 giờ</div>
+            <div class="sh-benefit-desc">Nhân viên mới học qua Zalo bot. Video + quiz + practical test. Top performer dạy AI, AI dạy tân binh. Không mất 4 tuần training manual.</div>
+          </div>
+        </div>
+        <div class="sh-benefit">
+          <div class="sh-benefit-icon" style="background: rgba(74, 222, 155, 0.1); color: var(--emerald);">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 2 L14 5 L14 11 L8 14 L2 11 L2 5 Z"/></svg>
+          </div>
+          <div class="sh-benefit-body">
+            <div class="sh-benefit-title">Tip bằng $ZENI từ khách VIP</div>
+            <div class="sh-benefit-desc">Captain/Helmsman tip trực tiếp vào $ZENI wallet của server. Minh bạch, tức thời, không bị quản lý giữ. Server quy đổi VNĐ hoặc tiêu trong ecosystem.</div>
+          </div>
+        </div>
+        <div class="sh-benefit">
+          <div class="sh-benefit-icon" style="background: rgba(74, 222, 155, 0.1); color: var(--emerald);">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="5" r="3"/><path d="M2 14 Q 2 10 8 10 Q 14 10 14 14"/></svg>
+          </div>
+          <div class="sh-benefit-body">
+            <div class="sh-benefit-title">Career path rõ ràng · xuyên chuỗi</div>
+            <div class="sh-benefit-desc">Performance score theo cá nhân, không theo chi nhánh. Top server ở Chinh Thủy có thể apply lên manager ở Sen Garden. Ecosystem-level career progression.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sh-viz sh-viz-staff">
+      <div class="sh-viz-inner">
+        <div style="font-family: var(--mono); font-size: 10px; letter-spacing: 0.2em; color: var(--emerald); text-transform: uppercase; font-weight: 600; margin-bottom: 16px;">Server mobile · Bàn 08</div>
+
+        <div class="mini-phone" style="max-width: 260px; height: 460px;">
+          <div class="mini-phone-notch"></div>
+          <div class="mini-phone-screen">
+            <div class="mini-phone-content">
+              <div class="mini-phone-greeting">Bàn 08 · 19:30</div>
+              <div class="mini-phone-name">Nguyễn <em>Ngọc Linh</em></div>
+
+              <div style="padding: 10px 12px; background: var(--gold-soft); border: 1px solid rgba(212, 166, 90, 0.25); border-radius: 8px; margin-bottom: 10px;">
+                <div style="font-family: var(--mono); font-size: 7px; letter-spacing: 0.15em; color: var(--gold); text-transform: uppercase; font-weight: 600; margin-bottom: 4px;">★ Captain · Lần 12</div>
+                <div style="font-size: 11px; color: var(--cream); line-height: 1.45;">Kỷ niệm 5 năm với chồng. Đã chuẩn bị rượu vang tặng.</div>
+              </div>
+
+              <div style="padding: 8px 10px; background: rgba(255, 107, 94, 0.08); border: 1px solid rgba(255, 107, 94, 0.2); border-radius: 6px; margin-bottom: 10px; font-size: 10px; color: #FF9A90; line-height: 1.4;">
+                <strong style="color: var(--danger);">Dị ứng:</strong> Tôm hùm<br>
+                Đã note cho bếp
+              </div>
+
+              <div style="padding: 10px 12px; background: var(--graphite); border-radius: 8px; margin-bottom: 10px;">
+                <div style="font-family: var(--mono); font-size: 7px; color: var(--mist); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 4px;">Order gợi ý</div>
+                <div style="font-size: 11px; color: var(--cream); line-height: 1.45;">Set Biển Đông · không cay · thêm cá hồi sashimi (từng order 3 lần)</div>
+              </div>
+
+              <div style="padding: 10px 12px; background: rgba(0, 229, 212, 0.06); border: 1px solid rgba(0, 229, 212, 0.2); border-radius: 8px; margin-bottom: 12px;">
+                <div style="font-family: var(--mono); font-size: 7px; color: var(--token); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 4px; font-weight: 600;">Tip em đã nhận hôm nay</div>
+                <div style="font-family: var(--serif); font-size: 18px; font-style: italic; color: var(--token-bright); font-weight: 500;">+820K <span style="font-size: 12px; color: var(--mist);">&middot; 42 ZENI</span></div>
+              </div>
+
+              <div class="mini-phone-action-grid">
+                <div class="mini-phone-action">Order</div>
+                <div class="mini-phone-action">Chef</div>
+                <div class="mini-phone-action">Pay</div>
+                <div class="mini-phone-action">Help</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- STAKEHOLDER 4: DINER -->
+<div class="sh-block reversed" id="sh-diner">
+  <div class="sh-inner">
+    <div class="sh-viz sh-viz-diner">
+      <div class="sh-viz-inner">
+        <div style="font-family: var(--mono); font-size: 10px; letter-spacing: 0.2em; color: var(--token); text-transform: uppercase; font-weight: 600; margin-bottom: 16px;">Diner app · Hoa Tiêu</div>
+
+        <div class="mini-phone" style="max-width: 260px; height: 480px;">
+          <div class="mini-phone-notch"></div>
+          <div class="mini-phone-screen">
+            <div class="mini-phone-content">
+              <div class="mini-phone-greeting">Chào buổi tối</div>
+              <div class="mini-phone-name">Anh <em>Ngọc Linh</em></div>
+
+              <div class="mini-phone-card">
+                <div class="mini-phone-card-label">Số dư $ZENI</div>
+                <div class="mini-phone-card-val">2.847</div>
+                <div style="font-family: var(--mono); font-size: 8px; color: var(--mist); margin-top: 3px;">≈ 7.5M VNĐ · 50+ nhà hàng</div>
+              </div>
+
+              <div style="padding: 10px 12px; background: linear-gradient(135deg, rgba(255, 107, 94, 0.1) 0%, rgba(255, 181, 71, 0.08) 100%); border: 1px solid rgba(255, 107, 94, 0.25); border-radius: 8px; margin-bottom: 10px; display: flex; align-items: center; gap: 10px;">
+                <div style="width: 28px; height: 28px; background: radial-gradient(circle at 50% 60%, #FFB547 0%, #FF6B5E 80%); border-radius: 50%; flex-shrink: 0;"></div>
+                <div style="flex: 1;">
+                  <div style="font-family: var(--serif); font-size: 14px; font-style: italic; color: #FF9A90; font-weight: 500;">12 ngày</div>
+                  <div style="font-family: var(--mono); font-size: 8px; color: var(--mist); letter-spacing: 0.1em;">STREAK · kỷ lục 28</div>
+                </div>
+                <div style="font-family: var(--mono); font-size: 9px; color: var(--gold-bright); font-weight: 600; letter-spacing: 0.1em;">+5 $ZENI</div>
+              </div>
+
+              <div style="padding: 8px 10px; background: var(--graphite); border-radius: 8px; margin-bottom: 10px;">
+                <div style="font-family: var(--mono); font-size: 7px; letter-spacing: 0.15em; color: var(--gold); text-transform: uppercase; font-weight: 600; margin-bottom: 3px;">Quest hôm nay</div>
+                <div style="font-size: 11px; color: var(--cream); line-height: 1.4; margin-bottom: 6px;">Thử 1 nhà hàng mới trong tháng</div>
+                <div style="height: 4px; background: var(--smoke); border-radius: 2px; overflow: hidden;">
+                  <div style="width: 60%; height: 100%; background: var(--gold);"></div>
+                </div>
+                <div style="font-family: var(--mono); font-size: 7px; color: var(--mist); margin-top: 4px; letter-spacing: 0.1em;">3/5 · +50 XP · +20 ZENI</div>
+              </div>
+
+              <div class="mini-phone-action-grid">
+                <div class="mini-phone-action">Đặt bàn</div>
+                <div class="mini-phone-action">Ví ZENI</div>
+                <div class="mini-phone-action">Tier</div>
+                <div class="mini-phone-action">Mời bạn</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sh-left">
+      <div class="sh-tag">
+        <span class="sh-tag-dot" style="background: var(--token);"></span>
+        Vai trò 04 · Thực khách
+      </div>
+      <h3 class="sh-title">
+        Không cần nhớ<br>
+        50 thẻ VIP. Chỉ cần<br>
+        <em style="color: var(--token-bright);">một chiếc điện thoại</em>.
+      </h3>
+      <p class="sh-subtitle">
+        Khách hàng VN trung bình có 5-10 thẻ VIP F&amp;B nhưng không nhớ thẻ nào. Zeni gộp tất cả thành một: một tier duy nhất, một ví $ZENI duy nhất, xuyên 50+ nhà hàng trong ecosystem. Một trải nghiệm, đa trải nghiệm.
+      </p>
+
+      <div class="sh-kpi-row">
+        <div>
+          <div class="sh-kpi-val" style="color: var(--token-bright);">+5%</div>
+          <div class="sh-kpi-lbl">$ZENI<br>mỗi bữa</div>
+        </div>
+        <div>
+          <div class="sh-kpi-val" style="color: var(--gold-bright);">50+</div>
+          <div class="sh-kpi-lbl">Nhà hàng<br>xuyên hệ</div>
+        </div>
+        <div>
+          <div class="sh-kpi-val" style="color: var(--success);">4.2M</div>
+          <div class="sh-kpi-lbl">Savings<br>lifetime</div>
+        </div>
+      </div>
+
+      <div class="sh-benefits">
+        <div class="sh-benefit">
+          <div class="sh-benefit-icon" style="background: rgba(0, 229, 212, 0.1); color: var(--token-bright);">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 2 L14 5 L14 11 L8 14 L2 11 L2 5 Z"/></svg>
+          </div>
+          <div class="sh-benefit-body">
+            <div class="sh-benefit-title">$ZENI &mdash; điểm xuyên nhà hàng</div>
+            <div class="sh-benefit-desc">Ăn ở Chinh Thủy hôm nay, tích điểm. Tuần sau đi Đà Nẵng, dùng điểm đó giảm giá ở Ocean Wave. Tuần tới đi Ninh Thuận, dùng tiếp ở Amanoi. Network effect thật.</div>
+          </div>
+        </div>
+        <div class="sh-benefit">
+          <div class="sh-benefit-icon" style="background: rgba(0, 229, 212, 0.1); color: var(--token-bright);">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 12 L3 5 L6 8 L8 3 L10 8 L13 5 L14 12 Z"/></svg>
+          </div>
+          <div class="sh-benefit-body">
+            <div class="sh-benefit-title">Captain Club 3 tier &middot; status thật</div>
+            <div class="sh-benefit-desc">Thủy Thủ → Hoa Tiêu → Thuyền Trưởng. Captain có quyền book bàn VIP, off-menu experience, private chef table, quarterly Captain Summit. Status có giá trị thực.</div>
+          </div>
+        </div>
+        <div class="sh-benefit">
+          <div class="sh-benefit-icon" style="background: rgba(0, 229, 212, 0.1); color: var(--token-bright);">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 1 L10 5 L14 6 L11 9 L12 13 L8 11 L4 13 L5 9 L2 6 L6 5 Z"/></svg>
+          </div>
+          <div class="sh-benefit-body">
+            <div class="sh-benefit-title">Gamification: Quest · Badge · Streak</div>
+            <div class="sh-benefit-desc">Quest hàng ngày &middot; 12+ badges collectible với 4 rarity (Common/Rare/Epic/Legendary) &middot; Streak flame + insurance &middot; Squad quest nhóm bạn.</div>
+          </div>
+        </div>
+        <div class="sh-benefit">
+          <div class="sh-benefit-icon" style="background: rgba(0, 229, 212, 0.1); color: var(--token-bright);">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="4" cy="4" r="2"/><circle cx="12" cy="4" r="2"/><circle cx="4" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><path d="M6 4 L10 4 M4 6 L4 10 M12 6 L12 10 M6 12 L10 12"/></svg>
+          </div>
+          <div class="sh-benefit-body">
+            <div class="sh-benefit-title">Affiliate link riêng &middot; kiếm passive</div>
+            <div class="sh-benefit-desc">Mỗi Captain có link riêng, bạn đặt bàn qua link → commission 5-15%. Payout monthly bằng $ZENI. Ăn mà còn được kiếm.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- STAKEHOLDER 5: AFFILIATE / KOC -->
+<div class="sh-block" id="sh-affiliate">
+  <div class="sh-inner">
+    <div class="sh-left">
+      <div class="sh-tag">
+        <span class="sh-tag-dot" style="background: var(--rose);"></span>
+        Vai trò 05 · KOC / Affiliate
+      </div>
+      <h3 class="sh-title">
+        Content creator<br>
+        xứng đáng hơn<br>
+        <em style="color: var(--rose);">tiền "view ảo"</em>.
+      </h3>
+      <p class="sh-subtitle">
+        KOC VN đang kiếm tiền dựa trên view. Nhưng view không bằng booking, booking mới ra tiền cho nhà hàng. Zeni trả commission theo conversion thật &mdash; KOC giỏi kiếm nhiều hơn, KOC chạy số kém thì không ăn may được.
+      </p>
+
+      <div class="sh-kpi-row">
+        <div>
+          <div class="sh-kpi-val" style="color: var(--rose);">15%</div>
+          <div class="sh-kpi-lbl">Commission<br>max tier</div>
+        </div>
+        <div>
+          <div class="sh-kpi-val" style="color: var(--gold-bright);">28M</div>
+          <div class="sh-kpi-lbl">Commission<br>top KOC/th</div>
+        </div>
+        <div>
+          <div class="sh-kpi-val" style="color: var(--success);">T+0</div>
+          <div class="sh-kpi-lbl">Payout<br>bằng $ZENI</div>
+        </div>
+      </div>
+
+      <div class="sh-benefits">
+        <div class="sh-benefit">
+          <div class="sh-benefit-icon" style="background: rgba(255, 107, 138, 0.1); color: var(--rose);">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="4" cy="4" r="2"/><circle cx="12" cy="4" r="2"/><circle cx="4" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><path d="M6 4 L10 4 M4 6 L4 10 M12 6 L12 10 M6 12 L10 12"/></svg>
+            </div>
+          <div class="sh-benefit-body">
+            <div class="sh-benefit-title">UTM link unique &middot; tracking chính xác</div>
+            <div class="sh-benefit-desc">Mỗi KOC có subdomain riêng zeni.app/k/your-name. Ai click, ai book, ai đến ăn &mdash; tracking attribution đầy đủ. Không mất commission vì tech fail.</div>
+          </div>
+        </div>
+        <div class="sh-benefit">
+          <div class="sh-benefit-icon" style="background: rgba(255, 107, 138, 0.1); color: var(--rose);">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 13 L6 7 L9 10 L13 3"/><circle cx="13" cy="3" r="1.5"/></svg>
+          </div>
+          <div class="sh-benefit-body">
+            <div class="sh-benefit-title">Content kit tự động · brand-safe</div>
+            <div class="sh-benefit-desc">AI Hải generate content template, nhà hàng approve, KOC dùng. Không bị ban vì content thiếu brand guideline. Không phải viết từ đầu.</div>
+          </div>
+        </div>
+        <div class="sh-benefit">
+          <div class="sh-benefit-icon" style="background: rgba(255, 107, 138, 0.1); color: var(--rose);">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="12" height="12" rx="1"/><path d="M5 8 L7 10 L11 6"/></svg>
+          </div>
+          <div class="sh-benefit-body">
+            <div class="sh-benefit-title">Leaderboard công khai &middot; thi đua</div>
+            <div class="sh-benefit-desc">Top 10 KOC mỗi tháng hiện trên leaderboard. Bonus tier tăng theo rank. Competition tạo động cơ, không phải lương cơ bản ăn mòn.</div>
+          </div>
+        </div>
+        <div class="sh-benefit">
+          <div class="sh-benefit-icon" style="background: rgba(255, 107, 138, 0.1); color: var(--rose);">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 2 L14 5 L14 11 L8 14 L2 11 L2 5 Z"/></svg>
+          </div>
+          <div class="sh-benefit-body">
+            <div class="sh-benefit-title">Payout T+0 bằng $ZENI &middot; swap VNĐ</div>
+            <div class="sh-benefit-desc">Không đợi cuối tháng. Booking đến ăn hôm nay, commission vào ví $ZENI trong 15 phút. Swap VNĐ chuyển bank ngay. Cash flow KOC healthy.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sh-viz sh-viz-affiliate">
+      <div class="sh-viz-inner">
+        <div style="font-family: var(--mono); font-size: 10px; letter-spacing: 0.2em; color: var(--rose); text-transform: uppercase; font-weight: 600; margin-bottom: 16px;">Top KOC leaderboard · T04</div>
+
+        <div style="display: flex; flex-direction: column; gap: 8px;">
+          <div style="padding: 14px; background: linear-gradient(135deg, rgba(255, 107, 138, 0.12) 0%, rgba(212, 166, 90, 0.08) 100%); border: 1px solid rgba(255, 107, 138, 0.3); border-radius: 10px; display: grid; grid-template-columns: 30px 36px 1fr auto; gap: 12px; align-items: center;">
+            <div style="font-family: var(--serif); font-size: 22px; font-style: italic; color: var(--gold-bright); font-weight: 500; font-variation-settings: 'SOFT' 100, 'opsz' 24;">01</div>
+            <div style="width: 32px; height: 32px; border-radius: 50%; background: linear-gradient(135deg, var(--rose) 0%, var(--violet) 100%); display: flex; align-items: center; justify-content: center; font-family: var(--serif); font-weight: 600; font-size: 13px; color: var(--obsidian);">MA</div>
+            <div>
+              <div style="font-family: var(--serif); font-size: 14px; font-weight: 500;">@miaanh.foodie</div>
+              <div style="font-family: var(--mono); font-size: 9px; color: var(--mist); letter-spacing: 0.05em; margin-top: 2px;">247 booking · 42 conv</div>
+            </div>
+            <div style="text-align: right;">
+              <div style="font-family: var(--serif); font-size: 17px; font-style: italic; color: var(--gold-bright); font-weight: 500;">28.4M</div>
+              <div style="font-family: var(--mono); font-size: 8px; color: var(--mist); letter-spacing: 0.1em;">10.7k $ZENI</div>
+            </div>
+          </div>
+
+          <div style="padding: 12px; background: var(--obsidian); border: 1px solid var(--line); border-radius: 10px; display: grid; grid-template-columns: 30px 32px 1fr auto; gap: 12px; align-items: center;">
+            <div style="font-family: var(--serif); font-size: 18px; font-style: italic; color: var(--mist); font-weight: 400;">02</div>
+            <div style="width: 28px; height: 28px; border-radius: 50%; background: var(--graphite); display: flex; align-items: center; justify-content: center; font-family: var(--serif); font-weight: 600; font-size: 11px;">LN</div>
+            <div>
+              <div style="font-family: var(--serif); font-size: 13px; font-weight: 500;">@linh.nguyenfood</div>
+              <div style="font-family: var(--mono); font-size: 8px; color: var(--mist); margin-top: 2px;">189 booking · 31 conv</div>
+            </div>
+            <div style="text-align: right;">
+              <div style="font-family: var(--serif); font-size: 14px; font-style: italic; color: var(--cream); font-weight: 500;">21.2M</div>
+            </div>
+          </div>
+
+          <div style="padding: 12px; background: var(--obsidian); border: 1px solid var(--line); border-radius: 10px; display: grid; grid-template-columns: 30px 32px 1fr auto; gap: 12px; align-items: center;">
+            <div style="font-family: var(--serif); font-size: 18px; font-style: italic; color: var(--mist);">03</div>
+            <div style="width: 28px; height: 28px; border-radius: 50%; background: var(--graphite); display: flex; align-items: center; justify-content: center; font-family: var(--serif); font-weight: 600; font-size: 11px;">TH</div>
+            <div>
+              <div style="font-family: var(--serif); font-size: 13px; font-weight: 500;">@thanhhien.reviews</div>
+              <div style="font-family: var(--mono); font-size: 8px; color: var(--mist); margin-top: 2px;">167 booking · 28 conv</div>
+            </div>
+            <div style="text-align: right;">
+              <div style="font-family: var(--serif); font-size: 14px; font-style: italic; color: var(--cream); font-weight: 500;">18.6M</div>
+            </div>
+          </div>
+
+          <div style="padding: 10px 12px; background: var(--onyx); border: 1px solid var(--line); border-radius: 10px; display: grid; grid-template-columns: 30px 1fr auto; gap: 12px; align-items: center;">
+            <div style="font-family: var(--serif); font-size: 15px; font-style: italic; color: var(--mist);">04</div>
+            <div style="font-family: var(--serif); font-size: 12px;">@foodchaser.vn</div>
+            <div style="font-family: var(--serif); font-size: 12px; font-style: italic; color: var(--mist);">14.8M</div>
+          </div>
+
+          <div style="padding: 10px 12px; background: var(--onyx); border: 1px solid var(--line); border-radius: 10px; display: grid; grid-template-columns: 30px 1fr auto; gap: 12px; align-items: center;">
+            <div style="font-family: var(--serif); font-size: 15px; font-style: italic; color: var(--mist);">05</div>
+            <div style="font-family: var(--serif); font-size: 12px;">@eating.saigon</div>
+            <div style="font-family: var(--serif); font-size: 12px; font-style: italic; color: var(--mist);">11.2M</div>
+          </div>
+        </div>
+
+        <div style="margin-top: 16px; padding: 12px; background: rgba(255, 107, 138, 0.06); border-radius: 8px; font-size: 11px; color: rgba(245, 242, 235, 0.72); line-height: 1.5; text-align: center;">
+          Top 47 KOC tham gia &middot; tổng <strong style="color: var(--rose);">284M</strong> commission tháng này
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- STAKEHOLDER 6: FRANCHISEE -->
+<div class="sh-block reversed" id="sh-franchisee">
+  <div class="sh-inner">
+    <div class="sh-viz sh-viz-franchisee">
+      <div class="sh-viz-inner">
+        <div style="font-family: var(--mono); font-size: 10px; letter-spacing: 0.2em; color: var(--gold); text-transform: uppercase; font-weight: 600; margin-bottom: 16px;">Franchise onboarding · 12 tuần</div>
+
+        <div style="display: flex; flex-direction: column; gap: 6px;">
+          <!-- Phase 1: Discovery -->
+          <div style="padding: 12px 14px; background: var(--obsidian); border: 1px solid var(--line); border-left: 3px solid var(--success); border-radius: 8px; display: grid; grid-template-columns: 24px 1fr auto; gap: 12px; align-items: center;">
+            <div style="width: 20px; height: 20px; background: var(--success); color: var(--obsidian); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: var(--serif); font-weight: 600; font-size: 11px;">1</div>
+            <div>
+              <div style="font-family: var(--serif); font-size: 13px; font-weight: 500;">Location scoring</div>
+              <div style="font-size: 10px; color: var(--mist); font-family: var(--mono); margin-top: 2px; letter-spacing: 0.02em;">AI chấm 87/100 · Tuần 1-2</div>
+            </div>
+            <div style="font-family: var(--mono); font-size: 10px; color: var(--success); font-weight: 600; letter-spacing: 0.1em;">DONE</div>
+          </div>
+
+          <div style="padding: 12px 14px; background: var(--obsidian); border: 1px solid var(--line); border-left: 3px solid var(--success); border-radius: 8px; display: grid; grid-template-columns: 24px 1fr auto; gap: 12px; align-items: center;">
+            <div style="width: 20px; height: 20px; background: var(--success); color: var(--obsidian); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: var(--serif); font-weight: 600; font-size: 11px;">2</div>
+            <div>
+              <div style="font-family: var(--serif); font-size: 13px; font-weight: 500;">Legal &amp; licensing</div>
+              <div style="font-size: 10px; color: var(--mist); font-family: var(--mono); margin-top: 2px;">Playbook legal · Tuần 2-3</div>
+            </div>
+            <div style="font-family: var(--mono); font-size: 10px; color: var(--success); font-weight: 600; letter-spacing: 0.1em;">DONE</div>
+          </div>
+
+          <div style="padding: 12px 14px; background: linear-gradient(90deg, rgba(212, 166, 90, 0.08) 0%, transparent 100%); border: 1px solid rgba(212, 166, 90, 0.3); border-left: 3px solid var(--gold); border-radius: 8px; display: grid; grid-template-columns: 24px 1fr auto; gap: 12px; align-items: center;">
+            <div style="width: 20px; height: 20px; background: var(--gold); color: var(--obsidian); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: var(--serif); font-weight: 600; font-size: 11px;">3</div>
+            <div>
+              <div style="font-family: var(--serif); font-size: 13px; font-weight: 500;">Training AI Teacher &middot; 72h</div>
+              <div style="font-size: 10px; color: var(--gold-bright); font-family: var(--mono); margin-top: 2px;">18/24 module · đang chạy</div>
+              <div style="height: 3px; background: var(--graphite); border-radius: 2px; margin-top: 6px; overflow: hidden;">
+                <div style="width: 75%; height: 100%; background: var(--gold);"></div>
+              </div>
+            </div>
+            <div style="font-family: var(--mono); font-size: 10px; color: var(--gold); font-weight: 600; letter-spacing: 0.1em;">75%</div>
+          </div>
+
+          <div style="padding: 12px 14px; background: var(--obsidian); border: 1px solid var(--line); border-left: 3px solid var(--fog); border-radius: 8px; display: grid; grid-template-columns: 24px 1fr auto; gap: 12px; align-items: center; opacity: 0.6;">
+            <div style="width: 20px; height: 20px; background: var(--fog); color: var(--cream); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: var(--serif); font-weight: 600; font-size: 11px;">4</div>
+            <div>
+              <div style="font-family: var(--serif); font-size: 13px; font-weight: 500;">Soft opening &middot; AI vision audit</div>
+              <div style="font-size: 10px; color: var(--mist); font-family: var(--mono); margin-top: 2px;">Tuần 10-11</div>
+            </div>
+            <div style="font-family: var(--mono); font-size: 10px; color: var(--mist); letter-spacing: 0.1em;">NEXT</div>
+          </div>
+
+          <div style="padding: 12px 14px; background: var(--obsidian); border: 1px solid var(--line); border-left: 3px solid var(--fog); border-radius: 8px; display: grid; grid-template-columns: 24px 1fr auto; gap: 12px; align-items: center; opacity: 0.6;">
+            <div style="width: 20px; height: 20px; background: var(--fog); color: var(--cream); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: var(--serif); font-weight: 600; font-size: 11px;">5</div>
+            <div>
+              <div style="font-family: var(--serif); font-size: 13px; font-weight: 500;">Grand opening</div>
+              <div style="font-size: 10px; color: var(--mist); font-family: var(--mono); margin-top: 2px;">Tuần 12 &middot; Captain Summit mời</div>
+            </div>
+            <div style="font-family: var(--mono); font-size: 10px; color: var(--mist); letter-spacing: 0.1em;">&minus;&minus;</div>
+          </div>
+        </div>
+
+        <div style="margin-top: 16px; padding: 12px 14px; background: rgba(212, 166, 90, 0.06); border: 1px dashed rgba(212, 166, 90, 0.3); border-radius: 8px; font-size: 11px; color: var(--gold-bright); line-height: 1.5; text-align: center;">
+          <strong>ROI franchise</strong> &middot; target break-even 14 tháng &middot; royalty 3% + platform 2%
+        </div>
+      </div>
+    </div>
+
+    <div class="sh-left">
+      <div class="sh-tag">
+        <span class="sh-tag-dot" style="background: var(--gold-bright);"></span>
+        Vai trò 06 · Franchisee
+      </div>
+      <h3 class="sh-title">
+        Mở nhà hàng,<br>
+        nhưng không phải<br>
+        <em style="color: var(--gold-bright);">làm lại từ đầu</em>.
+      </h3>
+      <p class="sh-subtitle">
+        Nhượng quyền truyền thống đưa brand, logo, menu &mdash; rồi franchisee tự mò mẫm. Zeni đưa cả hệ điều hành: AI agent, staff training module, supplier network, customer base. Franchisee vận hành ngày 1 như brand 5 năm tuổi.
+      </p>
+
+      <div class="sh-kpi-row">
+        <div>
+          <div class="sh-kpi-val" style="color: var(--gold-bright);">12w</div>
+          <div class="sh-kpi-lbl">Onboarding<br>có gates</div>
+        </div>
+        <div>
+          <div class="sh-kpi-val" style="color: var(--success);">14 th</div>
+          <div class="sh-kpi-lbl">Break-even<br>target</div>
+        </div>
+        <div>
+          <div class="sh-kpi-val" style="color: var(--emerald);">96%</div>
+          <div class="sh-kpi-lbl">Quality score<br>weekly audit</div>
+        </div>
+      </div>
+
+      <div class="sh-benefits">
+        <div class="sh-benefit">
+          <div class="sh-benefit-icon" style="background: var(--gold-soft); color: var(--gold);">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 2 L14 5 L14 11 L8 14 L2 11 L2 5 Z"/></svg>
+          </div>
+          <div class="sh-benefit-body">
+            <div class="sh-benefit-title">Location scoring AI trước khi ký</div>
+            <div class="sh-benefit-desc">AI chấm mặt bằng 0-100 dựa vào: traffic walkby, demographics, competitor density, tenant mix, price/sqm. Không ký hợp đồng với mặt bằng dưới 75 điểm.</div>
+          </div>
+        </div>
+        <div class="sh-benefit">
+          <div class="sh-benefit-icon" style="background: var(--gold-soft); color: var(--gold);">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="10" height="10" rx="1"/><path d="M6 6 L10 8 L6 10 Z" fill="currentColor"/></svg>
+          </div>
+          <div class="sh-benefit-body">
+            <div class="sh-benefit-title">Playbook số hóa &middot; SOP video</div>
+            <div class="sh-benefit-desc">Mọi quy trình từ setup bếp đến training server đều là video có subtitle, có quiz, có practical test. Chef bạn không cần biết tiếng Việt, chỉ cần biết xem video.</div>
+          </div>
+        </div>
+        <div class="sh-benefit">
+          <div class="sh-benefit-icon" style="background: var(--gold-soft); color: var(--gold);">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 6 A5 5 0 0 1 13 6 L13 10 L14 12 L2 12 L3 10 Z"/></svg>
+          </div>
+          <div class="sh-benefit-body">
+            <div class="sh-benefit-title">Remote audit qua AI vision</div>
+            <div class="sh-benefit-desc">Camera bếp + AI vision weekly scan cleanliness, portion size, plating consistency. Không cần fly audit team. Quality score gửi founder &amp; franchisee mỗi tuần.</div>
+          </div>
+        </div>
+        <div class="sh-benefit">
+          <div class="sh-benefit-icon" style="background: var(--gold-soft); color: var(--gold);">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="3" r="1.5"/><circle cx="3" cy="12" r="1.5"/><circle cx="13" cy="12" r="1.5"/><path d="M8 5 L4 11 M8 5 L12 11"/></svg>
+          </div>
+          <div class="sh-benefit-body">
+            <div class="sh-benefit-title">Captain Club sẵn có &middot; customer base inherit</div>
+            <div class="sh-benefit-desc">Mở chi nhánh mới, Captain từ chi nhánh khác auto-notify. Grand opening không phải marketing từ zero &mdash; có 500 Captain tiềm năng đến thử.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- STAKEHOLDER 7: SUPPLIER -->
+<div class="sh-block" id="sh-supplier">
+  <div class="sh-inner">
+    <div class="sh-left">
+      <div class="sh-tag">
+        <span class="sh-tag-dot" style="background: var(--warn);"></span>
+        Vai trò 07 · Nhà cung cấp nguyên liệu
+      </div>
+      <h3 class="sh-title">
+        Thôi chạy Zalo,<br>
+        bắt đầu <em style="color: var(--warn);">bidding</em><br>
+        minh bạch.
+      </h3>
+      <p class="sh-subtitle">
+        Supplier VN hiện tại gọi Zalo cho chef, chờ 3 giờ, có khi không có đơn. Zeni tạo marketplace: nhà hàng đăng demand, supplier bid giá, AI Lâm chọn tối ưu. Giá minh bạch, thanh toán nhanh, khối lượng dự đoán được.
+      </p>
+
+      <div class="sh-kpi-row">
+        <div>
+          <div class="sh-kpi-val" style="color: var(--warn);">-18%</div>
+          <div class="sh-kpi-lbl">Giá vốn<br>TB ngành</div>
+        </div>
+        <div>
+          <div class="sh-kpi-val" style="color: var(--success);">T+3</div>
+          <div class="sh-kpi-lbl">Payment<br>vs T+30</div>
+        </div>
+        <div>
+          <div class="sh-kpi-val" style="color: var(--gold-bright);">7d</div>
+          <div class="sh-kpi-lbl">Forecast<br>order</div>
+        </div>
+      </div>
+
+      <div class="sh-benefits">
+        <div class="sh-benefit">
+          <div class="sh-benefit-icon" style="background: rgba(255, 181, 71, 0.1); color: var(--warn);">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="4" width="12" height="9" rx="1"/><path d="M2 7 L14 7"/></svg>
+          </div>
+          <div class="sh-benefit-body">
+            <div class="sh-benefit-title">Marketplace bidding &middot; đơn lớn</div>
+            <div class="sh-benefit-desc">Không phải chỉ 1 chef trong 1 nhà hàng. Bạn bid cho 50+ nhà hàng trong ecosystem. Đơn hàng lớn, giá tốt, supply chain tối ưu.</div>
+          </div>
+        </div>
+        <div class="sh-benefit">
+          <div class="sh-benefit-icon" style="background: rgba(255, 181, 71, 0.1); color: var(--warn);">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 2 L2 14 L14 14"/><path d="M5 11 L5 8 M8 11 L8 5 M11 11 L11 7"/></svg>
+          </div>
+          <div class="sh-benefit-body">
+            <div class="sh-benefit-title">Forecast 7 ngày &middot; supply planning</div>
+            <div class="sh-benefit-desc">AI Lâm dự đoán nhu cầu 7 ngày tới cho từng SKU. Supplier chuẩn bị trước, không thiếu hàng không thừa hàng. Cash flow stable, plan production chính xác.</div>
+          </div>
+        </div>
+        <div class="sh-benefit">
+          <div class="sh-benefit-icon" style="background: rgba(255, 181, 71, 0.1); color: var(--warn);">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 5 L8 2 L14 5 L14 12 L8 15 L2 12 Z"/><path d="M2 5 L8 8 L14 5 M8 8 L8 15"/></svg>
+          </div>
+          <div class="sh-benefit-body">
+            <div class="sh-benefit-title">Traceability QR · premium pricing</div>
+            <div class="sh-benefit-desc">Mỗi lô hàng có QR trace từ cảng/trại đến bếp. Nhà hàng trả cao hơn cho traceability &mdash; supplier có chứng nhận nguồn gốc bán giá premium 15-20%.</div>
+          </div>
+        </div>
+        <div class="sh-benefit">
+          <div class="sh-benefit-icon" style="background: rgba(255, 181, 71, 0.1); color: var(--warn);">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="4" width="12" height="9" rx="1"/><path d="M6 4 L6 2 L10 2 L10 4"/></svg>
+          </div>
+          <div class="sh-benefit-body">
+            <div class="sh-benefit-title">Payment T+3 · ổn định cash flow</div>
+            <div class="sh-benefit-desc">Thay vì T+30 hoặc tệ hơn, Zeni thanh toán T+3 nhờ escrow $ZENI. Supplier không bị nợ dây chuyền, mở rộng quy mô được.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sh-viz sh-viz-supplier">
+      <div class="sh-viz-inner">
+        <div style="font-family: var(--mono); font-size: 10px; letter-spacing: 0.2em; color: var(--warn); text-transform: uppercase; font-weight: 600; margin-bottom: 16px;">Multi-supplier bidding · Live</div>
+
+        <div style="padding: 14px 16px; background: linear-gradient(135deg, rgba(255, 181, 71, 0.08) 0%, rgba(212, 166, 90, 0.04) 100%); border: 1px solid rgba(255, 181, 71, 0.25); border-radius: 10px; margin-bottom: 14px;">
+          <div style="font-family: var(--mono); font-size: 9px; letter-spacing: 0.15em; color: var(--warn); text-transform: uppercase; font-weight: 600; margin-bottom: 6px;">RFQ · Đang mở</div>
+          <div style="font-family: var(--serif); font-size: 17px; font-weight: 500;">Cua hoàng đế size L · 18 con</div>
+          <div style="font-size: 11px; color: var(--mist); font-family: var(--mono); margin-top: 6px; letter-spacing: 0.05em;">Deadline &middot; 2 giờ 14 phút còn lại</div>
+        </div>
+
+        <div style="font-family: var(--mono); font-size: 9px; letter-spacing: 0.15em; color: var(--mist); text-transform: uppercase; margin-bottom: 10px;">3 nhà cung cấp đã bid</div>
+
+        <div style="display: flex; flex-direction: column; gap: 8px;">
+          <div style="padding: 12px 14px; background: linear-gradient(90deg, rgba(74, 222, 155, 0.08) 0%, transparent 60%); border: 1px solid rgba(74, 222, 155, 0.25); border-radius: 8px; display: grid; grid-template-columns: 1fr auto; gap: 12px; align-items: center;">
+            <div>
+              <div style="font-family: var(--serif); font-size: 14px; font-weight: 500;">Hải Sản Quảng Ninh Co.</div>
+              <div style="font-family: var(--mono); font-size: 10px; color: var(--mist); margin-top: 2px; letter-spacing: 0.03em;">★★★★★ · 142 đơn · 98% on-time</div>
+            </div>
+            <div style="text-align: right;">
+              <div style="font-family: var(--serif); font-size: 16px; font-style: italic; color: var(--success); font-weight: 500;">1.4M<span style="font-size: 11px; color: var(--mist);">/con</span></div>
+              <div style="font-family: var(--mono); font-size: 9px; color: var(--success); font-weight: 600; margin-top: 2px; letter-spacing: 0.1em;">BEST</div>
+            </div>
+          </div>
+
+          <div style="padding: 12px 14px; background: var(--obsidian); border: 1px solid var(--line); border-radius: 8px; display: grid; grid-template-columns: 1fr auto; gap: 12px; align-items: center;">
+            <div>
+              <div style="font-family: var(--serif); font-size: 14px; font-weight: 500;">Phú Quốc Seafood Partners</div>
+              <div style="font-family: var(--mono); font-size: 10px; color: var(--mist); margin-top: 2px;">★★★★☆ · 89 đơn · 96% on-time</div>
+            </div>
+            <div style="text-align: right;">
+              <div style="font-family: var(--serif); font-size: 15px; font-style: italic; color: var(--cream); font-weight: 500;">1.5M</div>
+            </div>
+          </div>
+
+          <div style="padding: 12px 14px; background: var(--obsidian); border: 1px solid var(--line); border-radius: 8px; display: grid; grid-template-columns: 1fr auto; gap: 12px; align-items: center;">
+            <div>
+              <div style="font-family: var(--serif); font-size: 14px; font-weight: 500;">Alaska Import Direct</div>
+              <div style="font-family: var(--mono); font-size: 10px; color: var(--mist); margin-top: 2px;">★★★★☆ · 54 đơn · 92% on-time</div>
+            </div>
+            <div style="text-align: right;">
+              <div style="font-family: var(--serif); font-size: 15px; font-style: italic; color: var(--cream); font-weight: 500;">1.6M</div>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top: 14px; padding: 12px 14px; background: rgba(0, 229, 212, 0.05); border: 1px dashed rgba(0, 229, 212, 0.25); border-radius: 8px; font-size: 11px; color: rgba(245, 242, 235, 0.75); line-height: 1.55;">
+          AI Lâm khuyến nghị: <strong style="color: var(--success);">Hải Sản Quảng Ninh</strong> &middot; tiết kiệm 3.6M, escrow $ZENI, payment T+3.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- STAKEHOLDER 8: INVESTOR -->
+<div class="sh-block reversed" id="sh-investor">
+  <div class="sh-inner">
+    <div class="sh-viz sh-viz-investor">
+      <div class="sh-viz-inner">
+        <div style="font-family: var(--mono); font-size: 10px; letter-spacing: 0.2em; color: var(--violet); text-transform: uppercase; font-weight: 600; margin-bottom: 16px;">Data room · Always-on</div>
+
+        <div class="mini-dashboard" style="margin-bottom: 16px;">
+          <div class="mini-dash-top">
+            <div class="mini-dash-dots">
+              <div class="mini-dash-dot"></div>
+              <div class="mini-dash-dot"></div>
+              <div class="mini-dash-dot"></div>
+            </div>
+            <div class="mini-dash-title">Zeni Holdings · Data room</div>
+          </div>
+          <div class="mini-dash-body">
+            <div class="mini-kpi-grid">
+              <div class="mini-kpi-card">
+                <div class="mini-kpi-card-label">ARR run-rate</div>
+                <div class="mini-kpi-card-val">28 tỷ</div>
+              </div>
+              <div class="mini-kpi-card">
+                <div class="mini-kpi-card-label">Growth YoY</div>
+                <div class="mini-kpi-card-val success">+240%</div>
+              </div>
+              <div class="mini-kpi-card">
+                <div class="mini-kpi-card-label">Gross margin</div>
+                <div class="mini-kpi-card-val">68%</div>
+              </div>
+              <div class="mini-kpi-card">
+                <div class="mini-kpi-card-label">Net retention</div>
+                <div class="mini-kpi-card-val success">142%</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+          <div style="padding: 14px; background: linear-gradient(135deg, var(--onyx) 0%, rgba(139, 92, 246, 0.08) 100%); border: 1px solid rgba(139, 92, 246, 0.25); border-radius: 10px;">
+            <div style="font-family: var(--mono); font-size: 9px; letter-spacing: 0.15em; color: #C4B5FD; text-transform: uppercase; font-weight: 600; margin-bottom: 8px;">Valuation target</div>
+            <div style="font-family: var(--serif); font-size: 22px; font-style: italic; color: var(--violet); font-weight: 500; font-variation-settings: 'SOFT' 80, 'opsz' 32;">100 tỷ</div>
+            <div style="font-family: var(--mono); font-size: 9px; color: var(--mist); margin-top: 4px; letter-spacing: 0.05em;">Pre-money 2026</div>
+          </div>
+
+          <div style="padding: 14px; background: linear-gradient(135deg, var(--onyx) 0%, rgba(212, 166, 90, 0.06) 100%); border: 1px solid rgba(212, 166, 90, 0.25); border-radius: 10px;">
+            <div style="font-family: var(--mono); font-size: 9px; letter-spacing: 0.15em; color: var(--gold); text-transform: uppercase; font-weight: 600; margin-bottom: 8px;">SGX IPO target</div>
+            <div style="font-family: var(--serif); font-size: 22px; font-style: italic; color: var(--gold-bright); font-weight: 500; font-variation-settings: 'SOFT' 80, 'opsz' 32;">2031</div>
+            <div style="font-family: var(--mono); font-size: 9px; color: var(--mist); margin-top: 4px; letter-spacing: 0.05em;">Singapore Exchange</div>
+          </div>
+
+          <div style="padding: 14px; background: var(--obsidian); border: 1px solid var(--line); border-radius: 10px; grid-column: 1 / -1;">
+            <div style="font-family: var(--mono); font-size: 9px; letter-spacing: 0.15em; color: var(--mist); text-transform: uppercase; margin-bottom: 10px;">Revenue streams · diversified</div>
+            <div style="display: flex; flex-direction: column; gap: 8px;">
+              <div style="display: flex; justify-content: space-between; font-size: 11px;">
+                <span>SaaS subscription</span>
+                <span style="font-family: var(--mono); color: var(--gold-bright); font-weight: 600;">42%</span>
+              </div>
+              <div style="display: flex; justify-content: space-between; font-size: 11px;">
+                <span>Transaction fees</span>
+                <span style="font-family: var(--mono); color: var(--gold-bright); font-weight: 600;">28%</span>
+              </div>
+              <div style="display: flex; justify-content: space-between; font-size: 11px;">
+                <span>$ZENI economy</span>
+                <span style="font-family: var(--mono); color: var(--token); font-weight: 600;">18%</span>
+              </div>
+              <div style="display: flex; justify-content: space-between; font-size: 11px;">
+                <span>Franchise royalty</span>
+                <span style="font-family: var(--mono); color: var(--gold-bright); font-weight: 600;">8%</span>
+              </div>
+              <div style="display: flex; justify-content: space-between; font-size: 11px;">
+                <span>Data intelligence</span>
+                <span style="font-family: var(--mono); color: var(--gold-bright); font-weight: 600;">4%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sh-left">
+      <div class="sh-tag">
+        <span class="sh-tag-dot" style="background: var(--violet);"></span>
+        Vai trò 08 · Investor
+      </div>
+      <h3 class="sh-title">
+        Due diligence<br>
+        không phải 6 tháng.<br>
+        Mà <em style="color: #C4B5FD;">6 phút</em>.
+      </h3>
+      <p class="sh-subtitle">
+        Investor F&amp;B VN khổ nhất là due diligence data. Data room tự build vì không ai có. Zeni Holdings là data room sống &mdash; ARR realtime, unit economics từng cơ sở, Captain LTV, churn cohort, inventory turnover &mdash; mọi metric đều có audit trail on-chain.
+      </p>
+
+      <div class="sh-kpi-row">
+        <div>
+          <div class="sh-kpi-val" style="color: var(--violet);">100 tỷ</div>
+          <div class="sh-kpi-lbl">Pre-money<br>valuation</div>
+        </div>
+        <div>
+          <div class="sh-kpi-val" style="color: var(--gold-bright);">2031</div>
+          <div class="sh-kpi-lbl">SGX IPO<br>target</div>
+        </div>
+        <div>
+          <div class="sh-kpi-val" style="color: var(--emerald);">+240%</div>
+          <div class="sh-kpi-lbl">YoY<br>growth</div>
+        </div>
+      </div>
+
+      <div class="sh-benefits">
+        <div class="sh-benefit">
+          <div class="sh-benefit-icon" style="background: rgba(139, 92, 246, 0.1); color: #C4B5FD;">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 2 L14 5 L14 11 L8 14 L2 11 L2 5 Z"/></svg>
+          </div>
+          <div class="sh-benefit-body">
+            <div class="sh-benefit-title">5 dòng doanh thu · không phụ thuộc 1 nguồn</div>
+            <div class="sh-benefit-desc">SaaS subscription (42%) · Transaction fees (28%) · $ZENI token economy (18%) · Franchise royalty (8%) · Data intelligence anonymized (4%). Business model resilient.</div>
+          </div>
+        </div>
+        <div class="sh-benefit">
+          <div class="sh-benefit-icon" style="background: rgba(139, 92, 246, 0.1); color: #C4B5FD;">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 6 A5 5 0 0 1 13 6 L13 10 L14 12 L2 12 L3 10 Z"/></svg>
+          </div>
+          <div class="sh-benefit-body">
+            <div class="sh-benefit-title">Data room always-on &middot; audit trail</div>
+            <div class="sh-benefit-desc">Mọi giao dịch có timestamp on-chain, mọi metric auto-compute. Không cần cho team kế toán 3 tuần chuẩn bị DD. Investor tự explore realtime.</div>
+          </div>
+        </div>
+        <div class="sh-benefit">
+          <div class="sh-benefit-icon" style="background: rgba(139, 92, 246, 0.1); color: #C4B5FD;">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 14 Q 2 10 8 10 Q 14 10 14 14"/><circle cx="8" cy="5" r="3"/></svg>
+          </div>
+          <div class="sh-benefit-body">
+            <div class="sh-benefit-title">Defensibility &middot; moat 3 lớp</div>
+            <div class="sh-benefit-desc">Lớp 1: AI agent trained trên dữ liệu F&amp;B VN · Lớp 2: Captain Club network effect (càng đông càng dính) · Lớp 3: Supplier + Franchisee ecosystem lock-in.</div>
+          </div>
+        </div>
+        <div class="sh-benefit">
+          <div class="sh-benefit-icon" style="background: rgba(139, 92, 246, 0.1); color: #C4B5FD;">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 2 L2 14 L14 14"/><path d="M5 11 L5 8 M8 11 L8 5 M11 11 L11 7"/></svg>
+          </div>
+          <div class="sh-benefit-body">
+            <div class="sh-benefit-title">IPO roadmap SGX 2031 &middot; clear exit</div>
+            <div class="sh-benefit-desc">Singapore Exchange chọn vì phù hợp SaaS + loyalty token economy. Target listing Q3/2031, post-money 2000+ tỷ, 48% dilution tổng 5 rounds.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+<!-- ============ BUSINESS MODEL ============ -->
+<style>
+.model-section {
+  padding: 140px 0;
+  background: linear-gradient(180deg, transparent 0%, rgba(212, 166, 90, 0.03) 50%, transparent 100%);
+  position: relative;
+}
+
+.revenue-streams {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 16px;
+  margin-top: 60px;
+}
+@media (max-width: 1100px) { .revenue-streams { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 700px) { .revenue-streams { grid-template-columns: 1fr; } }
+
+.stream-card {
+  padding: 28px 24px;
+  background: linear-gradient(180deg, var(--onyx) 0%, var(--graphite) 100%);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.25s;
+}
+.stream-card:hover { transform: translateY(-4px); border-color: var(--gold); }
+
+.stream-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: var(--gold);
+}
+.stream-card.token::before { background: var(--token); }
+
+.stream-num {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.25em;
+  color: var(--mist);
+  text-transform: uppercase;
+  margin-bottom: 18px;
+  font-weight: 600;
+}
+
+.stream-pct {
+  font-family: var(--serif);
+  font-size: 56px;
+  font-weight: 300;
+  font-style: italic;
+  line-height: 1;
+  color: var(--gold-bright);
+  font-variation-settings: "SOFT" 120, "opsz" 144;
+  margin-bottom: 10px;
+}
+.stream-card.token .stream-pct { color: var(--token-bright); }
+
+.stream-title {
+  font-family: var(--serif);
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.25;
+  font-variation-settings: "SOFT" 50, "opsz" 14;
+  margin-bottom: 10px;
+  letter-spacing: -0.005em;
+}
+
+.stream-desc {
+  font-size: 12.5px;
+  color: rgba(245, 242, 235, 0.6);
+  line-height: 1.55;
+  margin-bottom: 16px;
+}
+
+.stream-example {
+  padding-top: 14px;
+  border-top: 1px dashed var(--line);
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--gold);
+  letter-spacing: 0.05em;
+  line-height: 1.5;
+}
+.stream-card.token .stream-example { color: var(--token-bright); }
+
+/* ============ $ZENI TOKENOMICS ============ */
+.tokenomics-section {
+  padding: 140px 0;
+  background: radial-gradient(ellipse 60% 40% at 50% 50%, rgba(0, 229, 212, 0.05) 0%, transparent 70%);
+  position: relative;
+}
+
+.token-roles {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 60px;
+  margin-bottom: 80px;
+}
+@media (max-width: 900px) { .token-roles { grid-template-columns: 1fr; } }
+
+.token-role {
+  padding: 36px 28px;
+  background: linear-gradient(180deg, var(--onyx) 0%, rgba(0, 229, 212, 0.04) 100%);
+  border: 1px solid rgba(0, 229, 212, 0.15);
+  border-radius: 16px;
+  position: relative;
+}
+
+.token-role-num {
+  position: absolute;
+  top: -12px; left: 28px;
+  font-family: var(--serif);
+  font-size: 44px;
+  font-weight: 300;
+  font-style: italic;
+  color: var(--token-bright);
+  line-height: 1;
+  font-variation-settings: "SOFT" 120, "opsz" 144;
+  background: var(--obsidian);
+  padding: 0 12px;
+}
+
+.token-role-eyebrow {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.25em;
+  color: var(--token);
+  text-transform: uppercase;
+  font-weight: 600;
+  margin-bottom: 16px;
+  margin-top: 24px;
+}
+
+.token-role-title {
+  font-family: var(--serif);
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 1.15;
+  font-variation-settings: "SOFT" 60, "opsz" 32;
+  margin-bottom: 14px;
+  letter-spacing: -0.01em;
+}
+.token-role-title em { font-style: italic; color: var(--token-bright); }
+
+.token-role-desc {
+  font-size: 13px;
+  color: rgba(245, 242, 235, 0.68);
+  line-height: 1.65;
+  margin-bottom: 18px;
+}
+
+.token-role-mech {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-top: 14px;
+  border-top: 1px dashed rgba(0, 229, 212, 0.15);
+}
+.token-mech-item {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  font-size: 12px;
+  line-height: 1.5;
+  color: rgba(245, 242, 235, 0.65);
+}
+.token-mech-bullet {
+  width: 14px; height: 1px;
+  background: var(--token);
+  margin-top: 9px;
+  flex-shrink: 0;
+}
+
+/* Token flow diagram */
+.token-flow {
+  padding: 40px;
+  background: linear-gradient(135deg, var(--onyx) 0%, rgba(0, 229, 212, 0.04) 100%);
+  border: 1px solid var(--line-bright);
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.token-flow-title {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.28em;
+  color: var(--token);
+  text-transform: uppercase;
+  font-weight: 600;
+  margin-bottom: 28px;
+  text-align: center;
+}
+
+.token-flow-diagram {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 32px;
+  align-items: center;
+}
+@media (max-width: 800px) { .token-flow-diagram { grid-template-columns: 1fr; gap: 24px; } }
+
+.token-flow-side {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.token-flow-box {
+  padding: 16px 18px;
+  background: var(--obsidian);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+}
+
+.token-flow-box-label {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  color: var(--mist);
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+.token-flow-box-main {
+  font-family: var(--serif);
+  font-size: 16px;
+  font-weight: 500;
+  font-variation-settings: "SOFT" 50, "opsz" 14;
+  line-height: 1.3;
+  letter-spacing: -0.005em;
+}
+
+.token-flow-box-sub {
+  font-size: 11px;
+  color: var(--mist);
+  margin-top: 4px;
+  font-family: var(--mono);
+  letter-spacing: 0.02em;
+}
+
+.token-flow-center {
+  width: 140px; height: 140px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(0, 229, 212, 0.15) 0%, rgba(0, 229, 212, 0.02) 70%);
+  border: 2px solid var(--token);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  position: relative;
+  margin: 0 auto;
+}
+.token-flow-center::before {
+  content: '';
+  position: absolute;
+  inset: -12px;
+  border: 1px dashed var(--token);
+  border-radius: 50%;
+  opacity: 0.3;
+  animation: tokenRotate 30s linear infinite;
+}
+@keyframes tokenRotate {
+  to { transform: rotate(360deg); }
+}
+
+.token-flow-center-sym {
+  font-family: var(--serif);
+  font-size: 32px;
+  font-style: italic;
+  color: var(--token-bright);
+  font-weight: 500;
+  font-variation-settings: "SOFT" 100, "opsz" 48;
+}
+
+.token-flow-center-lbl {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  color: var(--token-bright);
+  text-transform: uppercase;
+  font-weight: 600;
+  margin-top: 4px;
+}
+
+/* ============ PRICING ============ */
+.pricing-section {
+  padding: 140px 0;
+}
+
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-top: 60px;
+}
+@media (max-width: 900px) { .pricing-grid { grid-template-columns: 1fr; gap: 16px; } }
+
+.price-card {
+  padding: 36px 30px;
+  background: var(--onyx);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.25s;
+}
+.price-card:hover { border-color: var(--line-bright); }
+
+.price-card.featured {
+  background: linear-gradient(180deg, var(--onyx) 0%, rgba(212, 166, 90, 0.06) 100%);
+  border-color: var(--gold);
+  transform: scale(1.02);
+}
+@media (max-width: 900px) {
+  .price-card.featured { transform: none; }
+}
+
+.price-tag-recommend {
+  position: absolute;
+  top: 18px; right: 24px;
+  padding: 4px 10px;
+  background: var(--gold);
+  color: var(--obsidian);
+  border-radius: 999px;
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.price-eyebrow {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.25em;
+  color: var(--mist);
+  text-transform: uppercase;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+.price-card.featured .price-eyebrow { color: var(--gold); }
+
+.price-name {
+  font-family: var(--serif);
+  font-size: 28px;
+  font-weight: 500;
+  line-height: 1.1;
+  font-variation-settings: "SOFT" 50, "opsz" 32;
+  margin-bottom: 6px;
+  letter-spacing: -0.01em;
+}
+.price-name em { font-style: italic; color: var(--gold-bright); }
+
+.price-sub {
+  font-size: 13px;
+  color: rgba(245, 242, 235, 0.6);
+  line-height: 1.5;
+  margin-bottom: 28px;
+  font-family: var(--serif);
+  font-style: italic;
+  font-variation-settings: "SOFT" 80, "opsz" 14;
+}
+
+.price-amount {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.price-currency {
+  font-family: var(--mono);
+  font-size: 14px;
+  color: var(--mist);
+  letter-spacing: 0.05em;
+}
+
+.price-number {
+  font-family: var(--serif);
+  font-size: 58px;
+  font-weight: 300;
+  line-height: 1;
+  color: var(--cream);
+  font-variation-settings: "SOFT" 40, "opsz" 144;
+  letter-spacing: -0.02em;
+}
+
+.price-card.featured .price-number { color: var(--gold-bright); font-style: italic; font-variation-settings: "SOFT" 120, "opsz" 144; }
+
+.price-unit {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--mist);
+  letter-spacing: 0.1em;
+}
+
+.price-note {
+  font-size: 11px;
+  color: var(--mist);
+  font-family: var(--mono);
+  letter-spacing: 0.05em;
+  margin-bottom: 24px;
+}
+
+.price-cta {
+  width: 100%;
+  padding: 13px;
+  background: transparent;
+  color: var(--cream);
+  border: 1px solid var(--line-bright);
+  border-radius: 10px;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s;
+  margin-bottom: 28px;
+  text-align: center;
+  text-decoration: none;
+  display: block;
+}
+.price-cta:hover { background: rgba(255, 255, 255, 0.04); border-color: var(--cream); }
+
+.price-card.featured .price-cta {
+  background: var(--gold);
+  color: var(--obsidian);
+  border-color: var(--gold);
+  font-weight: 600;
+}
+.price-card.featured .price-cta:hover { background: var(--gold-bright); }
+
+.price-features-label {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  color: var(--mist);
+  text-transform: uppercase;
+  margin-bottom: 14px;
+  font-weight: 600;
+}
+
+.price-features {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  list-style: none;
+}
+
+.price-feature {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  font-size: 12.5px;
+  line-height: 1.45;
+  color: rgba(245, 242, 235, 0.75);
+}
+
+.price-feature-check {
+  width: 14px; height: 14px;
+  margin-top: 2px;
+  flex-shrink: 0;
+  color: var(--gold);
+}
+.price-feature.locked .price-feature-check { color: var(--fog); }
+.price-feature.locked { color: var(--mist); }
+
+/* ============ ECOSYSTEM SHOWCASE ============ */
+.ecosystem-section {
+  padding: 140px 0;
+  background: linear-gradient(180deg, transparent 0%, rgba(0, 229, 212, 0.02) 50%, transparent 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.ecosystem-hero {
+  text-align: center;
+  max-width: 780px;
+  margin: 0 auto 60px;
+}
+
+.ecosystem-number {
+  font-family: var(--serif);
+  font-size: clamp(120px, 18vw, 220px);
+  font-weight: 300;
+  font-style: italic;
+  line-height: 0.9;
+  color: var(--gold-bright);
+  font-variation-settings: "SOFT" 140, "opsz" 144;
+  letter-spacing: -0.04em;
+  margin-bottom: 24px;
+  background: linear-gradient(135deg, var(--gold-bright) 0%, var(--token-bright) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.ecosystem-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  max-width: var(--max-w);
+  margin: 60px auto 0;
+  padding: 32px 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+@media (max-width: 800px) { .ecosystem-stats { grid-template-columns: repeat(2, 1fr); } }
+
+.eco-stat {
+  text-align: center;
+  border-right: 1px dashed var(--line);
+  padding: 0 16px;
+}
+.eco-stat:last-child { border-right: none; }
+@media (max-width: 800px) {
+  .eco-stat:nth-child(2) { border-right: none; }
+}
+
+.eco-stat-val {
+  font-family: var(--serif);
+  font-size: 42px;
+  font-weight: 400;
+  font-style: italic;
+  line-height: 1;
+  color: var(--gold-bright);
+  font-variation-settings: "SOFT" 100, "opsz" 144;
+  margin-bottom: 10px;
+}
+
+.eco-stat-lbl {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  color: var(--mist);
+  text-transform: uppercase;
+  line-height: 1.5;
+}
+
+/* ============ ROADMAP ============ */
+.roadmap-section {
+  padding: 140px 0;
+  position: relative;
+}
+
+.roadmap-timeline {
+  max-width: 1040px;
+  margin: 60px auto 0;
+  position: relative;
+  padding: 0 var(--gutter);
+}
+
+.roadmap-line {
+  position: absolute;
+  left: 50%;
+  top: 20px;
+  bottom: 20px;
+  width: 1px;
+  background: linear-gradient(180deg, var(--gold) 0%, var(--token) 50%, var(--gold-bright) 100%);
+  opacity: 0.3;
+}
+@media (max-width: 800px) { .roadmap-line { left: 22px; } }
+
+.roadmap-year {
+  position: relative;
+  padding: 32px 0;
+  display: grid;
+  grid-template-columns: 1fr 80px 1fr;
+  gap: 32px;
+  align-items: center;
+}
+@media (max-width: 800px) {
+  .roadmap-year {
+    grid-template-columns: 44px 1fr;
+    padding-left: 0;
+  }
+}
+
+.roadmap-year:nth-child(even) {
+  direction: rtl;
+}
+.roadmap-year:nth-child(even) > * {
+  direction: ltr;
+}
+@media (max-width: 800px) {
+  .roadmap-year:nth-child(even) { direction: ltr; }
+}
+
+.roadmap-marker {
+  grid-column: 2;
+  justify-self: center;
+  z-index: 2;
+  position: relative;
+}
+@media (max-width: 800px) {
+  .roadmap-marker { grid-column: 1; justify-self: start; }
+}
+
+.roadmap-marker-dot {
+  width: 16px; height: 16px;
+  border-radius: 50%;
+  background: var(--obsidian);
+  border: 2px solid var(--gold);
+  box-shadow: 0 0 16px rgba(212, 166, 90, 0.3);
+  position: relative;
+}
+.roadmap-year.done .roadmap-marker-dot {
+  background: var(--success);
+  border-color: var(--success);
+}
+.roadmap-year.current .roadmap-marker-dot {
+  background: var(--gold);
+  animation: rmPulse 2s infinite;
+}
+@keyframes rmPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(212, 166, 90, 0.4); }
+  50% { box-shadow: 0 0 0 12px rgba(212, 166, 90, 0); }
+}
+
+.roadmap-year-label {
+  grid-column: 1;
+  text-align: right;
+  font-family: var(--serif);
+  font-size: 48px;
+  font-weight: 300;
+  font-style: italic;
+  color: var(--gold-bright);
+  line-height: 1;
+  font-variation-settings: "SOFT" 120, "opsz" 144;
+}
+@media (max-width: 800px) {
+  .roadmap-year-label {
+    grid-column: 2;
+    text-align: left;
+    font-size: 32px;
+    margin-bottom: 8px;
+  }
+}
+
+.roadmap-year:nth-child(even) .roadmap-year-label {
+  grid-column: 3;
+  text-align: left;
+}
+@media (max-width: 800px) {
+  .roadmap-year:nth-child(even) .roadmap-year-label {
+    grid-column: 2;
+    text-align: left;
+  }
+}
+
+.roadmap-content {
+  grid-column: 3;
+  padding: 20px 24px;
+  background: var(--onyx);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+}
+@media (max-width: 800px) {
+  .roadmap-content { grid-column: 2; }
+}
+
+.roadmap-year:nth-child(even) .roadmap-content {
+  grid-column: 1;
+}
+@media (max-width: 800px) {
+  .roadmap-year:nth-child(even) .roadmap-content { grid-column: 2; }
+}
+
+.roadmap-year.current .roadmap-content {
+  border-color: var(--gold);
+  background: linear-gradient(135deg, var(--onyx) 0%, rgba(212, 166, 90, 0.05) 100%);
+}
+
+.roadmap-phase {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  color: var(--gold);
+  text-transform: uppercase;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+.roadmap-year.done .roadmap-phase { color: var(--success); }
+
+.roadmap-title {
+  font-family: var(--serif);
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 1.25;
+  font-variation-settings: "SOFT" 50, "opsz" 20;
+  margin-bottom: 10px;
+  letter-spacing: -0.005em;
+}
+.roadmap-title em { font-style: italic; color: var(--gold-bright); }
+
+.roadmap-desc {
+  font-size: 12.5px;
+  color: rgba(245, 242, 235, 0.62);
+  line-height: 1.6;
+  margin-bottom: 12px;
+}
+
+.roadmap-mile {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  background: var(--graphite);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  color: var(--mist);
+  text-transform: uppercase;
+  margin-right: 6px;
+  margin-top: 6px;
+}
+
+/* ============ SOCIAL PROOF ============ */
+.proof-section {
+  padding: 140px 0;
+  background: linear-gradient(180deg, transparent 0%, rgba(20, 20, 32, 0.6) 50%, transparent 100%);
+}
+
+.proof-stats-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  overflow: hidden;
+  margin-top: 40px;
+  margin-bottom: 60px;
+}
+@media (max-width: 800px) { .proof-stats-row { grid-template-columns: repeat(2, 1fr); } }
+
+.proof-stat {
+  padding: 36px 24px;
+  background: var(--onyx);
+  text-align: center;
+}
+
+.proof-stat-num {
+  font-family: var(--serif);
+  font-size: 52px;
+  font-weight: 300;
+  font-style: italic;
+  line-height: 1;
+  color: var(--gold-bright);
+  font-variation-settings: "SOFT" 120, "opsz" 144;
+  margin-bottom: 10px;
+  letter-spacing: -0.02em;
+}
+
+.proof-stat-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  color: var(--mist);
+  text-transform: uppercase;
+  line-height: 1.5;
+}
+
+.testimonials {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+@media (max-width: 900px) { .testimonials { grid-template-columns: 1fr; } }
+
+.testimonial {
+  padding: 28px 26px;
+  background: var(--onyx);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.testimonial-quote {
+  font-family: var(--serif);
+  font-size: 16px;
+  line-height: 1.55;
+  font-weight: 300;
+  color: rgba(245, 242, 235, 0.85);
+  font-variation-settings: "SOFT" 40, "opsz" 20;
+  flex: 1;
+  position: relative;
+  padding-left: 20px;
+}
+.testimonial-quote::before {
+  content: '"';
+  position: absolute;
+  left: -4px; top: -8px;
+  font-family: var(--serif);
+  font-size: 42px;
+  color: var(--gold);
+  font-style: italic;
+  line-height: 1;
+}
+.testimonial-quote em { font-style: italic; color: var(--gold-bright); }
+
+.testimonial-author {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  padding-top: 18px;
+  border-top: 1px dashed var(--line);
+}
+
+.testimonial-avatar {
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dim) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--serif);
+  font-weight: 600;
+  color: var(--obsidian);
+  flex-shrink: 0;
+  font-size: 15px;
+}
+.testimonial-avatar.cyan { background: linear-gradient(135deg, var(--token) 0%, #0080FF 100%); }
+.testimonial-avatar.rose { background: linear-gradient(135deg, var(--rose) 0%, var(--violet) 100%); }
+
+.testimonial-author-body { flex: 1; min-width: 0; }
+.testimonial-author-name {
+  font-family: var(--serif);
+  font-size: 14px;
+  font-weight: 500;
+  font-variation-settings: "SOFT" 50, "opsz" 14;
+  line-height: 1.2;
+  margin-bottom: 2px;
+}
+.testimonial-author-role {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--mist);
+  letter-spacing: 0.05em;
+}
+
+/* ============ CTA SECTION ============ */
+.cta-section {
+  padding: 140px 0;
+  position: relative;
+  overflow: hidden;
+}
+.cta-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 50% 50% at 30% 30%, rgba(212, 166, 90, 0.1) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 40% at 70% 70%, rgba(0, 229, 212, 0.08) 0%, transparent 65%);
+  pointer-events: none;
+}
+
+.cta-inner {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+  position: relative;
+  z-index: 2;
+  text-align: center;
+}
+
+.cta-title {
+  font-family: var(--serif);
+  font-size: clamp(44px, 7vw, 96px);
+  font-weight: 300;
+  line-height: 0.95;
+  letter-spacing: -0.028em;
+  font-variation-settings: "SOFT" 50, "opsz" 144;
+  margin-bottom: 32px;
+}
+.cta-title em {
+  font-style: italic;
+  color: var(--gold-bright);
+  font-variation-settings: "SOFT" 120, "opsz" 144;
+}
+
+.cta-lede {
+  font-family: var(--serif);
+  font-size: clamp(16px, 1.8vw, 20px);
+  line-height: 1.55;
+  font-weight: 300;
+  color: rgba(245, 242, 235, 0.75);
+  font-variation-settings: "SOFT" 40, "opsz" 24;
+  max-width: 620px;
+  margin: 0 auto 48px;
+}
+
+.cta-dual {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  max-width: 820px;
+  margin: 0 auto 48px;
+}
+@media (max-width: 700px) { .cta-dual { grid-template-columns: 1fr; } }
+
+.cta-card {
+  padding: 36px 30px;
+  background: var(--onyx);
+  border: 1px solid var(--line-bright);
+  border-radius: 16px;
+  text-align: left;
+  transition: all 0.2s;
+}
+.cta-card:hover { border-color: var(--gold); transform: translateY(-4px); }
+
+.cta-card.primary {
+  background: linear-gradient(135deg, var(--onyx) 0%, rgba(212, 166, 90, 0.06) 100%);
+  border-color: var(--gold);
+}
+
+.cta-card.token {
+  background: linear-gradient(135deg, var(--onyx) 0%, rgba(0, 229, 212, 0.06) 100%);
+  border-color: rgba(0, 229, 212, 0.3);
+}
+
+.cta-card-eyebrow {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.25em;
+  color: var(--gold);
+  text-transform: uppercase;
+  font-weight: 600;
+  margin-bottom: 14px;
+}
+.cta-card.token .cta-card-eyebrow { color: var(--token); }
+
+.cta-card-title {
+  font-family: var(--serif);
+  font-size: 26px;
+  font-weight: 500;
+  line-height: 1.15;
+  font-variation-settings: "SOFT" 50, "opsz" 32;
+  margin-bottom: 10px;
+  letter-spacing: -0.01em;
+}
+.cta-card-title em { font-style: italic; color: var(--gold-bright); }
+.cta-card.token .cta-card-title em { color: var(--token-bright); }
+
+.cta-card-desc {
+  font-size: 13px;
+  color: rgba(245, 242, 235, 0.7);
+  line-height: 1.6;
+  margin-bottom: 24px;
+}
+
+.cta-card-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold-bright);
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.15s;
+}
+.cta-card.token .cta-card-action { color: var(--token-bright); }
+.cta-card-action svg {
+  width: 12px; height: 12px;
+  transition: transform 0.2s;
+}
+.cta-card-action:hover svg { transform: translateX(4px); }
+
+.cta-contact-line {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 24px;
+  background: var(--graphite);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  color: var(--cream);
+}
+.cta-contact-line-dot {
+  width: 8px; height: 8px;
+  background: var(--success);
+  border-radius: 50%;
+  box-shadow: 0 0 8px var(--success);
+  animation: pulse 2s infinite;
+}
+
+/* ============ FOOTER ============ */
+.footer {
+  padding: 100px 0 48px;
+  background: linear-gradient(180deg, transparent 0%, #08080F 100%);
+  border-top: 1px solid var(--line);
+  position: relative;
+}
+
+.footer-inner {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+
+.footer-top {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+  gap: 40px;
+  padding-bottom: 60px;
+  border-bottom: 1px solid var(--line);
+}
+@media (max-width: 900px) {
+  .footer-top { grid-template-columns: 1fr 1fr; gap: 32px; }
+}
+@media (max-width: 500px) { .footer-top { grid-template-columns: 1fr; } }
+
+.footer-brand-col {
+  max-width: 360px;
+}
+.footer-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+.footer-brand svg { width: 36px; height: 36px; }
+.footer-brand strong {
+  font-family: var(--serif);
+  font-size: 20px;
+  font-weight: 500;
+  font-variation-settings: "SOFT" 50, "opsz" 32;
+}
+
+.footer-tagline {
+  font-family: var(--serif);
+  font-size: 15px;
+  line-height: 1.55;
+  color: rgba(245, 242, 235, 0.65);
+  font-weight: 300;
+  font-variation-settings: "SOFT" 40, "opsz" 14;
+  margin-bottom: 24px;
+}
+.footer-tagline em { font-style: italic; color: var(--gold-bright); }
+
+.footer-socials {
+  display: flex;
+  gap: 8px;
+}
+.footer-social {
+  width: 36px; height: 36px;
+  background: var(--graphite);
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--mist);
+  transition: all 0.15s;
+}
+.footer-social:hover { color: var(--gold); border-color: var(--gold); }
+.footer-social svg { width: 14px; height: 14px; }
+
+.footer-col-title {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.25em;
+  color: var(--gold);
+  text-transform: uppercase;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.footer-links {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  list-style: none;
+}
+.footer-links li a {
+  font-size: 13px;
+  color: rgba(245, 242, 235, 0.65);
+  transition: color 0.15s;
+}
+.footer-links li a:hover { color: var(--gold-bright); }
+
+.footer-bottom {
+  padding-top: 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.footer-copy {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--mist);
+  letter-spacing: 0.04em;
+}
+.footer-copy strong { color: var(--gold); font-weight: 600; }
+
+.footer-legal {
+  display: flex;
+  gap: 24px;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  color: var(--mist);
+  text-transform: uppercase;
+}
+.footer-legal a:hover { color: var(--gold); }
+
+/* Scroll-triggered fade-in */
+.fade-in {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s cubic-bezier(0.2, 0.9, 0.3, 1), transform 0.8s cubic-bezier(0.2, 0.9, 0.3, 1);
+}
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+</style>
+
+<!-- ============ BUSINESS MODEL ============ -->
+<section class="model-section" id="model">
+  <div class="container">
+    <div class="section-head center">
+      <div class="eyebrow" style="justify-content: center;">[05] · Mô hình kinh doanh</div>
+      <h2 class="section-title">
+        Năm dòng doanh thu.<br>
+        Một <em>flywheel</em>.
+      </h2>
+      <p class="section-lede">
+        Zeni không phụ thuộc một nguồn thu duy nhất. Mỗi dòng doanh thu gia tốc cho nhau: càng nhiều nhà hàng → càng nhiều thực khách → càng nhiều $ZENI lưu thông → càng nhiều data → càng nhiều giá trị cho investor.
+      </p>
+    </div>
+
+    <div class="revenue-streams">
+      <div class="stream-card">
+        <div class="stream-num">[01]</div>
+        <div class="stream-pct">42%</div>
+        <div class="stream-title">SaaS Subscription</div>
+        <div class="stream-desc">Monthly subscription cho nhà hàng, theo tier Harbor / Voyage / Flagship. Recurring revenue cơ bản.</div>
+        <div class="stream-example">3-12M VNĐ / tháng / cơ sở</div>
+      </div>
+
+      <div class="stream-card">
+        <div class="stream-num">[02]</div>
+        <div class="stream-pct">28%</div>
+        <div class="stream-title">Transaction Fees</div>
+        <div class="stream-desc">Phí trên mỗi booking, mỗi đơn hàng, mỗi giao dịch supplier bidding. Tự scale theo volume ecosystem.</div>
+        <div class="stream-example">0.8-2.4% / transaction</div>
+      </div>
+
+      <div class="stream-card token">
+        <div class="stream-num">[03]</div>
+        <div class="stream-pct">18%</div>
+        <div class="stream-title">$ZENI Economy</div>
+        <div class="stream-desc">Phí mint &middot; phí swap &middot; stake yield spread &middot; unclaimed token revenue. Token kinh tế riêng, không phụ thuộc SaaS.</div>
+        <div class="stream-example">Token velocity spread</div>
+      </div>
+
+      <div class="stream-card">
+        <div class="stream-num">[04]</div>
+        <div class="stream-pct">8%</div>
+        <div class="stream-title">Franchise Royalty</div>
+        <div class="stream-desc">Royalty 3% + platform fee 2% từ franchisee. Scale khi nhà hàng chuỗi mở chi nhánh mới.</div>
+        <div class="stream-example">5% lifetime franchise</div>
+      </div>
+
+      <div class="stream-card">
+        <div class="stream-num">[05]</div>
+        <div class="stream-pct">4%</div>
+        <div class="stream-title">Data Intelligence</div>
+        <div class="stream-desc">Anonymized industry report bán cho F&amp;B market research, FMCG brand, real estate developer, investor. Ethical, opt-in.</div>
+        <div class="stream-example">Enterprise reports</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ $ZENI TOKENOMICS ============ -->
+<section class="tokenomics-section" id="tokenomics">
+  <div class="container">
+    <div class="section-head center">
+      <div class="eyebrow token" style="justify-content: center;">[06] · $ZENI Tokenomics</div>
+      <h2 class="section-title">
+        Không phải điểm loyalty.<br>
+        Là một <em class="token">nền kinh tế</em>.
+      </h2>
+      <p class="section-lede">
+        $ZENI không phải là thẻ tích điểm thông thường. Nó là token có utility thực, stake-to-earn, xuyên 50+ nhà hàng trong ecosystem. Thực khách, nhà hàng, KOC, investor &mdash; mỗi người dùng $ZENI theo một cách khác nhau.
+      </p>
+    </div>
+
+    <div class="token-roles">
+      <div class="token-role">
+        <div class="token-role-num">01</div>
+        <div class="token-role-eyebrow">Utility Token</div>
+        <h3 class="token-role-title">Dùng được &mdash;<br><em>không phải điểm ảo</em>.</h3>
+        <p class="token-role-desc">Thực khách dùng $ZENI thanh toán trực tiếp tại nhà hàng, swap VNĐ, gửi bạn, pay bill. 1 $ZENI &asymp; 2.640 VNĐ (rate platform-stabilized).</p>
+        <div class="token-role-mech">
+          <div class="token-mech-item"><span class="token-mech-bullet"></span><span>Thanh toán bill nhà hàng</span></div>
+          <div class="token-mech-item"><span class="token-mech-bullet"></span><span>Swap 2-way sang VNĐ</span></div>
+          <div class="token-mech-item"><span class="token-mech-bullet"></span><span>Gift transfer giữa users</span></div>
+          <div class="token-mech-item"><span class="token-mech-bullet"></span><span>Stake-to-book (đặt bàn)</span></div>
+        </div>
+      </div>
+
+      <div class="token-role">
+        <div class="token-role-num">02</div>
+        <div class="token-role-eyebrow">Loyalty Currency</div>
+        <h3 class="token-role-title">Tích xuyên<br><em>50+ nhà hàng</em>.</h3>
+        <p class="token-role-desc">Ăn bất cứ đâu trong ecosystem, tích +3-5% giá trị bữa bằng $ZENI. Lên tier Captain Club unlock perks đặc quyền. Network effect: càng nhiều brand partner, càng giá trị.</p>
+        <div class="token-role-mech">
+          <div class="token-mech-item"><span class="token-mech-bullet"></span><span>Cashback tự động mỗi bữa</span></div>
+          <div class="token-mech-item"><span class="token-mech-bullet"></span><span>Tier bonus: Sailor → Helmsman → Captain</span></div>
+          <div class="token-mech-item"><span class="token-mech-bullet"></span><span>Referral commission 5-15%</span></div>
+          <div class="token-mech-item"><span class="token-mech-bullet"></span><span>Quest reward hàng ngày</span></div>
+        </div>
+      </div>
+
+      <div class="token-role">
+        <div class="token-role-num">03</div>
+        <div class="token-role-eyebrow">Stake-to-Earn</div>
+        <h3 class="token-role-title">Khóa để<br><em>kiếm yield</em>.</h3>
+        <p class="token-role-desc">Nhà hàng stake $ZENI để share doanh thu platform. Thực khách stake để unlock perks. Investor stake để earn passive income theo growth ecosystem.</p>
+        <div class="token-role-mech">
+          <div class="token-mech-item"><span class="token-mech-bullet"></span><span>Restaurant staking: APR 6-12%</span></div>
+          <div class="token-mech-item"><span class="token-mech-bullet"></span><span>Treasury yield từ transaction fees</span></div>
+          <div class="token-mech-item"><span class="token-mech-bullet"></span><span>Governance vote cho platform</span></div>
+          <div class="token-mech-item"><span class="token-mech-bullet"></span><span>Lock periods 30/90/365 ngày</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="token-flow">
+      <div class="token-flow-title">$ZENI Circulation · Closed-loop Economy</div>
+
+      <div class="token-flow-diagram">
+        <div class="token-flow-side">
+          <div class="token-flow-box">
+            <div class="token-flow-box-label">Source · Phát sinh</div>
+            <div class="token-flow-box-main">Bữa ăn · Quest · Referral</div>
+            <div class="token-flow-box-sub">Mint khi user hoàn thành action</div>
+          </div>
+          <div class="token-flow-box">
+            <div class="token-flow-box-label">Source · Nạp</div>
+            <div class="token-flow-box-main">Fiat top-up · Banking</div>
+            <div class="token-flow-box-sub">VNĐ → $ZENI · fee 0%</div>
+          </div>
+          <div class="token-flow-box">
+            <div class="token-flow-box-label">Source · Yield</div>
+            <div class="token-flow-box-main">Stake reward · Airdrop</div>
+            <div class="token-flow-box-sub">Passive income theo growth</div>
+          </div>
+        </div>
+
+        <div class="token-flow-center">
+          <div class="token-flow-center-sym">$Z</div>
+          <div class="token-flow-center-lbl">Zeni Token</div>
+        </div>
+
+        <div class="token-flow-side">
+          <div class="token-flow-box">
+            <div class="token-flow-box-label">Sink · Thanh toán</div>
+            <div class="token-flow-box-main">Pay bill · Platform fee</div>
+            <div class="token-flow-box-sub">Nhà hàng discount 20% khi pay ZENI</div>
+          </div>
+          <div class="token-flow-box">
+            <div class="token-flow-box-label">Sink · Swap</div>
+            <div class="token-flow-box-main">$ZENI → VNĐ bank</div>
+            <div class="token-flow-box-sub">Fee 2% · stable peg</div>
+          </div>
+          <div class="token-flow-box">
+            <div class="token-flow-box-label">Sink · Lock</div>
+            <div class="token-flow-box-main">Stake · Treasury · Burn</div>
+            <div class="token-flow-box-sub">Deflationary pressure</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PRICING ============ -->
+<section class="pricing-section" id="pricing">
+  <div class="container">
+    <div class="section-head center">
+      <div class="eyebrow" style="justify-content: center;">[07] · Pricing</div>
+      <h2 class="section-title">
+        Ba cấp độ.<br>
+        Thực dụng đến <em>IPO-grade</em>.
+      </h2>
+      <p class="section-lede">
+        Zeni được thiết kế để mở rộng từ quán ăn 50m² đến chuỗi đa quốc gia. Mỗi tier unlock module cao hơn, AI agent nhiều hơn, quyền staking cao hơn. Tất cả đều có lộ trình upgrade.
+      </p>
+    </div>
+
+    <div class="pricing-grid">
+      <!-- HARBOR -->
+      <div class="price-card">
+        <div class="price-eyebrow">[01] · Entry</div>
+        <h3 class="price-name">Harbor</h3>
+        <p class="price-sub">Cho quán ăn nhỏ và cafe độc lập. Bắt đầu bằng điều cơ bản, nâng cấp khi grow.</p>
+
+        <div class="price-amount">
+          <span class="price-currency">VNĐ</span>
+          <span class="price-number">3M</span>
+          <span class="price-unit">/ tháng</span>
+        </div>
+        <div class="price-note">Hoặc stake 5.000 $ZENI · miễn phí subscription</div>
+
+        <a href="#cta" class="price-cta">Bắt đầu 14 ngày miễn phí</a>
+
+        <div class="price-features-label">Bao gồm</div>
+        <ul class="price-features">
+          <li class="price-feature">
+            <svg class="price-feature-check" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 7 L6 10 L11 4"/></svg>
+            CRM 360° &middot; tối đa 2.000 khách
+          </li>
+          <li class="price-feature">
+            <svg class="price-feature-check" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 7 L6 10 L11 4"/></svg>
+            Booking engine + POS tích hợp
+          </li>
+          <li class="price-feature">
+            <svg class="price-feature-check" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 7 L6 10 L11 4"/></svg>
+            2 AI agent: Thủy + Hải
+          </li>
+          <li class="price-feature">
+            <svg class="price-feature-check" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 7 L6 10 L11 4"/></svg>
+            $ZENI wallet + Captain Club access
+          </li>
+          <li class="price-feature">
+            <svg class="price-feature-check" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 7 L6 10 L11 4"/></svg>
+            Mobile staff app (unlimited users)
+          </li>
+          <li class="price-feature locked">
+            <svg class="price-feature-check" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 7 L11 7"/></svg>
+            Franchise Engine
+          </li>
+          <li class="price-feature locked">
+            <svg class="price-feature-check" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 7 L11 7"/></svg>
+            Multi-supplier bidding
+          </li>
+        </ul>
+      </div>
+
+      <!-- VOYAGE (featured) -->
+      <div class="price-card featured">
+        <span class="price-tag-recommend">Phổ biến nhất</span>
+        <div class="price-eyebrow">[02] · Standard</div>
+        <h3 class="price-name"><em>Voyage</em></h3>
+        <p class="price-sub">Cho nhà hàng trung &mdash; lớn, multi-location. Unlock 6 AI agent, franchise engine, analytics deep.</p>
+
+        <div class="price-amount">
+          <span class="price-currency">VNĐ</span>
+          <span class="price-number">7M</span>
+          <span class="price-unit">/ tháng / cơ sở</span>
+        </div>
+        <div class="price-note">Hoặc stake 15.000 $ZENI · discount 25% khi pay $ZENI</div>
+
+        <a href="#cta" class="price-cta">Đặt demo cho chuỗi</a>
+
+        <div class="price-features-label">Tất cả Harbor +</div>
+        <ul class="price-features">
+          <li class="price-feature">
+            <svg class="price-feature-check" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 7 L6 10 L11 4"/></svg>
+            CRM không giới hạn &middot; segment AI
+          </li>
+          <li class="price-feature">
+            <svg class="price-feature-check" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 7 L6 10 L11 4"/></svg>
+            6 AI agent đầy đủ: Thủy, Hải, Phong, Lâm, Minh, Ngọc
+          </li>
+          <li class="price-feature">
+            <svg class="price-feature-check" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 7 L6 10 L11 4"/></svg>
+            Multi-supplier bidding marketplace
+          </li>
+          <li class="price-feature">
+            <svg class="price-feature-check" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 7 L6 10 L11 4"/></svg>
+            Franchise Engine + location scoring
+          </li>
+          <li class="price-feature">
+            <svg class="price-feature-check" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 7 L6 10 L11 4"/></svg>
+            Affiliate / KOC campaigns
+          </li>
+          <li class="price-feature">
+            <svg class="price-feature-check" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 7 L6 10 L11 4"/></svg>
+            P&amp;L realtime + data room
+          </li>
+          <li class="price-feature">
+            <svg class="price-feature-check" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 7 L6 10 L11 4"/></svg>
+            Dedicated Customer Success
+          </li>
+        </ul>
+      </div>
+
+      <!-- FLAGSHIP -->
+      <div class="price-card">
+        <div class="price-eyebrow">[03] · Enterprise</div>
+        <h3 class="price-name">Flagship</h3>
+        <p class="price-sub">Cho chuỗi 10+ cơ sở hoặc F&amp;B group chuẩn bị IPO. Custom AI, white-label, audit compliance.</p>
+
+        <div class="price-amount">
+          <span class="price-currency">VNĐ</span>
+          <span class="price-number">12M</span>
+          <span class="price-unit">/ tháng / cơ sở</span>
+        </div>
+        <div class="price-note">Hoặc stake 50.000 $ZENI · custom enterprise terms</div>
+
+        <a href="#cta" class="price-cta">Liên hệ sales team</a>
+
+        <div class="price-features-label">Tất cả Voyage +</div>
+        <ul class="price-features">
+          <li class="price-feature">
+            <svg class="price-feature-check" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 7 L6 10 L11 4"/></svg>
+            Custom AI agent trained trên data bạn
+          </li>
+          <li class="price-feature">
+            <svg class="price-feature-check" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 7 L6 10 L11 4"/></svg>
+            White-label app cho Captain Club
+          </li>
+          <li class="price-feature">
+            <svg class="price-feature-check" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 7 L6 10 L11 4"/></svg>
+            AI vision audit bếp (camera)
+          </li>
+          <li class="price-feature">
+            <svg class="price-feature-check" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 7 L6 10 L11 4"/></svg>
+            IPO-ready data room + audit trail
+          </li>
+          <li class="price-feature">
+            <svg class="price-feature-check" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 7 L6 10 L11 4"/></svg>
+            SLA 99.95% + priority support
+          </li>
+          <li class="price-feature">
+            <svg class="price-feature-check" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 7 L6 10 L11 4"/></svg>
+            Governance vote (stake-weighted)
+          </li>
+          <li class="price-feature">
+            <svg class="price-feature-check" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 7 L6 10 L11 4"/></svg>
+            Revenue share chương trình Flagship 50
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ECOSYSTEM ============ -->
+<section class="ecosystem-section" id="ecosystem">
+  <div class="container">
+    <div class="ecosystem-hero">
+      <div class="eyebrow" style="justify-content: center;">[08] · Hệ sinh thái</div>
+      <div class="ecosystem-number">50+</div>
+      <h2 style="font-family: var(--serif); font-size: clamp(28px, 4vw, 44px); font-weight: 300; line-height: 1.15; margin-bottom: 20px; letter-spacing: -0.018em; font-variation-settings: 'SOFT' 50, 'opsz' 144;">
+        Nhà hàng &middot; Resort &middot; Cafe<br>
+        đang cam kết <em style="font-style: italic; color: var(--token-bright); font-variation-settings: 'SOFT' 120, 'opsz' 144;">dưới một hệ điều hành</em>.
+      </h2>
+      <p style="font-family: var(--serif); font-size: 17px; font-weight: 300; color: rgba(245, 242, 235, 0.7); line-height: 1.55; max-width: 620px; margin: 0 auto; font-variation-settings: 'SOFT' 40, 'opsz' 20;">
+        Flagship ở 3 thành phố lớn, resort destination ở 5 tỉnh, và network hàng chục cafe độc lập. Network effect khởi động khi ecosystem đạt ngưỡng 100 venues &mdash; target cuối 2027.
+      </p>
+    </div>
+
+    <div class="ecosystem-stats">
+      <div class="eco-stat">
+        <div class="eco-stat-val">50+</div>
+        <div class="eco-stat-lbl">Venues<br>partner</div>
+      </div>
+      <div class="eco-stat">
+        <div class="eco-stat-val">3</div>
+        <div class="eco-stat-lbl">Thành phố<br>trọng điểm</div>
+      </div>
+      <div class="eco-stat">
+        <div class="eco-stat-val">12.4k</div>
+        <div class="eco-stat-lbl">Captain<br>active</div>
+      </div>
+      <div class="eco-stat">
+        <div class="eco-stat-val">2.8M</div>
+        <div class="eco-stat-lbl">$ZENI<br>lưu hành</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ROADMAP ============ -->
+<section class="roadmap-section" id="roadmap">
+  <div class="container">
+    <div class="section-head center">
+      <div class="eyebrow" style="justify-content: center;">[09] · Roadmap</div>
+      <h2 class="section-title">
+        Từ prototype<br>
+        đến <em>SGX IPO 2031</em>.
+      </h2>
+      <p class="section-lede">
+        5 năm. 6 milestones. Một hệ sinh thái F&amp;B đầu tiên Việt Nam được niêm yết trên sàn quốc tế. Đây không phải slide deck &mdash; đây là playbook đang vận hành.
+      </p>
+    </div>
+  </div>
+
+  <div class="roadmap-timeline">
+    <div class="roadmap-line"></div>
+
+    <div class="roadmap-year current">
+      <div class="roadmap-year-label">2026</div>
+      <div class="roadmap-marker"><div class="roadmap-marker-dot"></div></div>
+      <div class="roadmap-content">
+        <div class="roadmap-phase">Angel &middot; Đang chạy</div>
+        <h3 class="roadmap-title">Hạt giống &middot; <em>3 co-founders</em></h3>
+        <p class="roadmap-desc">Prototype live, flagship Chinh Thủy HN go-live, 500 Captain Club members đầu tiên. Đang tuyển 3 đồng sáng lập vào team core: 3B VNĐ mỗi người cho 3% equity tại pre-money 100 tỷ.</p>
+        <span class="roadmap-mile">Q1/2026 &middot; Angel 9 tỷ</span>
+        <span class="roadmap-mile">Q3/2026 &middot; Seed 25 tỷ</span>
+      </div>
+    </div>
+
+    <div class="roadmap-year">
+      <div class="roadmap-year-label">2027</div>
+      <div class="roadmap-marker"><div class="roadmap-marker-dot"></div></div>
+      <div class="roadmap-content">
+        <div class="roadmap-phase">Series A &middot; Scale</div>
+        <h3 class="roadmap-title">100 venues &middot; <em>2 thành phố</em></h3>
+        <p class="roadmap-desc">HN + HCM full coverage. 100 nhà hàng partner, 50.000 Captain active. Franchise Engine deploy chính thức. $ZENI bật sang tradable trên 1 sàn quốc gia.</p>
+        <span class="roadmap-mile">Series A $10M</span>
+        <span class="roadmap-mile">ARR 80 tỷ</span>
+      </div>
+    </div>
+
+    <div class="roadmap-year">
+      <div class="roadmap-year-label">2028</div>
+      <div class="roadmap-marker"><div class="roadmap-marker-dot"></div></div>
+      <div class="roadmap-content">
+        <div class="roadmap-phase">Series B &middot; SEA expansion</div>
+        <h3 class="roadmap-title">Mở rộng <em>Đông Nam Á</em></h3>
+        <p class="roadmap-desc">Launch Bangkok, Singapore, Jakarta. Bản quốc tế với 4 ngôn ngữ. Partnership với SEA hospitality group. 500 venues ecosystem.</p>
+        <span class="roadmap-mile">Series B $30M</span>
+        <span class="roadmap-mile">ARR 240 tỷ</span>
+      </div>
+    </div>
+
+    <div class="roadmap-year">
+      <div class="roadmap-year-label">2029</div>
+      <div class="roadmap-marker"><div class="roadmap-marker-dot"></div></div>
+      <div class="roadmap-content">
+        <div class="roadmap-phase">Series C &middot; Pre-IPO</div>
+        <h3 class="roadmap-title">1000 venues &middot; <em>profitability</em></h3>
+        <p class="roadmap-desc">Break-even operating, EBITDA margin 22%. 1000+ venues, 500K Captain Club members. Pre-IPO due diligence kick off. Audit Big 4.</p>
+        <span class="roadmap-mile">Series C $80M</span>
+        <span class="roadmap-mile">EBITDA 22%</span>
+      </div>
+    </div>
+
+    <div class="roadmap-year">
+      <div class="roadmap-year-label">2030</div>
+      <div class="roadmap-marker"><div class="roadmap-marker-dot"></div></div>
+      <div class="roadmap-content">
+        <div class="roadmap-phase">Pre-IPO · SGX listing prep</div>
+        <h3 class="roadmap-title">IPO <em>prospectus</em> &middot; roadshow</h3>
+        <p class="roadmap-desc">SGX listing application, prospectus submission, institutional roadshow ASEAN + HK + Nhật. Appointment underwriters (DBS / OCBC). ARR 500 tỷ.</p>
+        <span class="roadmap-mile">Cornerstone locked</span>
+        <span class="roadmap-mile">ARR 500 tỷ</span>
+      </div>
+    </div>
+
+    <div class="roadmap-year">
+      <div class="roadmap-year-label">2031</div>
+      <div class="roadmap-marker"><div class="roadmap-marker-dot"></div></div>
+      <div class="roadmap-content">
+        <div class="roadmap-phase">SGX Listing &middot; Q3</div>
+        <h3 class="roadmap-title">Ring the <em>bell</em> ở Singapore</h3>
+        <p class="roadmap-desc">Zeni Holdings IPO on SGX mainboard. Target market cap 2000+ tỷ. First Vietnamese F&amp;B operating system listed internationally. 48% tổng dilution sau 5 rounds funding.</p>
+        <span class="roadmap-mile">SGX Mainboard</span>
+        <span class="roadmap-mile">Market cap 2.000 tỷ+</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SOCIAL PROOF ============ -->
+<section class="proof-section" id="proof">
+  <div class="container">
+    <div class="section-head center">
+      <div class="eyebrow" style="justify-content: center;">[10] · Niềm tin</div>
+      <h2 class="section-title">
+        Founder đang thực làm.<br>
+        <em>Không</em> chỉ <em>pitch</em>.
+      </h2>
+    </div>
+
+    <div class="proof-stats-row">
+      <div class="proof-stat">
+        <div class="proof-stat-num">20 năm</div>
+        <div class="proof-stat-label">Kinh nghiệm<br>F&amp;B</div>
+      </div>
+      <div class="proof-stat">
+        <div class="proof-stat-num">40 tỷ</div>
+        <div class="proof-stat-label">Đầu tư vào<br>flagship HN</div>
+      </div>
+      <div class="proof-stat">
+        <div class="proof-stat-num">12.4k</div>
+        <div class="proof-stat-label">Captain<br>đã tham gia</div>
+      </div>
+      <div class="proof-stat">
+        <div class="proof-stat-num">v1.2.4</div>
+        <div class="proof-stat-label">Prototype<br>đang chạy</div>
+      </div>
+    </div>
+
+    <div class="testimonials">
+      <div class="testimonial">
+        <div class="testimonial-quote">
+          Trước Zeni, tôi là CEO kiêm kế toán kiêm marketing kiêm tuyển dụng. Sau Zeni, tôi là CEO &mdash; thật sự. 6 AI agent thay 15 người <em>không phải slogan</em>, mà là daily reality.
+        </div>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">TC</div>
+          <div class="testimonial-author-body">
+            <div class="testimonial-author-name">Tuấn Chinh</div>
+            <div class="testimonial-author-role">Founder &middot; Chinh Thủy Seafood</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial">
+        <div class="testimonial-quote">
+          Tôi là Captain ở 6 nhà hàng khác nhau trong ecosystem. <em>Một ví duy nhất</em>, một tier duy nhất, tự động chuyển điểm. Trước đó tôi có 11 thẻ VIP nhưng không nhớ thẻ nào.
+        </div>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar cyan">NL</div>
+          <div class="testimonial-author-body">
+            <div class="testimonial-author-name">Nguyễn Ngọc Linh</div>
+            <div class="testimonial-author-role">Captain &middot; 12 hải trình</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial">
+        <div class="testimonial-quote">
+          KOC trước giờ chạy content ăn may. Zeni cho tôi link UTM riêng, thấy ai click ai đến ăn. Tháng 4 kiếm 28M commission, <em>thanh toán T+0</em> bằng $ZENI. Không gọi bàn không nhắn zalo.
+        </div>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar rose">MA</div>
+          <div class="testimonial-author-body">
+            <div class="testimonial-author-name">Mia Anh</div>
+            <div class="testimonial-author-role">@miaanh.foodie &middot; Top KOC</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ DUAL CTA ============ -->
+<section class="cta-section" id="cta">
+  <div class="cta-inner">
+    <div class="eyebrow" style="justify-content: center;">[11] · Hành động</div>
+
+    <h2 class="cta-title">
+      Sẵn sàng<br>
+      <em>cùng xây dựng?</em>
+    </h2>
+    <p class="cta-lede">
+      Zeni F&amp;B OS không phải một sản phẩm bạn mua về rồi setup một mình. Đây là một hệ sinh thái bạn tham gia, đóng góp, và thu hoạch cùng.
+    </p>
+
+    <div class="cta-dual">
+      <div class="cta-card primary">
+        <div class="cta-card-eyebrow">Cho nhà hàng</div>
+        <h3 class="cta-card-title">
+          Xem <em>prototype</em><br>
+          trực tiếp
+        </h3>
+        <p class="cta-card-desc">
+          Prototype v1.2.4 đang live. Click để xem toàn bộ 15 module, 6 AI agent, gamification, $ZENI wallet, và cả admin quest builder &mdash; tất cả chạy thật.
+        </p>
+        <a href="zeni-fb-os-prototype.html" class="cta-card-action">
+          Mở prototype ngay
+          <svg viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 6.5 L11 6.5 M7 3 L11 6.5 L7 10"/></svg>
+        </a>
+      </div>
+
+      <div class="cta-card token">
+        <div class="cta-card-eyebrow">Cho Investor</div>
+        <h3 class="cta-card-title">
+          Pitch deck<br>
+          <em>SGX IPO 2031</em>
+        </h3>
+        <p class="cta-card-desc">
+          Angel round 9 tỷ đang đóng. 3 suất co-founder còn: 3B VNĐ mỗi người cho 3% equity pre-money 100 tỷ. Pitch deck 48 trang + data room live.
+        </p>
+        <a href="mailto:invest@zeni.holdings?subject=Request%20pitch%20deck" class="cta-card-action">
+          Yêu cầu pitch deck
+          <svg viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 6.5 L11 6.5 M7 3 L11 6.5 L7 10"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <div class="cta-contact-line">
+      <span class="cta-contact-line-dot"></span>
+      <span>invest@zeni.holdings &middot; Hà Nội &middot; đang phản hồi trong 24h</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand-col">
+        <div class="footer-brand">
+          <svg viewBox="0 0 36 36" fill="none">
+            <path d="M18 3 L31 10 L31 26 L18 33 L5 26 L5 10 Z" stroke="url(#fGrad)" stroke-width="1.2"/>
+            <circle cx="18" cy="18" r="6" stroke="url(#fGrad)" stroke-width="1.2"/>
+            <circle cx="18" cy="18" r="2" fill="#D4A65A"/>
+            <defs>
+              <linearGradient id="fGrad" x1="0" y1="0" x2="36" y2="36">
+                <stop offset="0" stop-color="#D4A65A"/>
+                <stop offset="1" stop-color="#00E5D4"/>
+              </linearGradient>
+            </defs>
+          </svg>
+          <strong>Zeni F&amp;B OS</strong>
+        </div>
+        <p class="footer-tagline">
+          Một hệ điều hành cho <em>tương lai</em> ngành F&amp;B Việt Nam. Thuộc Zeni Holdings &mdash; target SGX IPO 2031.
+        </p>
+        <div class="footer-socials">
+          <a href="#" class="footer-social" aria-label="LinkedIn"><svg viewBox="0 0 14 14" fill="currentColor"><rect x="1" y="5" width="2.5" height="8"/><circle cx="2.25" cy="2" r="1.25"/><path d="M5.5 5 L5.5 13 L8 13 L8 9 Q 8 7.5 9.25 7.5 Q 10.5 7.5 10.5 9 L10.5 13 L13 13 L13 8.5 Q 13 5.5 10.5 5.5 Q 8.5 5.5 8 7 L8 5 Z"/></svg></a>
+          <a href="#" class="footer-social" aria-label="Facebook"><svg viewBox="0 0 14 14" fill="currentColor"><path d="M8.5 14 L8.5 8 L10.5 8 L11 5.5 L8.5 5.5 L8.5 4.2 Q 8.5 3.2 9.5 3.2 L11 3.2 L11 1 Q 10.25 0.9 9 0.9 Q 6 0.9 6 3.8 L6 5.5 L4 5.5 L4 8 L6 8 L6 14 Z"/></svg></a>
+          <a href="#" class="footer-social" aria-label="TikTok"><svg viewBox="0 0 14 14" fill="currentColor"><path d="M9 1 L9 8.5 Q 9 10 7.5 10 Q 6 10 6 8.5 Q 6 7 7.5 7 Q 8 7 8.5 7.2 L8.5 5.2 Q 8 5 7.5 5 Q 4 5 4 8.5 Q 4 12 7.5 12 Q 11 12 11 8.5 L11 4.5 Q 12 5 13.5 5 L13.5 3 Q 11 3 11 1 Z"/></svg></a>
+          <a href="#" class="footer-social" aria-label="X"><svg viewBox="0 0 14 14" fill="currentColor"><path d="M1 1 L6 7 L1 13 L2.5 13 L6.8 8 L10.5 13 L13 13 L8 6.5 L12.5 1 L11 1 L7.3 5.5 L4 1 Z"/></svg></a>
+        </div>
+      </div>
+
+      <div>
+        <div class="footer-col-title">Sản phẩm</div>
+        <ul class="footer-links">
+          <li><a href="zeni-fb-os-prototype.html">Prototype live</a></li>
+          <li><a href="#solution">Tổng quan</a></li>
+          <li><a href="#pricing">Pricing</a></li>
+          <li><a href="#tokenomics">$ZENI</a></li>
+          <li><a href="#roadmap">Roadmap</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <div class="footer-col-title">Vai trò</div>
+        <ul class="footer-links">
+          <li><a href="#sh-owner">Chủ nhà hàng</a></li>
+          <li><a href="#sh-diner">Thực khách</a></li>
+          <li><a href="#sh-affiliate">KOC / Affiliate</a></li>
+          <li><a href="#sh-franchisee">Franchisee</a></li>
+          <li><a href="#sh-investor">Investor</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <div class="footer-col-title">Công ty</div>
+        <ul class="footer-links">
+          <li><a href="#vision">Tầm nhìn</a></li>
+          <li><a href="#proof">Founder story</a></li>
+          <li><a href="#cta">Careers</a></li>
+          <li><a href="mailto:press@zeni.holdings">Press kit</a></li>
+          <li><a href="mailto:partner@zeni.holdings">Partnerships</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <div class="footer-col-title">Liên hệ</div>
+        <ul class="footer-links">
+          <li><a href="mailto:hello@zeni.holdings">hello@zeni.holdings</a></li>
+          <li><a href="mailto:invest@zeni.holdings">invest@zeni.holdings</a></li>
+          <li><a href="mailto:partner@zeni.holdings">partner@zeni.holdings</a></li>
+          <li style="color: var(--mist); font-size: 12px; margin-top: 8px;">Hà Nội &middot; Việt Nam</li>
+          <li style="color: var(--mist); font-size: 12px;">Trụ sở: 23 Nguyễn Đình Chiểu</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="footer-copy">
+        &copy; 2026 <strong>Zeni Holdings</strong> &middot; All rights reserved &middot; Made with &hearts; in Vietnam
+      </div>
+      <div class="footer-legal">
+        <a href="#">Terms</a>
+        <a href="#">Privacy</a>
+        <a href="#">Cookies</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Scroll-triggered topnav
+const topnav = document.getElementById('topnav');
+window.addEventListener('scroll', () => {
+  if (window.scrollY > 40) {
+    topnav.classList.add('scrolled');
+  } else {
+    topnav.classList.remove('scrolled');
+  }
+}, { passive: true });
+
+// Smooth scroll for anchor links
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const href = a.getAttribute('href');
+    if (href === '#' || href.length < 2) return;
+    const target = document.querySelector(href);
+    if (target) {
+      e.preventDefault();
+      const top = target.getBoundingClientRect().top + window.scrollY - 60;
+      window.scrollTo({ top, behavior: 'smooth' });
+    }
+  });
+});
+
+// Fade-in observer
+const fadeEls = document.querySelectorAll('.fade-in');
+const io = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      io.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.12, rootMargin: '-40px 0px' });
+fadeEls.forEach(el => io.observe(el));
+</script>
+</body>
+</html>

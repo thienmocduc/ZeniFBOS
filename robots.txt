@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /staging/
+
+Sitemap: https://zeni.holdings/sitemap.xml

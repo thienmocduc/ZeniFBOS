@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1200" y2="630" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#0C0C14"/>
+      <stop offset="1" stop-color="#141420"/>
+    </linearGradient>
+    <radialGradient id="glow1" cx="200" cy="180" r="300" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#D4A65A" stop-opacity="0.25"/>
+      <stop offset="1" stop-color="#D4A65A" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glow2" cx="1000" cy="500" r="320" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#00E5D4" stop-opacity="0.18"/>
+      <stop offset="1" stop-color="#00E5D4" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="logoGrad" x1="0" y1="0" x2="120" y2="120" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#D4A65A"/>
+      <stop offset="1" stop-color="#00E5D4"/>
+    </linearGradient>
+    <linearGradient id="textGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#F5F2EB"/>
+      <stop offset="1" stop-color="#F0C072"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect width="1200" height="630" fill="url(#glow1)"/>
+  <rect width="1200" height="630" fill="url(#glow2)"/>
+
+  <g transform="translate(80, 110)">
+    <path d="M60 8 L110 34 L110 86 L60 112 L10 86 L10 34 Z" stroke="url(#logoGrad)" stroke-width="3" fill="none"/>
+    <circle cx="60" cy="60" r="18" stroke="url(#logoGrad)" stroke-width="3" fill="none"/>
+    <circle cx="60" cy="60" r="6" fill="#D4A65A"/>
+  </g>
+
+  <text x="220" y="160" font-family="'Fraunces', Georgia, serif" font-size="38" font-weight="500" fill="#F5F2EB" letter-spacing="-0.5">Zeni F&amp;B OS</text>
+  <text x="220" y="195" font-family="'JetBrains Mono', monospace" font-size="13" fill="#6A6A7E" letter-spacing="4">OPERATING SYSTEM · VIETNAM · 2026</text>
+
+  <text x="80" y="340" font-family="'Fraunces', Georgia, serif" font-size="78" font-weight="300" fill="#F5F2EB" letter-spacing="-2">Hệ điều hành cho</text>
+  <text x="80" y="425" font-family="'Fraunces', Georgia, serif" font-style="italic" font-size="78" font-weight="300" fill="#F0C072" letter-spacing="-2">tương lai ngành F&amp;B.</text>
+
+  <text x="80" y="510" font-family="'Inter Tight', sans-serif" font-size="26" font-weight="300" fill="#F5F2EB" opacity="0.78">Một nền tảng. Tám vai trò. Một hệ sinh thái.</text>
+
+  <line x1="80" y1="555" x2="1120" y2="555" stroke="#F5F2EB" stroke-opacity="0.1"/>
+  <text x="80" y="590" font-family="'JetBrains Mono', monospace" font-size="13" fill="#6A6A7E" letter-spacing="3">ZENI.HOLDINGS  ·  APP.ZENI.HOLDINGS</text>
+</svg>
