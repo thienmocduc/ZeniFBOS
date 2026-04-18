@@ -3,4 +3,4 @@ Allow: /
 Disallow: /admin/
 Disallow: /staging/
 
-Sitemap: https://zeni.holdings/sitemap.xml
+Sitemap: https://zenifb.com/sitemap.xml

@@ -6,9 +6,9 @@ Hệ điều hành cho tương lai ngành F&B Việt Nam — Một nền tảng.
 
 | Path | Subdomain (production) | Nguồn |
 | --- | --- | --- |
-| `/index.html` | `zeni.holdings` | Landing marketing |
-| `/app/index.html` | `app.zeni.holdings` | Prototype tương tác |
-| `/docs/index.html` | `docs.zeni.holdings` | Doc Portal (sẽ bổ sung) |
+| `/index.html` | `zenifb.com` | Landing marketing |
+| `/app/index.html` | `app.zenifb.com` | Prototype tương tác |
+| `/docs/index.html` | `docs.zenifb.com` | Doc Portal (sẽ bổ sung) |
 
 ## Phase
 
