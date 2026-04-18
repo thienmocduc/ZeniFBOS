@@ -10,3 +10,9 @@ node_modules/
 dist/
 build/
 .claude/settings.local.json
+.claude/scheduled_tasks.lock
+.claude/memory/
+
+# Cloudflare wrangler cache + generated app build
+.wrangler/
+build-app/
