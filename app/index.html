@@ -2709,9 +2709,42 @@ body::before {
   font-weight: 600;
 }
 .cust-nav-btn svg { width: 14px; height: 14px; }
-@media (max-width: 500px) {
-  .cust-nav-btn { padding: 9px 10px; font-size: 10px; }
-  .cust-nav-btn span { display: none; }
+
+/* ====== MOBILE: full-width bottom nav matching reference UI ====== */
+@media (max-width: 899px) {
+  .cust-bottom-nav {
+    left: 12px;
+    right: 12px;
+    bottom: 14px;
+    transform: none;
+    width: auto;
+    max-width: none;
+    justify-content: space-around;
+    padding: 8px 10px;
+    gap: 0;
+    border-radius: 22px;
+  }
+  .cust-nav-btn {
+    flex: 1;
+    flex-direction: column;
+    gap: 4px;
+    padding: 8px 6px;
+    font-size: 10px;
+    letter-spacing: 0.02em;
+    border-radius: 14px;
+    min-width: 0;
+  }
+  .cust-nav-btn span { display: inline; }
+  .cust-nav-btn svg { width: 18px; height: 18px; }
+  .cust-nav-btn.active {
+    background: linear-gradient(180deg, var(--gold) 0%, #B8864A 100%);
+    color: var(--obsidian);
+    box-shadow: 0 4px 12px rgba(212, 166, 90, 0.35), inset 0 1px 0 rgba(255,255,255,0.2);
+  }
+}
+@media (max-width: 360px) {
+  .cust-nav-btn { font-size: 9px; padding: 7px 4px; }
+  .cust-nav-btn svg { width: 17px; height: 17px; }
 }
 
 /* ============ CUSTOMER HOME ============ */
@@ -7821,7 +7854,63 @@ function selectAuthRole(role) {
   });
 }
 
-function handleAuthSubmit() {
+/* ============ REAL ACCOUNT STORAGE ============ */
+const ZENI_USERS_KEY = 'zeni_fb_users';
+const ZENI_SESSION_KEY = 'zeni_fb_session';
+
+async function hashPassword(pw) {
+  const enc = new TextEncoder().encode('zeni-fb-salt:' + pw);
+  const buf = await crypto.subtle.digest('SHA-256', enc);
+  return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
+function getUsers() {
+  try { return JSON.parse(localStorage.getItem(ZENI_USERS_KEY) || '[]'); }
+  catch { return []; }
+}
+
+function saveUsers(list) {
+  localStorage.setItem(ZENI_USERS_KEY, JSON.stringify(list));
+}
+
+function findUser(email) {
+  return getUsers().find(u => u.email.toLowerCase() === email.toLowerCase());
+}
+
+async function seedDefaultAccounts() {
+  if (getUsers().length > 0) return;
+  const seeds = [
+    { email: 'chairman@zeni.holdings', password: 'Zeni@2031', name: 'Chairman Zeni', role: 'restaurant' },
+    { email: 'owner@chinhthuy.vn',     password: 'Chinh@2026', name: 'Tuấn Chinh',     role: 'restaurant' },
+    { email: 'diner@zeni.app',         password: 'Diner@2026', name: 'Ngọc Linh',      role: 'customer' }
+  ];
+  const users = [];
+  for (const s of seeds) {
+    users.push({
+      email: s.email,
+      name: s.name,
+      role: s.role,
+      passwordHash: await hashPassword(s.password),
+      createdAt: new Date().toISOString(),
+      seed: true
+    });
+  }
+  saveUsers(users);
+}
+
+function saveSession(user) {
+  localStorage.setItem(ZENI_SESSION_KEY, JSON.stringify({
+    email: user.email, name: user.name, role: user.role, loggedAt: Date.now()
+  }));
+  AppState.currentUser = user;
+}
+
+function clearSession() {
+  localStorage.removeItem(ZENI_SESSION_KEY);
+  AppState.currentUser = null;
+}
+
+async function handleAuthSubmit() {
   const email = document.getElementById('authEmail');
   const password = document.getElementById('authPassword');
 
@@ -7830,9 +7919,13 @@ function handleAuthSubmit() {
     return;
   }
   if (!password || !password.value.trim()) {
-    showToast('Thiếu thông tin', 'Nhập password để tiếp tục', 'warn');
+    showToast('Thiếu thông tin', 'Nhập mật khẩu để tiếp tục', 'warn');
     return;
   }
+
+  const emailVal = email.value.trim().toLowerCase();
+  const pwVal = password.value;
+  const pwHash = await hashPassword(pwVal);
 
   if (AppState.authMode === 'register') {
     const name = document.getElementById('authName');
@@ -7840,26 +7933,49 @@ function handleAuthSubmit() {
       showToast('Thiếu thông tin', 'Nhập họ tên để tiếp tục', 'warn');
       return;
     }
+    if (pwVal.length < 8) {
+      showToast('Mật khẩu yếu', 'Tối thiểu 8 ký tự', 'warn');
+      return;
+    }
+    if (findUser(emailVal)) {
+      showToast('Email đã tồn tại', 'Hãy chuyển sang Đăng nhập', 'warn');
+      return;
+    }
+    const newUser = {
+      email: emailVal,
+      name: name.value.trim(),
+      role: AppState.selectedRole,
+      passwordHash: pwHash,
+      createdAt: new Date().toISOString()
+    };
+    const users = getUsers();
+    users.push(newUser);
+    saveUsers(users);
+    saveSession(newUser);
+    showToast('Đăng ký thành công', 'Chào mừng ' + newUser.name + ' đến Zeni', 'success');
+    setTimeout(() => {
+      if (newUser.role === 'restaurant') showB2BApp('owner');
+      else showCustomerApp();
+    }, 500);
+    return;
   }
 
-  // Simulate auth success
-  if (AppState.selectedRole === 'restaurant') {
-    showToast('Chào mừng', 'Đăng nhập thành công · chuyển sang dashboard nhà hàng', 'success');
-    setTimeout(() => showB2BApp('owner'), 500);
-  } else {
-    showToast('Chào mừng', 'Đăng nhập thành công · mở Zeni App', 'success');
-    setTimeout(() => showCustomerApp(), 500);
+  // LOGIN
+  const user = findUser(emailVal);
+  if (!user) {
+    showToast('Email chưa đăng ký', 'Kiểm tra lại email hoặc tạo tài khoản mới', 'warn');
+    return;
   }
-}
-
-function quickDemoLogin(type) {
-  if (type === 'restaurant') {
-    showToast('Demo mode', 'Đăng nhập demo · tài khoản Owner', 'info');
-    setTimeout(() => showB2BApp('owner'), 400);
-  } else {
-    showToast('Demo mode', 'Đăng nhập demo · tài khoản Customer', 'info');
-    setTimeout(() => showCustomerApp(), 400);
+  if (user.passwordHash !== pwHash) {
+    showToast('Sai mật khẩu', 'Nhập lại mật khẩu', 'warn');
+    return;
   }
+  saveSession(user);
+  showToast('Chào mừng ' + user.name, 'Đăng nhập thành công', 'success');
+  setTimeout(() => {
+    if (user.role === 'restaurant') showB2BApp('owner');
+    else showCustomerApp();
+  }, 500);
 }
 
 function renderAuthForm() {
@@ -7934,20 +8050,6 @@ function renderAuthForm() {
     <div class="auth-footer-note">
       ${isRegister ? 'Đã có tài khoản? <a onclick="setAuthTab(\'login\')">Đăng nhập</a>' : 'Chưa có tài khoản? <a onclick="setAuthTab(\'register\')">Đăng ký miễn phí</a>'}<br>
       Bằng cách tiếp tục, bạn đồng ý với <a>Terms</a> &amp; <a>Privacy Policy</a>
-    </div>
-
-    <div class="auth-demo-shortcuts">
-      <div class="auth-demo-label">⚡ Demo nhanh · không cần đăng ký</div>
-      <div class="auth-demo-btns">
-        <button class="auth-demo-btn" onclick="quickDemoLogin('restaurant')">
-          <strong>Nhà hàng OS</strong>
-          <small>Dashboard · Agents · $ZENI</small>
-        </button>
-        <button class="auth-demo-btn" onclick="quickDemoLogin('customer')">
-          <strong>Thực khách App</strong>
-          <small>Discover · Tier · Wallet</small>
-        </button>
-      </div>
     </div>
   `;
 }
@@ -8814,13 +8916,31 @@ function renderCustProfile() {
 }
 
 function logoutCustomer() {
+  clearSession();
   showToast('Đã đăng xuất', 'Chuyển về màn hình login', 'info');
   setTimeout(() => showAuth(), 500);
 }
 
 /* ============ INIT AUTH + CUST ============ */
-function initAuthLayer() {
-  // Render auth form initially
+async function initAuthLayer() {
+  await seedDefaultAccounts();
+
+  // Restore session if valid
+  try {
+    const raw = localStorage.getItem(ZENI_SESSION_KEY);
+    if (raw) {
+      const session = JSON.parse(raw);
+      const user = findUser(session.email);
+      if (user) {
+        AppState.currentUser = user;
+        if (user.role === 'restaurant') { showB2BApp('owner'); renderAuthForm(); return; }
+        else { showCustomerApp(); renderAuthForm(); return; }
+      } else {
+        clearSession();
+      }
+    }
+  } catch { clearSession(); }
+
   renderAuthForm();
 }
 

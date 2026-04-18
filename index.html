@@ -227,53 +227,59 @@ section {
 @media (max-width: 768px) { section { padding: 72px 0; } }
 
 /* ================================================================
- * TOP NAV
+ * TOP NAV — collapsed corner pill (GitHub/Zenidigital style)
  * ================================================================ */
 .topnav {
   position: fixed;
-  top: 0; left: 0; right: 0;
+  top: 16px;
+  left: 16px;
   z-index: 100;
-  padding: 16px var(--gutter);
-  background: rgba(12, 12, 20, 0.5);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border-bottom: 1px solid var(--line-soft);
-  transition: all 0.3s;
-}
-
-.topnav.scrolled {
-  background: rgba(12, 12, 20, 0.88);
-  border-bottom-color: var(--line);
-}
-
-.topnav-inner {
-  max-width: var(--max-w);
-  margin: 0 auto;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 32px;
+  gap: 12px;
+  padding: 10px 14px 10px 12px;
+  background: rgba(12, 12, 20, 0.72);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--line-bright);
+  border-radius: 14px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+  cursor: pointer;
+  transition: all 0.25s ease;
+  user-select: none;
 }
+.topnav:hover {
+  border-color: rgba(212, 166, 90, 0.45);
+  box-shadow: 0 14px 36px rgba(0,0,0,0.45), 0 0 0 1px rgba(212, 166, 90, 0.15);
+}
+.topnav.scrolled { background: rgba(12, 12, 20, 0.9); }
+
+/* Hide the old flex row structure — we reuse markup but collapse into a pill */
+.topnav-inner {
+  display: contents;
+}
+.nav-links, .nav-cta-group { display: none !important; }
 
 .brand {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
   cursor: pointer;
 }
-.brand-mark { width: 32px; height: 32px; flex-shrink: 0; }
+.brand-mark { width: 28px; height: 28px; flex-shrink: 0; }
 .brand-text strong {
   font-family: var(--serif);
-  font-size: 18px;
+  font-size: 15px;
   font-weight: 500;
   line-height: 1;
   font-variation-settings: "SOFT" 50, "opsz" 32;
   display: block;
+  color: var(--cream);
 }
 .brand-text small {
   font-family: var(--mono);
-  font-size: 8px;
-  letter-spacing: 0.3em;
+  font-size: 7px;
+  letter-spacing: 0.28em;
   color: var(--mist);
   text-transform: uppercase;
   margin-top: 3px;
@@ -281,26 +287,412 @@ section {
 }
 @media (max-width: 600px) { .brand-text small { display: none; } }
 
-.nav-links {
+/* Toggle icon (hamburger → chevron when sidebar open) */
+.nav-toggle {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  background: rgba(212, 166, 90, 0.1);
+  border: 1px solid rgba(212, 166, 90, 0.25);
+  color: var(--gold-bright);
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  transition: all 0.2s;
+}
+.nav-toggle svg { width: 14px; height: 14px; transition: transform 0.3s; }
+body.sidebar-open .nav-toggle svg { transform: rotate(90deg); }
+body.sidebar-open .topnav { border-color: rgba(212, 166, 90, 0.5); }
+
+/* ================================================================
+ * TOP-RIGHT cluster: Language · Theme · Login
+ * ================================================================ */
+.topnav-right {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  z-index: 100;
   display: flex;
   align-items: center;
-  gap: 28px;
+  gap: 2px;
+  padding: 5px 6px;
+  background: rgba(12, 12, 20, 0.78);
+  backdrop-filter: blur(24px) saturate(160%);
+  -webkit-backdrop-filter: blur(24px) saturate(160%);
+  border: 1px solid var(--line-bright);
+  border-radius: 14px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.04);
 }
-.nav-link {
+.tnr-group { display: inline-flex; align-items: center; gap: 2px; }
+.tnr-divider {
+  width: 1px;
+  height: 18px;
+  background: var(--line-bright);
+  margin: 0 6px;
+  flex-shrink: 0;
+}
+.tnr-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  height: 32px;
+  padding: 0 10px;
+  border-radius: 10px;
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--fog);
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.tnr-btn:hover {
+  background: rgba(255,255,255,0.05);
+  color: var(--cream);
+  border-color: var(--line);
+}
+.tnr-btn svg { width: 12px; height: 12px; opacity: 0.7; }
+.tnr-theme { width: 34px; padding: 0; justify-content: center; }
+.tnr-theme svg { width: 15px; height: 15px; opacity: 0.85; }
+.tnr-theme .tnr-moon { display: none; }
+html[data-theme="light"] .tnr-theme .tnr-sun { display: none; }
+html[data-theme="light"] .tnr-theme .tnr-moon { display: block; }
+
+/* Icon-only quick nav buttons — GitHub style */
+.tnr-icon {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 10px;
+  color: var(--fog);
+  border: 1px solid transparent;
+  background: transparent;
+  text-decoration: none;
+  transition: all 0.15s;
+}
+.tnr-icon svg { width: 15px; height: 15px; opacity: 0.85; }
+.tnr-icon:hover {
+  background: rgba(255,255,255,0.06);
+  color: var(--gold-bright);
+  border-color: rgba(212, 166, 90, 0.22);
+  box-shadow: 0 0 0 3px rgba(212, 166, 90, 0.06);
+}
+.tnr-icon:hover svg { opacity: 1; }
+.tnr-icon:active { transform: scale(0.96); }
+
+/* Tooltip — GitHub-style pill */
+.tnr-icon[data-tip]::after,
+.tnr-btn[data-tip]::after {
+  content: attr(data-tip);
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%) translateY(-4px);
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--cream);
+  background: rgba(12, 12, 20, 0.96);
+  border: 1px solid var(--line-bright);
+  padding: 5px 9px;
+  border-radius: 6px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s, transform 0.15s;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.45);
+  z-index: 102;
+}
+.tnr-icon[data-tip]:hover::after,
+.tnr-btn[data-tip]:hover::after {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+.tnr-btn[data-tip] { position: relative; }
+.tnr-login {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  height: 32px;
+  padding: 0 14px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, var(--gold) 0%, var(--gold-bright) 100%);
+  color: var(--obsidian);
+  font-family: var(--sans);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  text-decoration: none;
+  transition: all 0.15s;
+}
+.tnr-login:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 22px rgba(212, 166, 90, 0.38);
+}
+.tnr-login svg { width: 13px; height: 13px; color: var(--obsidian); opacity: 1; }
+
+.tnr-lang-wrap { position: relative; }
+.tnr-lang-menu {
+  position: absolute;
+  top: 40px;
+  right: 0;
+  min-width: 150px;
+  background: rgba(12, 12, 20, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--line-bright);
+  border-radius: 12px;
+  padding: 6px;
+  display: none;
+  box-shadow: 0 14px 40px rgba(0,0,0,0.5);
+  z-index: 101;
+}
+.tnr-lang-menu.open { display: block; }
+.tnr-lang-opt {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 9px 12px;
+  background: transparent;
+  border: none;
+  color: var(--cream);
+  text-align: left;
+  cursor: pointer;
+  border-radius: 7px;
+  font-size: 12px;
+  font-family: var(--sans);
+  transition: all 0.12s;
+}
+.tnr-lang-opt:hover { background: rgba(212, 166, 90, 0.1); color: var(--gold-bright); }
+.tnr-lang-opt.active { color: var(--gold-bright); background: rgba(212, 166, 90, 0.08); }
+.tnr-lang-opt-code {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  color: var(--mist);
+  margin-left: auto;
+  font-weight: 600;
+}
+.tnr-lang-opt.active .tnr-lang-opt-code { color: var(--gold); }
+
+@media (max-width: 780px) {
+  .tnr-icon[href="#roadmap"],
+  .tnr-icon[href="#pricing"] { display: none; }
+}
+@media (max-width: 600px) {
+  .topnav-right { top: 14px; right: 12px; gap: 1px; padding: 4px; }
+  .tnr-btn { padding: 0 7px; height: 30px; font-size: 10px; }
+  .tnr-theme { width: 30px; }
+  .tnr-icon { width: 30px; height: 30px; }
+  .tnr-icon svg { width: 14px; height: 14px; }
+  .tnr-divider { margin: 0 3px; height: 16px; }
+  .tnr-login { padding: 0 10px; height: 30px; gap: 5px; font-size: 11px; }
+  .tnr-login .tnr-login-label { display: none; }
+  .tnr-icon[data-tip]::after,
+  .tnr-btn[data-tip]::after { display: none; }
+}
+
+/* LIGHT THEME overrides */
+html[data-theme="light"] {
+  --obsidian: #FAF7F0;
+  --onyx: #F2ECE0;
+  --graphite: #E6DFCF;
+  --smoke: #CFC7B4;
+  --fog: rgba(20, 20, 28, 0.55);
+  --mist: rgba(20, 20, 28, 0.68);
+  --cream: #151520;
+  --line: rgba(20, 20, 28, 0.1);
+  --line-bright: rgba(20, 20, 28, 0.18);
+}
+html[data-theme="light"] body {
+  background: var(--obsidian);
+  color: var(--cream);
+}
+html[data-theme="light"] .topnav,
+html[data-theme="light"] .topnav-right,
+html[data-theme="light"] .sidenav {
+  background: rgba(250, 247, 240, 0.82);
+}
+html[data-theme="light"] .topnav-right .tnr-btn { color: rgba(20,20,28,0.65); }
+html[data-theme="light"] .topnav-right .tnr-btn:hover { background: rgba(20,20,28,0.06); color: #151520; }
+html[data-theme="light"] .tnr-icon { color: rgba(20,20,28,0.6); }
+html[data-theme="light"] .tnr-icon:hover { background: rgba(212, 166, 90, 0.12); color: #8B6B2F; border-color: rgba(212, 166, 90, 0.35); }
+html[data-theme="light"] .tnr-divider { background: rgba(20,20,28,0.12); }
+html[data-theme="light"] .tnr-icon[data-tip]::after,
+html[data-theme="light"] .tnr-btn[data-tip]::after { background: rgba(250,247,240,0.96); color: #151520; }
+
+/* ================================================================
+ * SIDEBAR — folder tree (GitHub Explorer style)
+ * ================================================================ */
+.sidenav-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(8, 8, 14, 0.6);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 98;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+body.sidebar-open .sidenav-backdrop {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.sidenav {
+  position: fixed;
+  top: 0; left: 0;
+  width: 320px;
+  max-width: 88vw;
+  height: 100vh;
+  background: #0a0a12;
+  border-right: 1px solid var(--line-bright);
+  box-shadow: 20px 0 60px rgba(0, 0, 0, 0.5);
+  z-index: 99;
+  transform: translateX(-100%);
+  transition: transform 0.32s cubic-bezier(0.22, 0.9, 0.3, 1);
+  display: flex;
+  flex-direction: column;
+  font-family: var(--mono);
+}
+body.sidebar-open .sidenav { transform: translateX(0); }
+
+.sidenav-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 18px;
+  border-bottom: 1px solid var(--line);
+  background: linear-gradient(180deg, #101018 0%, #0a0a12 100%);
+}
+.sidenav-head-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  color: var(--mist);
+  text-transform: uppercase;
+  font-weight: 600;
+}
+.sidenav-head-title svg { width: 14px; height: 14px; color: var(--gold-bright); }
+.sidenav-close {
+  width: 26px; height: 26px;
+  border-radius: 6px;
+  background: transparent;
+  border: 1px solid var(--line);
+  color: var(--mist);
+  cursor: pointer;
+  display: grid; place-items: center;
+  transition: all 0.15s;
+}
+.sidenav-close:hover { color: var(--cream); border-color: var(--line-bright); background: rgba(255,255,255,0.04); }
+.sidenav-close svg { width: 12px; height: 12px; }
+
+.sidenav-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 10px 0;
+  scrollbar-width: thin;
+  scrollbar-color: var(--line-bright) transparent;
+}
+.sidenav-body::-webkit-scrollbar { width: 6px; }
+.sidenav-body::-webkit-scrollbar-thumb { background: var(--line-bright); border-radius: 3px; }
+
+/* Tree nodes */
+.tree { list-style: none; padding: 0; margin: 0; }
+.tree-item { position: relative; }
+
+.tree-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px 6px 8px;
+  color: rgba(245, 242, 235, 0.78);
   font-size: 13px;
-  color: rgba(245, 242, 235, 0.7);
-  transition: color 0.15s;
-  font-weight: 400;
+  cursor: pointer;
+  border-left: 2px solid transparent;
+  transition: background 0.12s, color 0.12s, border-color 0.12s;
+  text-decoration: none;
+  line-height: 1.3;
+  user-select: none;
 }
-.nav-link:hover { color: var(--gold-bright); }
-
-@media (max-width: 900px) { .nav-links { display: none; } }
-
-.nav-cta-group {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+.tree-row:hover {
+  background: rgba(212, 166, 90, 0.07);
+  color: var(--cream);
 }
+.tree-row.active {
+  background: rgba(212, 166, 90, 0.1);
+  color: var(--gold-bright);
+  border-left-color: var(--gold-bright);
+}
+.tree-chevron {
+  width: 14px; height: 14px;
+  display: inline-grid;
+  place-items: center;
+  color: var(--mist);
+  transition: transform 0.2s;
+  flex-shrink: 0;
+}
+.tree-chevron svg { width: 9px; height: 9px; }
+.tree-item.open > .tree-row .tree-chevron { transform: rotate(90deg); }
+.tree-row.leaf .tree-chevron { visibility: hidden; }
+
+.tree-icon {
+  width: 16px; height: 16px;
+  display: grid; place-items: center;
+  color: var(--gold);
+  flex-shrink: 0;
+}
+.tree-item.open > .tree-row .tree-icon.folder { color: var(--gold-bright); }
+.tree-icon svg { width: 14px; height: 14px; }
+.tree-row .tree-icon.file { color: var(--token); }
+
+.tree-label { flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.tree-meta {
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  color: var(--mist);
+  text-transform: uppercase;
+  font-weight: 500;
+  opacity: 0.7;
+}
+
+/* Nested children — collapsed by default, animated */
+.tree-children {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  padding-left: 14px;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.28s ease;
+}
+.tree-item.open > .tree-children { max-height: 800px; }
+
+/* Guide line for nested */
+.tree-children {
+  position: relative;
+}
+.tree-children::before {
+  content: '';
+  position: absolute;
+  top: 0; bottom: 6px;
+  left: 14px;
+  width: 1px;
+  background: var(--line);
+}
+
+/* Sidebar footer: CTAs */
+/* Hide sidenav on no-JS */
+html:not(.js) .sidenav { display: none; }
 
 .btn {
   display: inline-flex;
@@ -859,9 +1251,9 @@ section {
 <body>
 
 <!-- ============ TOP NAV ============ -->
-<nav class="topnav" id="topnav">
+<nav class="topnav" id="topnav" role="button" tabindex="0" aria-label="Mở menu" aria-controls="sidenav" aria-expanded="false">
   <div class="topnav-inner">
-    <div class="brand" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+    <div class="brand">
       <svg class="brand-mark" viewBox="0 0 32 32" fill="none">
         <path d="M16 2 L28 9 L28 23 L16 30 L4 23 L4 9 Z" stroke="url(#bmGrad)" stroke-width="1.2"/>
         <circle cx="16" cy="16" r="5" stroke="url(#bmGrad)" stroke-width="1.2"/>
@@ -879,24 +1271,168 @@ section {
       </div>
     </div>
 
-    <div class="nav-links">
-      <a href="#problem" class="nav-link">Vấn đề</a>
-      <a href="#solution" class="nav-link">Giải pháp</a>
-      <a href="#stakeholders" class="nav-link">Vai trò</a>
-      <a href="#model" class="nav-link">Mô hình</a>
-      <a href="#pricing" class="nav-link">Pricing</a>
-      <a href="#roadmap" class="nav-link">Roadmap</a>
-      <a href="#install" class="nav-link">Cài app</a>
-    </div>
-
-    <div class="nav-cta-group">
-      <a href="zeni-fb-os-prototype.html" class="btn btn-ghost">Xem prototype</a>
-      <a href="#cta" class="btn btn-primary">Đặt lịch demo
-        <svg viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 6.5 L11 6.5 M7.5 3 L11 6.5 L7.5 10"/></svg>
-      </a>
+    <div class="nav-toggle" aria-hidden="true">
+      <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3 L10 7 L5 11"/></svg>
     </div>
   </div>
 </nav>
+
+<!-- ============ TOP RIGHT: GitHub-style toolbar · Prototype · Roadmap · Pricing · Lang · Theme · Login ============ -->
+<div class="topnav-right" id="topnavRight">
+  <!-- Group 1: Quick nav (icon-only, tooltip on hover) -->
+  <div class="tnr-group">
+    <a class="tnr-icon" href="/app/" data-tip="Prototype" aria-label="Xem prototype">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4.5 3.2 L12.5 8 L4.5 12.8 Z" fill="currentColor" fill-opacity="0.15"/>
+      </svg>
+    </a>
+    <a class="tnr-icon" href="#roadmap" data-tip="Lộ trình" aria-label="Lộ trình">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="4" cy="4" r="1.6"/><circle cx="12" cy="12" r="1.6"/>
+        <path d="M4 5.6 V10 A2 2 0 0 0 6 12 H10.4"/>
+      </svg>
+    </a>
+    <a class="tnr-icon" href="#pricing" data-tip="Giá" aria-label="Bảng giá">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M8.5 1.5 H2 V8 L8.5 14.5 L14.5 8.5 Z"/>
+        <circle cx="5.2" cy="5.2" r="0.9" fill="currentColor"/>
+      </svg>
+    </a>
+    <a class="tnr-icon" href="#cta" data-tip="Liên hệ" aria-label="Liên hệ">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="2" y="3.5" width="12" height="9" rx="1.2"/>
+        <path d="M2.5 4.5 L8 9 L13.5 4.5"/>
+      </svg>
+    </a>
+  </div>
+
+  <span class="tnr-divider" aria-hidden="true"></span>
+
+  <!-- Group 2: Preferences -->
+  <div class="tnr-group">
+    <div class="tnr-lang-wrap">
+      <button class="tnr-btn" id="langBtn" type="button" aria-label="Chọn ngôn ngữ">
+        <span id="langLabel">VI</span>
+        <svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 4 L5 6.5 L7.5 4"/></svg>
+      </button>
+      <div class="tnr-lang-menu" id="langMenu" role="menu">
+        <button class="tnr-lang-opt" data-lang="vi" role="menuitem"><span>Tiếng Việt</span><span class="tnr-lang-opt-code">VI</span></button>
+        <button class="tnr-lang-opt" data-lang="en" role="menuitem"><span>English</span><span class="tnr-lang-opt-code">EN</span></button>
+      </div>
+    </div>
+    <button class="tnr-btn tnr-theme" id="themeBtn" type="button" aria-label="Đổi chế độ sáng/tối" data-tip="Sáng / Tối">
+      <svg class="tnr-sun" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+        <circle cx="9" cy="9" r="3.2"/>
+        <path d="M9 1.5V3 M9 15V16.5 M1.5 9H3 M15 9H16.5 M3.5 3.5L4.5 4.5 M13.5 13.5L14.5 14.5 M3.5 14.5L4.5 13.5 M13.5 4.5L14.5 3.5"/>
+      </svg>
+      <svg class="tnr-moon" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M15 11A6 6 0 0 1 7 3A6.5 6.5 0 1 0 15 11Z"/>
+      </svg>
+    </button>
+  </div>
+
+  <span class="tnr-divider" aria-hidden="true"></span>
+
+  <!-- Group 3: Login CTA -->
+  <a class="tnr-login" href="https://app.zenifb.com/" aria-label="Đăng nhập">
+    <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M2 7 L10 7 M7 4 L10 7 L7 10"/>
+      <path d="M8 2 L12 2 L12 12 L8 12"/>
+    </svg>
+    <span class="tnr-login-label">Đăng nhập</span>
+  </a>
+</div>
+
+<!-- ============ SIDEBAR · GitHub-style folder tree ============ -->
+<div class="sidenav-backdrop" id="sidenavBackdrop" aria-hidden="true"></div>
+<aside class="sidenav" id="sidenav" aria-label="Điều hướng trang" aria-hidden="true">
+  <div class="sidenav-head">
+    <div class="sidenav-head-title">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1.5 4.5h4l1.5 2H14a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-.5.5H2a.5.5 0 0 1-.5-.5z"/></svg>
+      <span>Explorer · Zeni F&amp;B OS</span>
+    </div>
+    <button type="button" class="sidenav-close" id="sidenavClose" aria-label="Đóng menu">
+      <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M2 2 L10 10 M10 2 L2 10"/></svg>
+    </button>
+  </div>
+
+  <div class="sidenav-body">
+    <ul class="tree" role="tree">
+      <li class="tree-item"><a href="#hero" class="tree-row leaf" data-target="#top">
+        <span class="tree-chevron"></span>
+        <span class="tree-icon file"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"><path d="M4 2h6l2 2v10H4z"/><path d="M10 2v2h2"/></svg></span>
+        <span class="tree-label">Tổng quan</span>
+        <span class="tree-meta">01</span>
+      </a></li>
+
+      <li class="tree-item open">
+        <div class="tree-row">
+          <span class="tree-chevron"><svg viewBox="0 0 9 9" fill="currentColor"><path d="M2 1 L7 4.5 L2 8 Z"/></svg></span>
+          <span class="tree-icon folder"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M1.5 4h4l1.5 2H14a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-.5.5H2a.5.5 0 0 1-.5-.5z"/></svg></span>
+          <span class="tree-label">Vấn đề &amp; Giải pháp</span>
+        </div>
+        <ul class="tree-children">
+          <li class="tree-item"><a href="#problem" class="tree-row leaf">
+            <span class="tree-chevron"></span>
+            <span class="tree-icon file"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3"><circle cx="8" cy="8" r="6"/><path d="M8 5v4M8 11.5v.01"/></svg></span>
+            <span class="tree-label">Vấn đề</span>
+          </a></li>
+          <li class="tree-item"><a href="#solution" class="tree-row leaf">
+            <span class="tree-chevron"></span>
+            <span class="tree-icon file"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2l1.8 3.8 4.2.6-3 3 .7 4.2L8 11.6 4.3 13.6 5 9.4l-3-3 4.2-.6z"/></svg></span>
+            <span class="tree-label">Giải pháp</span>
+          </a></li>
+        </ul>
+      </li>
+
+      <li class="tree-item">
+        <div class="tree-row">
+          <span class="tree-chevron"><svg viewBox="0 0 9 9" fill="currentColor"><path d="M2 1 L7 4.5 L2 8 Z"/></svg></span>
+          <span class="tree-icon folder"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M1.5 4h4l1.5 2H14a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-.5.5H2a.5.5 0 0 1-.5-.5z"/></svg></span>
+          <span class="tree-label">8 Vai trò</span>
+          <span class="tree-meta">stakeholders</span>
+        </div>
+        <ul class="tree-children">
+          <li class="tree-item"><a href="#sh-owner" class="tree-row leaf"><span class="tree-chevron"></span><span class="tree-icon file"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3"><circle cx="8" cy="6" r="2.5"/><path d="M3 14a5 5 0 0 1 10 0"/></svg></span><span class="tree-label">Owner</span></a></li>
+          <li class="tree-item"><a href="#sh-manager" class="tree-row leaf"><span class="tree-chevron"></span><span class="tree-icon file"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="3" y="4" width="10" height="9" rx="1"/><path d="M3 7h10"/></svg></span><span class="tree-label">Manager</span></a></li>
+          <li class="tree-item"><a href="#sh-staff" class="tree-row leaf"><span class="tree-chevron"></span><span class="tree-icon file"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3"><circle cx="5" cy="6" r="2"/><circle cx="11" cy="6" r="2"/><path d="M2 13a3 3 0 0 1 6 0M8 13a3 3 0 0 1 6 0"/></svg></span><span class="tree-label">Staff</span></a></li>
+          <li class="tree-item"><a href="#sh-diner" class="tree-row leaf"><span class="tree-chevron"></span><span class="tree-icon file"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="4" y="2" width="8" height="12" rx="1.5"/><path d="M8 11.5v.01"/></svg></span><span class="tree-label">Diner</span></a></li>
+          <li class="tree-item"><a href="#sh-affiliate" class="tree-row leaf"><span class="tree-chevron"></span><span class="tree-icon file"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3"><circle cx="4.5" cy="8" r="2"/><circle cx="11.5" cy="4.5" r="2"/><circle cx="11.5" cy="11.5" r="2"/><path d="M6.3 7l3.7-2M6.3 9l3.7 2"/></svg></span><span class="tree-label">Affiliate</span></a></li>
+          <li class="tree-item"><a href="#sh-franchisee" class="tree-row leaf"><span class="tree-chevron"></span><span class="tree-icon file"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M2 14V7l6-4 6 4v7M6 14v-4h4v4"/></svg></span><span class="tree-label">Franchisee</span></a></li>
+          <li class="tree-item"><a href="#sh-supplier" class="tree-row leaf"><span class="tree-chevron"></span><span class="tree-icon file"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M2 10V5l4-2 4 2 4-2v5l-4 2-4-2z"/></svg></span><span class="tree-label">Supplier</span></a></li>
+          <li class="tree-item"><a href="#sh-investor" class="tree-row leaf"><span class="tree-chevron"></span><span class="tree-icon file"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M2 12l4-4 3 3 5-6"/><path d="M11 5h3v3"/></svg></span><span class="tree-label">Investor</span></a></li>
+        </ul>
+      </li>
+
+      <li class="tree-item">
+        <div class="tree-row">
+          <span class="tree-chevron"><svg viewBox="0 0 9 9" fill="currentColor"><path d="M2 1 L7 4.5 L2 8 Z"/></svg></span>
+          <span class="tree-icon folder"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M1.5 4h4l1.5 2H14a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-.5.5H2a.5.5 0 0 1-.5-.5z"/></svg></span>
+          <span class="tree-label">Mô hình kinh doanh</span>
+        </div>
+        <ul class="tree-children">
+          <li class="tree-item"><a href="#model" class="tree-row leaf"><span class="tree-chevron"></span><span class="tree-icon file"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M3 13V6M8 13V3M13 13V8"/></svg></span><span class="tree-label">Revenue streams</span></a></li>
+          <li class="tree-item"><a href="#token" class="tree-row leaf"><span class="tree-chevron"></span><span class="tree-icon file"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M8 2l5 3v6l-5 3-5-3V5z"/><circle cx="8" cy="8" r="2.2"/></svg></span><span class="tree-label">$ZENI tokenomics</span></a></li>
+          <li class="tree-item"><a href="#pricing" class="tree-row leaf"><span class="tree-chevron"></span><span class="tree-icon file"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M3 3h10v10H3z"/><path d="M6 7h4M6 10h4"/></svg></span><span class="tree-label">Pricing</span></a></li>
+        </ul>
+      </li>
+
+      <li class="tree-item"><a href="#roadmap" class="tree-row leaf">
+        <span class="tree-chevron"></span>
+        <span class="tree-icon file"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M2 13V3M14 13V3M2 3l6 2 6-2M2 8l6 2 6-2M2 13l6-2 6 2"/></svg></span>
+        <span class="tree-label">Lộ trình IPO</span>
+        <span class="tree-meta">2026 → 31</span>
+      </a></li>
+
+      <li class="tree-item"><a href="#install" class="tree-row leaf">
+        <span class="tree-chevron"></span>
+        <span class="tree-icon file"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v8M5 7l3 3 3-3M3 14h10"/></svg></span>
+        <span class="tree-label">Cài app</span>
+      </a></li>
+    </ul>
+  </div>
+
+</aside>
 
 <!-- ============ HERO ============ -->
 <section class="hero" id="hero">
@@ -924,7 +1460,7 @@ section {
           Tôi thuộc vai trò nào?
           <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 7 L12 7 M8 3 L12 7 L8 11"/></svg>
         </a>
-        <a href="zeni-fb-os-prototype.html" class="btn btn-ghost btn-lg">
+        <a href="/app/" class="btn btn-ghost btn-lg">
           <svg viewBox="0 0 14 14" fill="currentColor"><path d="M4 3 L11 7 L4 11 Z"/></svg>
           Xem live prototype
         </a>
@@ -1765,9 +2301,284 @@ section {
   color: rgba(245, 242, 235, 0.7);
 }
 .mini-phone-action-ico {
-  width: 14px; height: 14px;
-  margin: 0 auto 4px;
-  color: var(--gold);
+  width: 18px; height: 18px;
+  margin: 0 auto 6px;
+  color: var(--gold-bright);
+  display: block;
+}
+
+/* Luxury icon slot on mini KPI cards */
+.mini-kpi-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+.mini-kpi-ico {
+  width: 22px; height: 22px;
+  border-radius: 6px;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(135deg, rgba(212, 166, 90, 0.18), rgba(212, 166, 90, 0.04));
+  color: var(--gold-bright);
+  border: 1px solid rgba(212, 166, 90, 0.22);
+  flex-shrink: 0;
+}
+.mini-kpi-ico svg { width: 12px; height: 12px; }
+.mini-kpi-card.token .mini-kpi-ico {
+  background: linear-gradient(135deg, rgba(0, 229, 212, 0.18), rgba(0, 229, 212, 0.04));
+  color: var(--token-bright);
+  border-color: rgba(0, 229, 212, 0.22);
+}
+.mini-kpi-card.success .mini-kpi-ico {
+  background: linear-gradient(135deg, rgba(74, 222, 155, 0.18), rgba(74, 222, 155, 0.04));
+  color: var(--success);
+  border-color: rgba(74, 222, 155, 0.22);
+}
+
+/* Mobile-only app chrome (hidden on desktop) */
+.mobile-app-chrome, .mobile-tab-nav { display: none; }
+
+/* ============ MOBILE: admin-app look for Owner dashboard ============ */
+@media (max-width: 768px) {
+  /* Full-bleed the sh-viz frame on mobile so it feels like a phone app */
+  .sh-viz-owner {
+    padding: 0;
+    border-radius: 28px;
+    min-height: auto;
+    background: #000;
+    border: 1px solid rgba(212, 166, 90, 0.35);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5), inset 0 0 0 1px rgba(255,255,255,0.04);
+    overflow: hidden;
+  }
+  .sh-viz-owner::before { display: none; }
+  .sh-viz-owner .sh-viz-inner {
+    padding: 0;
+    background: var(--obsidian);
+    border-radius: inherit;
+  }
+  /* Hide the small eyebrow above dashboard — replaced by app chrome */
+  .sh-viz-owner .sh-viz-inner > div:first-child:not(.mini-dashboard):not(.mobile-app-chrome) {
+    display: none;
+  }
+
+  /* Phone status bar (top) */
+  .mobile-app-chrome {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 20px 10px;
+    background: linear-gradient(180deg, #0a0a12 0%, var(--obsidian) 100%);
+    border-bottom: 1px solid var(--line);
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--cream);
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+  .mobile-app-chrome-time { color: var(--cream); font-size: 13px; }
+  .mobile-app-chrome-icons {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--mist);
+  }
+  .mobile-app-chrome-icons svg { width: 14px; height: 14px; }
+  .mobile-app-chrome-battery {
+    width: 22px; height: 11px;
+    border: 1px solid currentColor;
+    border-radius: 3px;
+    padding: 1px;
+    position: relative;
+  }
+  .mobile-app-chrome-battery::after {
+    content: '';
+    position: absolute;
+    right: -3px; top: 3px;
+    width: 2px; height: 5px;
+    background: currentColor;
+    border-radius: 0 2px 2px 0;
+  }
+  .mobile-app-chrome-battery::before {
+    content: '';
+    display: block;
+    width: 85%;
+    height: 100%;
+    background: var(--success);
+    border-radius: 1px;
+  }
+
+  /* App header row: avatar + title + notifications */
+  .mobile-app-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 20px 14px;
+    border-bottom: 1px solid var(--line);
+  }
+  .mobile-app-avatar {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--gold), var(--gold-dim));
+    display: grid;
+    place-items: center;
+    font-family: var(--serif);
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--obsidian);
+    font-style: italic;
+    flex-shrink: 0;
+  }
+  .mobile-app-header-copy { flex: 1; min-width: 0; }
+  .mobile-app-header-hi {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    color: var(--gold);
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+  .mobile-app-header-name {
+    font-family: var(--serif);
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--cream);
+    line-height: 1.15;
+    margin-top: 2px;
+  }
+  .mobile-app-header-bell {
+    width: 36px; height: 36px;
+    border-radius: 10px;
+    background: var(--graphite);
+    border: 1px solid var(--line);
+    display: grid;
+    place-items: center;
+    color: var(--gold-bright);
+    position: relative;
+  }
+  .mobile-app-header-bell svg { width: 16px; height: 16px; }
+  .mobile-app-header-bell::after {
+    content: '3';
+    position: absolute;
+    top: 4px; right: 4px;
+    width: 14px; height: 14px;
+    background: var(--warn, #FF6B5E);
+    color: #0C0C14;
+    border-radius: 50%;
+    font-family: var(--mono);
+    font-size: 8px;
+    font-weight: 700;
+    display: grid;
+    place-items: center;
+  }
+
+  /* Dashboard inside app frame */
+  .sh-viz-owner .mini-dashboard {
+    border: none;
+    border-radius: 0;
+    background: transparent;
+  }
+  .sh-viz-owner .mini-dash-top { display: none; }
+  .mini-dash-body { padding: 18px 16px 16px; }
+  .mini-kpi-grid { gap: 10px; }
+  .mini-kpi-card {
+    padding: 14px 12px;
+    border-radius: 12px;
+    background: linear-gradient(180deg, var(--graphite) 0%, var(--onyx) 100%);
+  }
+  .mini-kpi-card-val { font-size: 24px; }
+  .mini-kpi-card-label { font-size: 9px; letter-spacing: 0.12em; }
+
+  /* Chart area — compact + scrollable header */
+  .sh-viz-owner .mini-chart-section-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin: 4px 2px 10px;
+  }
+  .sh-viz-owner .mini-chart-section-title span:first-child {
+    font-family: var(--serif);
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--cream);
+  }
+  .sh-viz-owner .mini-chart-section-title span:last-child {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    color: var(--gold-bright);
+    text-transform: uppercase;
+  }
+
+  /* Bottom tab nav (like real admin app) */
+  .mobile-tab-nav {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    padding: 10px 6px 14px;
+    background: linear-gradient(180deg, var(--obsidian) 0%, #080810 100%);
+    border-top: 1px solid var(--line-bright);
+    gap: 2px;
+  }
+  .mobile-tab-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding: 8px 4px;
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.05em;
+    color: var(--mist);
+    text-transform: uppercase;
+    border-radius: 10px;
+    transition: color .2s, background .2s;
+  }
+  .mobile-tab-item svg { width: 20px; height: 20px; }
+  .mobile-tab-item.active {
+    color: var(--gold-bright);
+    background: rgba(212, 166, 90, 0.08);
+  }
+
+  /* Revenue flow block under dashboard — keep but tighter */
+  .sh-viz-owner .revenue-flow {
+    margin: 0 16px 0;
+    padding: 16px 14px;
+    border-radius: 12px;
+  }
+
+  /* ======== Mini-phone (diner) — FULL WIDTH on mobile ======== */
+  .sh-viz-diner {
+    padding: 20px 12px 24px;
+    min-height: auto;
+  }
+  .sh-viz-diner .mini-phone {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    min-height: 560px;
+    border-radius: 28px;
+    padding: 10px;
+  }
+  .sh-viz-diner .mini-phone-screen {
+    border-radius: 22px;
+    padding: 32px 18px 20px;
+  }
+  .sh-viz-diner .mini-phone-notch { width: 90px; height: 22px; top: 8px; }
+  .sh-viz-diner .mini-phone-name { font-size: 26px; margin-bottom: 20px; }
+  .sh-viz-diner .mini-phone-card { padding: 14px 16px; margin-bottom: 12px; border-radius: 12px; }
+  .sh-viz-diner .mini-phone-card-val { font-size: 28px; }
+  .sh-viz-diner .mini-phone-action-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    margin-top: 16px;
+  }
+  .sh-viz-diner .mini-phone-action {
+    padding: 14px 6px;
+    font-size: 11px;
+    border-radius: 10px;
+    background: linear-gradient(180deg, var(--graphite) 0%, var(--onyx) 100%);
+  }
+  .sh-viz-diner .mini-phone-action-ico { width: 22px; height: 22px; margin-bottom: 6px; }
 }
 
 /* Revenue flow diagram (for Owner) */
@@ -2113,6 +2924,29 @@ section {
 
       <div class="sh-viz sh-viz-owner">
         <div class="sh-viz-inner">
+          <!-- Mobile-only: phone status bar -->
+          <div class="mobile-app-chrome" aria-hidden="true">
+            <div class="mobile-app-chrome-time">9:41</div>
+            <div class="mobile-app-chrome-icons">
+              <svg viewBox="0 0 16 10" fill="currentColor" aria-hidden="true"><path d="M1 7h2v3H1zM5 5h2v5H5zM9 2h2v8H9zM13 0h2v10h-2z"/></svg>
+              <svg viewBox="0 0 16 12" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><path d="M1 5a8 8 0 0 1 14 0M3.5 7.5a5 5 0 0 1 9 0M6 10a2.5 2.5 0 0 1 4 0"/></svg>
+              <div class="mobile-app-chrome-battery"></div>
+            </div>
+          </div>
+          <!-- Mobile-only: app header -->
+          <div class="mobile-app-header" aria-hidden="true">
+            <div class="mobile-app-avatar">C</div>
+            <div class="mobile-app-header-copy">
+              <div class="mobile-app-header-hi">Owner · Chinh Thủy HN</div>
+              <div class="mobile-app-header-name">Tổng quan hôm nay</div>
+            </div>
+            <div class="mobile-app-header-bell">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M4 7a4 4 0 0 1 8 0v3l1 2H3l1-2zM6 13a2 2 0 0 0 4 0"/></svg>
+            </div>
+          </div>
+
+          <div style="font-family: var(--mono); font-size: 10px; letter-spacing: 0.2em; color: var(--gold); text-transform: uppercase; font-weight: 600; margin-bottom: 16px;">Dashboard · Chinh Thủy HN</div>
+
           <div class="mini-dashboard">
             <div class="mini-dash-top">
               <div class="mini-dash-dots">
@@ -2125,23 +2959,39 @@ section {
             <div class="mini-dash-body">
               <div class="mini-kpi-grid">
                 <div class="mini-kpi-card">
-                  <div class="mini-kpi-card-label">Revenue 7d</div>
+                  <div class="mini-kpi-head">
+                    <div class="mini-kpi-card-label">Revenue 7d</div>
+                    <div class="mini-kpi-ico"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v12M5 5h4.5a2 2 0 0 1 0 4H6.5a2 2 0 0 0 0 4H11"/></svg></div>
+                  </div>
                   <div class="mini-kpi-card-val">487M</div>
                 </div>
-                <div class="mini-kpi-card">
-                  <div class="mini-kpi-card-label">Retention 60d</div>
+                <div class="mini-kpi-card success">
+                  <div class="mini-kpi-head">
+                    <div class="mini-kpi-card-label">Retention 60d</div>
+                    <div class="mini-kpi-ico"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l3-3 2 2 5-5M11 5h3v3"/></svg></div>
+                  </div>
                   <div class="mini-kpi-card-val success">34%</div>
                 </div>
                 <div class="mini-kpi-card">
-                  <div class="mini-kpi-card-label">AOV / bàn</div>
+                  <div class="mini-kpi-head">
+                    <div class="mini-kpi-card-label">AOV / bàn</div>
+                    <div class="mini-kpi-ico"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="6"/><path d="M8 4v8M6 6h3a1.5 1.5 0 0 1 0 3H7a1.5 1.5 0 0 0 0 3h3"/></svg></div>
+                  </div>
                   <div class="mini-kpi-card-val">2.1M</div>
                 </div>
-                <div class="mini-kpi-card">
-                  <div class="mini-kpi-card-label">$ZENI stake</div>
+                <div class="mini-kpi-card token">
+                  <div class="mini-kpi-head">
+                    <div class="mini-kpi-card-label">$ZENI stake</div>
+                    <div class="mini-kpi-ico"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2l5 3v6l-5 3-5-3V5z"/><circle cx="8" cy="8" r="2.2"/></svg></div>
+                  </div>
                   <div class="mini-kpi-card-val token">20k</div>
                 </div>
               </div>
 
+              <div class="mini-chart-section-title">
+                <span>Doanh thu 7 ngày</span>
+                <span>+12% WoW</span>
+              </div>
               <div class="mini-chart">
                 <div class="mini-bar" style="height: 45%;"></div>
                 <div class="mini-bar" style="height: 58%;"></div>
@@ -2173,6 +3023,26 @@ section {
               <span class="revenue-flow-label">Via campaigns</span>
               <div class="revenue-flow-bar"><div class="revenue-flow-fill rose" style="width: 25%;"></div></div>
               <span class="revenue-flow-val">124M</span>
+            </div>
+          </div>
+
+          <!-- Mobile-only: bottom tab navigation -->
+          <div class="mobile-tab-nav" aria-hidden="true">
+            <div class="mobile-tab-item active">
+              <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l7-6 7 6v8a1 1 0 0 1-1 1h-4v-6H8v6H4a1 1 0 0 1-1-1z"/></svg>
+              <span>Tổng quan</span>
+            </div>
+            <div class="mobile-tab-item">
+              <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17V7M9 17V3M15 17v-8"/></svg>
+              <span>Báo cáo</span>
+            </div>
+            <div class="mobile-tab-item">
+              <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="7" r="3"/><circle cx="14" cy="7" r="2.5"/><path d="M2 17a5 5 0 0 1 10 0M12 17a4 4 0 0 1 7-3"/></svg>
+              <span>Đội ngũ</span>
+            </div>
+            <div class="mobile-tab-item">
+              <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h14v10H3z"/><path d="M3 6l7 5 7-5"/><circle cx="15" cy="4" r="2" fill="currentColor" stroke="none"/></svg>
+              <span>Ví ZENI</span>
             </div>
           </div>
         </div>
@@ -2439,10 +3309,22 @@ section {
               </div>
 
               <div class="mini-phone-action-grid">
-                <div class="mini-phone-action">Đặt bàn</div>
-                <div class="mini-phone-action">Ví ZENI</div>
-                <div class="mini-phone-action">Tier</div>
-                <div class="mini-phone-action">Mời bạn</div>
+                <div class="mini-phone-action">
+                  <svg class="mini-phone-action-ico" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="14" height="12" rx="1.5"/><path d="M3 9h14M7 3v4M13 3v4"/></svg>
+                  Đặt bàn
+                </div>
+                <div class="mini-phone-action">
+                  <svg class="mini-phone-action-ico" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2l7 4v8l-7 4-7-4V6z"/><circle cx="10" cy="10" r="2.6"/></svg>
+                  Ví ZENI
+                </div>
+                <div class="mini-phone-action">
+                  <svg class="mini-phone-action-ico" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2l2.4 4.9 5.4.8-3.9 3.8.9 5.4-4.8-2.5-4.8 2.5.9-5.4L2.2 7.7l5.4-.8z"/></svg>
+                  Tier
+                </div>
+                <div class="mini-phone-action">
+                  <svg class="mini-phone-action-ico" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="7" r="3"/><path d="M2 17a6 6 0 0 1 12 0"/><path d="M15 7v4M13 9h4"/></svg>
+                  Mời bạn
+                </div>
               </div>
             </div>
           </div>
@@ -3647,16 +4529,6 @@ section {
   }
 }
 
-.roadmap-year:nth-child(even) {
-  direction: rtl;
-}
-.roadmap-year:nth-child(even) > * {
-  direction: ltr;
-}
-@media (max-width: 800px) {
-  .roadmap-year:nth-child(even) { direction: ltr; }
-}
-
 .roadmap-marker {
   grid-column: 2;
   justify-self: center;
@@ -3688,6 +4560,7 @@ section {
   50% { box-shadow: 0 0 0 12px rgba(212, 166, 90, 0); }
 }
 
+/* Default: odd rows (2027/29/31) → label LEFT, content RIGHT */
 .roadmap-year-label {
   grid-column: 1;
   text-align: right;
@@ -3699,26 +4572,6 @@ section {
   line-height: 1;
   font-variation-settings: "SOFT" 120, "opsz" 144;
 }
-@media (max-width: 800px) {
-  .roadmap-year-label {
-    grid-column: 2;
-    text-align: left;
-    font-size: 32px;
-    margin-bottom: 8px;
-  }
-}
-
-.roadmap-year:nth-child(even) .roadmap-year-label {
-  grid-column: 3;
-  text-align: left;
-}
-@media (max-width: 800px) {
-  .roadmap-year:nth-child(even) .roadmap-year-label {
-    grid-column: 2;
-    text-align: left;
-  }
-}
-
 .roadmap-content {
   grid-column: 3;
   padding: 20px 24px;
@@ -3726,14 +4579,28 @@ section {
   border: 1px solid var(--line);
   border-radius: 12px;
 }
-@media (max-width: 800px) {
-  .roadmap-content { grid-column: 2; }
-}
 
+/* Even rows (2026/28/30) → label RIGHT, content LEFT (2-wing alternating) */
+.roadmap-year:nth-child(even) .roadmap-year-label {
+  grid-column: 3;
+  text-align: left;
+}
 .roadmap-year:nth-child(even) .roadmap-content {
   grid-column: 1;
 }
+
 @media (max-width: 800px) {
+  .roadmap-year-label {
+    grid-column: 2;
+    text-align: left;
+    font-size: 32px;
+    margin-bottom: 8px;
+  }
+  .roadmap-content { grid-column: 2; }
+  .roadmap-year:nth-child(even) .roadmap-year-label {
+    grid-column: 2;
+    text-align: left;
+  }
   .roadmap-year:nth-child(even) .roadmap-content { grid-column: 2; }
 }
 
@@ -3914,9 +4781,9 @@ section {
   letter-spacing: 0.05em;
 }
 
-/* ============ INSTALL APP ============ */
+/* ============ INSTALL APP · simplified ============ */
 .install-section {
-  padding: 140px 0;
+  padding: 120px 0;
   background: linear-gradient(180deg, var(--obsidian) 0%, var(--onyx) 50%, var(--obsidian) 100%);
   border-top: 1px solid var(--line);
   border-bottom: 1px solid var(--line);
@@ -3932,192 +4799,203 @@ section {
     radial-gradient(circle at 85% 70%, rgba(0, 229, 212, 0.06), transparent 45%);
   pointer-events: none;
 }
-.install-grid {
-  display: grid;
-  grid-template-columns: minmax(280px, 360px) 1fr;
-  gap: 64px;
-  align-items: center;
-  max-width: 1080px;
-  margin: 72px auto 0;
+
+/* Single centered card */
+.install-card {
   position: relative;
   z-index: 1;
+  max-width: 620px;
+  margin: 56px auto 0;
+  padding: 40px 32px;
+  background: rgba(22, 22, 34, 0.7);
+  border: 1px solid var(--line-bright);
+  border-radius: 24px;
+  text-align: center;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 24px 80px rgba(0,0,0,0.45);
 }
-@media (max-width: 860px) {
-  .install-grid { grid-template-columns: 1fr; gap: 48px; margin-top: 48px; }
-}
-.install-qr-card {
-  display: flex;
-  flex-direction: column;
+
+/* Big primary CTA button */
+.install-cta-big {
+  display: inline-flex;
   align-items: center;
-  gap: 20px;
-}
-.install-qr-frame {
-  position: relative;
+  justify-content: center;
+  gap: 12px;
   width: 100%;
-  max-width: 320px;
-  aspect-ratio: 1 / 1;
-  padding: 20px;
-  background: var(--cream);
-  border-radius: 28px;
-  box-shadow:
-    0 20px 60px rgba(0, 0, 0, 0.4),
-    0 0 0 1px var(--line-bright),
-    inset 0 0 0 2px rgba(212, 166, 90, 0.25);
-}
-.install-qr-svg { display: block; width: 100%; height: 100%; }
-.install-qr-logo {
-  position: absolute;
-  top: 50%; left: 50%;
-  transform: translate(-50%, -50%);
-  width: 64px; height: 64px;
-  background: var(--obsidian);
+  max-width: 380px;
+  margin: 0 auto 18px;
+  padding: 20px 28px;
+  background: linear-gradient(135deg, var(--gold), var(--gold-bright));
+  color: var(--obsidian);
+  font-family: var(--sans);
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  text-decoration: none;
+  border: none;
   border-radius: 14px;
-  display: grid;
-  place-items: center;
-  box-shadow: 0 0 0 4px var(--cream);
+  cursor: pointer;
+  transition: transform .2s, box-shadow .3s;
+  box-shadow: 0 12px 32px rgba(212, 166, 90, 0.35);
 }
-.install-qr-logo svg { width: 40px; height: 40px; }
-.install-qr-caption { text-align: center; }
-.install-qr-url {
-  font-family: var(--mono);
-  font-size: 15px;
-  color: var(--gold-bright);
-  letter-spacing: 0.04em;
-  font-weight: 500;
-}
-.install-qr-sub {
+.install-cta-big:hover { transform: translateY(-2px); box-shadow: 0 16px 40px rgba(212, 166, 90, 0.5); }
+.install-cta-big svg { width: 20px; height: 20px; }
+
+.install-cta-hint {
   font-family: var(--mono);
   font-size: 11px;
   color: var(--mist);
   letter-spacing: 0.08em;
-  margin-top: 6px;
   text-transform: uppercase;
+  margin-bottom: 32px;
 }
-.install-steps-col { display: flex; flex-direction: column; gap: 20px; }
-.install-step {
-  padding: 24px 28px;
+.install-cta-hint strong { color: var(--token-bright); font-weight: 500; }
+
+/* Device-specific panel (auto-shown by JS) */
+.install-guide {
+  display: none;
+  padding: 24px;
+  background: rgba(12, 12, 20, 0.6);
   border: 1px solid var(--line);
-  border-radius: 18px;
-  background: rgba(30, 30, 46, 0.4);
-  backdrop-filter: blur(8px);
-  transition: border-color .3s, transform .3s;
+  border-radius: 16px;
+  text-align: left;
+  margin-bottom: 20px;
 }
-.install-step:hover { border-color: var(--line-bright); transform: translateY(-2px); }
-.install-step-head {
+.install-guide.active { display: block; }
+.install-guide-head {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 10px;
   margin-bottom: 14px;
 }
-.install-step-icon {
-  width: 40px; height: 40px;
-  border-radius: 10px;
+.install-guide-ic {
+  width: 32px; height: 32px;
+  border-radius: 8px;
   display: grid; place-items: center;
   background: var(--gold-soft);
   color: var(--gold-bright);
   border: 1px solid rgba(212, 166, 90, 0.3);
+  flex-shrink: 0;
 }
-.install-step[data-platform="android"] .install-step-icon {
+.install-guide[data-platform="android"] .install-guide-ic {
   background: var(--token-soft);
   color: var(--token-bright);
   border-color: rgba(0, 229, 212, 0.3);
 }
-.install-step-title {
+.install-guide-title {
   font-family: var(--serif);
-  font-size: 20px;
+  font-size: 16px;
   font-weight: 500;
   color: var(--cream);
-  line-height: 1.2;
 }
-.install-step-meta {
-  font-family: var(--mono);
-  font-size: 10px;
-  color: var(--mist);
-  letter-spacing: 0.08em;
-  margin-top: 2px;
-  text-transform: uppercase;
-}
-.install-step-list {
+.install-guide-steps {
+  list-style: none;
+  padding: 0;
   margin: 0;
-  padding-left: 22px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
+  counter-reset: istep;
 }
-.install-step-list li {
+.install-guide-steps li {
+  counter-increment: istep;
+  padding: 8px 0 8px 38px;
+  position: relative;
   font-size: 14px;
+  line-height: 1.5;
   color: var(--cream);
-  opacity: 0.88;
-  line-height: 1.55;
+  opacity: 0.9;
 }
-.install-step-list li::marker { color: var(--gold); font-weight: 600; }
-.install-step-list code {
+.install-guide-steps li::before {
+  content: counter(istep);
+  position: absolute;
+  left: 0; top: 6px;
+  width: 24px; height: 24px;
+  background: var(--gold-soft);
+  color: var(--gold-bright);
+  border-radius: 50%;
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 700;
+  display: grid; place-items: center;
+  border: 1px solid rgba(212, 166, 90, 0.3);
+}
+.install-guide[data-platform="android"] .install-guide-steps li::before {
+  background: var(--token-soft);
+  color: var(--token-bright);
+  border-color: rgba(0, 229, 212, 0.3);
+}
+.install-guide-steps code {
   font-family: var(--mono);
   font-size: 12px;
-  padding: 2px 7px;
+  padding: 1px 6px;
   background: rgba(0, 229, 212, 0.1);
   color: var(--token-bright);
   border-radius: 4px;
-  border: 1px solid rgba(0, 229, 212, 0.2);
 }
-.install-icn {
-  display: inline-flex;
+
+/* Collapsible "QR for desktop" */
+.install-qr-compact {
+  display: none;
+  gap: 20px;
   align-items: center;
   justify-content: center;
-  width: 18px; height: 18px;
-  background: rgba(245, 242, 235, 0.08);
-  border-radius: 4px;
-  font-size: 11px;
+  padding: 20px;
+  background: rgba(12, 12, 20, 0.6);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  text-align: left;
 }
-.install-cta-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 14px;
-  align-items: center;
-  margin-top: 8px;
+.install-qr-compact.show { display: flex; }
+.install-qr-mini {
+  width: 120px; height: 120px;
+  padding: 10px;
+  background: var(--cream);
+  border-radius: 12px;
+  flex-shrink: 0;
 }
-.install-btn-primary {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  padding: 14px 26px;
-  background: linear-gradient(135deg, var(--gold), var(--gold-bright));
-  color: var(--obsidian);
-  font-family: var(--sans);
-  font-size: 14px;
-  font-weight: 600;
-  letter-spacing: 0.02em;
-  text-decoration: none;
-  border: 1px solid transparent;
-  border-radius: 10px;
-  transition: transform .2s, box-shadow .3s;
-  box-shadow: 0 8px 24px rgba(212, 166, 90, 0.3);
-}
-.install-btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(212, 166, 90, 0.45); }
-.install-btn-primary svg { width: 14px; height: 14px; }
-.install-btn-secondary {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  padding: 14px 22px;
-  background: transparent;
-  color: var(--token-bright);
-  font-family: var(--sans);
-  font-size: 14px;
+.install-qr-mini svg { display: block; width: 100%; height: 100%; }
+.install-qr-copy { flex: 1; min-width: 0; }
+.install-qr-copy-title {
+  font-family: var(--serif);
+  font-size: 15px;
   font-weight: 500;
-  border: 1px solid var(--token);
-  border-radius: 10px;
-  cursor: pointer;
-  transition: background .2s;
+  color: var(--cream);
+  margin-bottom: 4px;
 }
-.install-btn-secondary:hover { background: var(--token-soft); }
-.install-cta-note {
-  width: 100%;
+.install-qr-copy-desc {
+  font-size: 12px;
+  color: var(--mist);
+  line-height: 1.45;
+}
+.install-qr-copy-url {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--gold-bright);
+  margin-top: 6px;
+  letter-spacing: 0.04em;
+}
+
+.install-toggle-qr {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: none;
+  color: var(--mist);
   font-family: var(--mono);
   font-size: 11px;
-  color: var(--mist);
-  letter-spacing: 0.04em;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  padding: 8px;
   margin-top: 4px;
+  transition: color .2s;
+}
+.install-toggle-qr:hover { color: var(--gold-bright); }
+
+@media (max-width: 600px) {
+  .install-section { padding: 80px 0; }
+  .install-card { margin: 40px 16px 0; padding: 28px 20px; border-radius: 20px; }
+  .install-cta-big { font-size: 16px; padding: 18px 22px; }
+  .install-qr-compact { flex-direction: column; text-align: center; }
 }
 
 /* ============ CTA SECTION ============ */
@@ -4932,91 +5810,68 @@ section {
   </div>
 </section>
 
-<!-- ============ INSTALL APP ============ -->
+<!-- ============ INSTALL APP · simplified ============ -->
 <section class="install-section" id="install">
   <div class="container">
     <div class="section-head center">
       <div class="eyebrow" style="justify-content: center;">[11] · Captain App</div>
       <h2 class="section-title">
-        Cài Zeni Captain<br>
-        <em>lên điện thoại</em> trong 10 giây.
+        Cài app trong<br>
+        <em>một chạm.</em>
       </h2>
       <p class="section-lede">
-        Một lần cài &mdash; mở trực tiếp từ màn hình chính, chạy full-screen như app native. Không App Store, không Google Play, không wait review.
+        Không App Store. Không tải file. Một nút — xong.
       </p>
     </div>
 
-    <div class="install-grid">
-      <div class="install-qr-card">
-        <div class="install-qr-frame">
-          <svg class="install-qr-svg" viewBox="0 0 29 29" xmlns="http://www.w3.org/2000/svg" aria-label="QR code app.zenifb.com">
+    <div class="install-card">
+      <button type="button" class="install-cta-big" id="installBtnSmart">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 L12 15 M7 10 L12 15 L17 10 M5 21 L19 21"/></svg>
+        <span id="installBtnLabel">Cài Zeni Captain</span>
+      </button>
+      <div class="install-cta-hint">Miễn phí &middot; <strong>full-screen</strong> như native &middot; 10 giây</div>
+
+      <!-- iOS guide (auto-shown on iPhone) -->
+      <div class="install-guide" data-platform="ios" id="guideIOS">
+        <div class="install-guide-head">
+          <div class="install-guide-ic">
+            <svg viewBox="0 0 20 24" fill="currentColor" width="18" height="18"><path d="M15.5 12.5c0-2.4 1.9-3.5 2-3.5-1.1-1.6-2.8-1.8-3.4-1.8-1.4-.1-2.8.9-3.5.9s-1.8-.9-3-.8c-1.5 0-3 .9-3.8 2.3-1.6 2.8-.4 7 1.2 9.3.8 1.1 1.7 2.4 2.9 2.3 1.2-.1 1.6-.8 3-.8s1.8.8 3 .8 2-1.1 2.8-2.3c.9-1.3 1.3-2.5 1.3-2.6 0-.1-2.5-1-2.5-3.8zM13.1 5.3c.7-.8 1.1-1.9 1-3-1 0-2.1.7-2.8 1.5-.6.7-1.2 1.8-1 2.9 1.1.1 2.2-.6 2.8-1.4z"/></svg>
+          </div>
+          <div class="install-guide-title">iPhone &middot; 3 bước</div>
+        </div>
+        <ol class="install-guide-steps">
+          <li>Bấm nút <strong>Chia sẻ</strong> ⬆ ở thanh Safari</li>
+          <li>Chọn <strong>Thêm vào Màn hình chính</strong></li>
+          <li>Bấm <strong>Thêm</strong> &mdash; xong!</li>
+        </ol>
+      </div>
+
+      <!-- Android guide (auto-shown on Android if no PWA prompt) -->
+      <div class="install-guide" data-platform="android" id="guideAndroid">
+        <div class="install-guide-head">
+          <div class="install-guide-ic">
+            <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M17.6 9.5l1.4-2.4c.1-.2 0-.4-.1-.4-.2-.1-.4 0-.4.1l-1.4 2.4C15.8 8.6 13.9 8.1 12 8.1s-3.8.5-5.1 1.1L5.5 6.8c-.1-.2-.3-.2-.4-.1-.2.1-.2.3-.1.4L6.4 9.5C4 11 2.4 13.5 2 16.4h20c-.4-2.9-2-5.4-4.4-6.9zM7 13.9c-.5 0-.9-.4-.9-.9s.4-.9.9-.9.9.4.9.9-.4.9-.9.9zm10 0c-.5 0-.9-.4-.9-.9s.4-.9.9-.9.9.4.9.9-.4.9-.9.9z"/></svg>
+          </div>
+          <div class="install-guide-title">Android &middot; 2 bước</div>
+        </div>
+        <ol class="install-guide-steps">
+          <li>Chrome sẽ tự hiện banner <strong>Cài đặt ứng dụng</strong> — bấm Cài</li>
+          <li>Hoặc mở menu <strong>⋮</strong> → <strong>Thêm vào Màn hình chính</strong></li>
+        </ol>
+      </div>
+
+      <!-- QR code (auto-shown on desktop) -->
+      <div class="install-qr-compact" id="qrCompact">
+        <div class="install-qr-mini">
+          <svg viewBox="0 0 29 29" xmlns="http://www.w3.org/2000/svg" aria-label="QR app.zenifb.com">
             <rect width="29" height="29" fill="#F5F2EB"/>
             <path fill="#0C0C14" d="M2,2H3V3H2zM3,2H4V3H3zM4,2H5V3H4zM5,2H6V3H5zM6,2H7V3H6zM7,2H8V3H7zM8,2H9V3H8zM11,2H12V3H11zM14,2H15V3H14zM15,2H16V3H15zM16,2H17V3H16zM20,2H21V3H20zM21,2H22V3H21zM22,2H23V3H22zM23,2H24V3H23zM24,2H25V3H24zM25,2H26V3H25zM26,2H27V3H26zM2,3H3V4H2zM8,3H9V4H8zM10,3H11V4H10zM11,3H12V4H11zM15,3H16V4H15zM20,3H21V4H20zM26,3H27V4H26zM2,4H3V5H2zM4,4H5V5H4zM5,4H6V5H5zM6,4H7V5H6zM8,4H9V5H8zM10,4H11V5H10zM11,4H12V5H11zM12,4H13V5H12zM14,4H15V5H14zM18,4H19V5H18zM20,4H21V5H20zM22,4H23V5H22zM23,4H24V5H23zM24,4H25V5H24zM26,4H27V5H26zM2,5H3V6H2zM4,5H5V6H4zM5,5H6V6H5zM6,5H7V6H6zM8,5H9V6H8zM10,5H11V6H10zM11,5H12V6H11zM13,5H14V6H13zM15,5H16V6H15zM16,5H17V6H16zM18,5H19V6H18zM20,5H21V6H20zM22,5H23V6H22zM23,5H24V6H23zM24,5H25V6H24zM26,5H27V6H26zM2,6H3V7H2zM4,6H5V7H4zM5,6H6V7H5zM6,6H7V7H6zM8,6H9V7H8zM11,6H12V7H11zM13,6H14V7H13zM15,6H16V7H15zM18,6H19V7H18zM20,6H21V7H20zM22,6H23V7H22zM23,6H24V7H23zM24,6H25V7H24zM26,6H27V7H26zM2,7H3V8H2zM8,7H9V8H8zM12,7H13V8H12zM14,7H15V8H14zM15,7H16V8H15zM16,7H17V8H16zM18,7H19V8H18zM20,7H21V8H20zM26,7H27V8H26zM2,8H3V9H2zM3,8H4V9H3zM4,8H5V9H4zM5,8H6V9H5zM6,8H7V9H6zM7,8H8V9H7zM8,8H9V9H8zM10,8H11V9H10zM12,8H13V9H12zM14,8H15V9H14zM16,8H17V9H16zM18,8H19V9H18zM20,8H21V9H20zM21,8H22V9H21zM22,8H23V9H22zM23,8H24V9H23zM24,8H25V9H24zM25,8H26V9H25zM26,8H27V9H26zM10,9H11V10H10zM11,9H12V10H11zM12,9H13V10H12zM13,9H14V10H13zM2,10H3V11H2zM8,10H9V11H8zM10,10H11V11H10zM11,10H12V11H11zM14,10H15V11H14zM15,10H16V11H15zM16,10H17V11H16zM19,10H20V11H19zM20,10H21V11H20zM23,10H24V11H23zM24,10H25V11H24zM25,10H26V11H25zM2,11H3V12H2zM5,11H6V12H5zM7,11H8V12H7zM9,11H10V12H9zM10,11H11V12H10zM12,11H13V12H12zM13,11H14V12H13zM16,11H17V12H16zM17,11H18V12H17zM19,11H20V12H19zM21,11H22V12H21zM22,11H23V12H22zM23,11H24V12H23zM24,11H25V12H24zM25,11H26V12H25zM3,12H4V13H3zM4,12H5V13H4zM7,12H8V13H7zM8,12H9V13H8zM9,12H10V13H9zM15,12H16V13H15zM17,12H18V13H17zM20,12H21V13H20zM21,12H22V13H21zM23,12H24V13H23zM25,12H26V13H25zM26,12H27V13H26zM2,13H3V14H2zM3,13H4V14H3zM5,13H6V14H5zM6,13H7V14H6zM7,13H8V14H7zM11,13H12V14H11zM12,13H13V14H12zM16,13H17V14H16zM17,13H18V14H17zM18,13H19V14H18zM20,13H21V14H20zM23,13H24V14H23zM26,13H27V14H26zM3,14H4V15H3zM4,14H5V15H4zM5,14H6V15H5zM6,14H7V15H6zM8,14H9V15H8zM9,14H10V15H9zM11,14H12V15H11zM13,14H14V15H13zM18,14H19V15H18zM20,14H21V15H20zM21,14H22V15H21zM26,14H27V15H26zM2,15H3V16H2zM9,15H10V16H9zM11,15H12V16H11zM12,15H13V16H12zM14,15H15V16H14zM15,15H16V16H15zM17,15H18V16H17zM18,15H19V16H18zM19,15H20V16H19zM21,15H22V16H21zM25,15H26V16H25zM2,16H3V17H2zM4,16H5V17H4zM7,16H8V17H7zM8,16H9V17H8zM15,16H16V17H15zM16,16H17V17H16zM17,16H18V17H17zM18,16H19V17H18zM20,16H21V17H20zM21,16H22V17H21zM22,16H23V17H22zM23,16H24V17H23zM25,16H26V17H25zM26,16H27V17H26zM2,17H3V18H2zM4,17H5V18H4zM5,17H6V18H5zM6,17H7V18H6zM7,17H8V18H7zM10,17H11V18H10zM12,17H13V18H12zM14,17H15V18H14zM20,17H21V18H20zM21,17H22V18H21zM23,17H24V18H23zM24,17H25V18H24zM26,17H27V18H26zM2,18H3V19H2zM5,18H6V19H5zM6,18H7V19H6zM8,18H9V19H8zM9,18H10V19H9zM10,18H11V19H10zM11,18H12V19H11zM14,18H15V19H14zM15,18H16V19H15zM16,18H17V19H16zM17,18H18V19H17zM18,18H19V19H18zM19,18H20V19H19zM20,18H21V19H20zM21,18H22V19H21zM22,18H23V19H22zM24,18H25V19H24zM10,19H11V20H10zM11,19H12V20H11zM12,19H13V20H12zM15,19H16V20H15zM18,19H19V20H18zM22,19H23V20H22zM2,20H3V21H2zM3,20H4V21H3zM4,20H5V21H4zM5,20H6V21H5zM6,20H7V21H6zM7,20H8V21H7zM8,20H9V21H8zM11,20H12V21H11zM14,20H15V21H14zM15,20H16V21H15zM18,20H19V21H18zM20,20H21V21H20zM22,20H23V21H22zM26,20H27V21H26zM2,21H3V22H2zM8,21H9V22H8zM11,21H12V22H11zM12,21H13V22H12zM13,21H14V22H13zM16,21H17V22H16zM17,21H18V22H17zM18,21H19V22H18zM22,21H23V22H22zM2,22H3V23H2zM4,22H5V23H4zM5,22H6V23H5zM6,22H7V23H6zM8,22H9V23H8zM11,22H12V23H11zM12,22H13V23H12zM13,22H14V23H13zM17,22H18V23H17zM18,22H19V23H18zM19,22H20V23H19zM20,22H21V23H20zM21,22H22V23H21zM22,22H23V23H22zM24,22H25V23H24zM25,22H26V23H25zM26,22H27V23H26zM2,23H3V24H2zM4,23H5V24H4zM5,23H6V24H5zM6,23H7V24H6zM8,23H9V24H8zM12,23H13V24H12zM14,23H15V24H14zM15,23H16V24H15zM16,23H17V24H16zM20,23H21V24H20zM25,23H26V24H25zM26,23H27V24H26zM2,24H3V25H2zM4,24H5V25H4zM5,24H6V25H5zM6,24H7V25H6zM8,24H9V25H8zM11,24H12V25H11zM15,24H16V25H15zM16,24H17V25H16zM17,24H18V25H17zM18,24H19V25H18zM23,24H24V25H23zM24,24H25V25H24zM26,24H27V25H26zM2,25H3V26H2zM8,25H9V26H8zM11,25H12V26H11zM14,25H15V26H14zM15,25H16V26H15zM17,25H18V26H17zM18,25H19V26H18zM19,25H20V26H19zM21,25H22V26H21zM22,25H23V26H22zM26,25H27V26H26zM2,26H3V27H2zM3,26H4V27H3zM4,26H5V27H4zM5,26H6V27H5zM6,26H7V27H6zM7,26H8V27H7zM8,26H9V27H8zM10,26H11V27H10zM12,26H13V27H12zM13,26H14V27H13zM14,26H15V27H14zM15,26H16V27H15zM18,26H19V27H18zM19,26H20V27H19zM23,26H24V27H23zM26,26H27V27H26z"/>
           </svg>
-          <div class="install-qr-logo" aria-hidden="true">
-            <svg viewBox="0 0 36 36" fill="none">
-              <path d="M18 3 L31 10 L31 26 L18 33 L5 26 L5 10 Z" stroke="url(#qrGrad)" stroke-width="1.6"/>
-              <circle cx="18" cy="18" r="7" stroke="url(#qrGrad)" stroke-width="1.6"/>
-              <circle cx="18" cy="18" r="2.4" fill="#D4A65A"/>
-              <defs>
-                <linearGradient id="qrGrad" x1="0" y1="0" x2="36" y2="36">
-                  <stop offset="0" stop-color="#D4A65A"/>
-                  <stop offset="1" stop-color="#00E5D4"/>
-                </linearGradient>
-              </defs>
-            </svg>
-          </div>
         </div>
-        <div class="install-qr-caption">
-          <div class="install-qr-url">app.zenifb.com</div>
-          <div class="install-qr-sub">Khách quét QR &middot; mở thẳng app</div>
-        </div>
-      </div>
-
-      <div class="install-steps-col">
-        <div class="install-step" data-platform="ios">
-          <div class="install-step-head">
-            <div class="install-step-icon">
-              <svg viewBox="0 0 20 24" fill="currentColor" width="22" height="22"><path d="M15.5 12.5c0-2.4 1.9-3.5 2-3.5-1.1-1.6-2.8-1.8-3.4-1.8-1.4-.1-2.8.9-3.5.9s-1.8-.9-3-.8c-1.5 0-3 .9-3.8 2.3-1.6 2.8-.4 7 1.2 9.3.8 1.1 1.7 2.4 2.9 2.3 1.2-.1 1.6-.8 3-.8s1.8.8 3 .8 2-1.1 2.8-2.3c.9-1.3 1.3-2.5 1.3-2.6 0-.1-2.5-1-2.5-3.8zM13.1 5.3c.7-.8 1.1-1.9 1-3-1 0-2.1.7-2.8 1.5-.6.7-1.2 1.8-1 2.9 1.1.1 2.2-.6 2.8-1.4z"/></svg>
-            </div>
-            <div>
-              <div class="install-step-title">Trên iPhone</div>
-              <div class="install-step-meta">Safari · iOS 14+</div>
-            </div>
-          </div>
-          <ol class="install-step-list">
-            <li><strong>Mở Safari</strong>, vào <code>app.zenifb.com</code></li>
-            <li>Bấm nút <strong>Chia sẻ</strong> <span class="install-icn">⬆</span> phía dưới</li>
-            <li>Chọn <strong>Thêm vào Màn hình chính</strong> → <strong>Thêm</strong></li>
-          </ol>
-        </div>
-
-        <div class="install-step" data-platform="android">
-          <div class="install-step-head">
-            <div class="install-step-icon">
-              <svg viewBox="0 0 24 24" fill="currentColor" width="22" height="22"><path d="M17.6 9.5l1.4-2.4c.1-.2 0-.4-.1-.4-.2-.1-.4 0-.4.1l-1.4 2.4C15.8 8.6 13.9 8.1 12 8.1s-3.8.5-5.1 1.1L5.5 6.8c-.1-.2-.3-.2-.4-.1-.2.1-.2.3-.1.4L6.4 9.5C4 11 2.4 13.5 2 16.4h20c-.4-2.9-2-5.4-4.4-6.9zM7 13.9c-.5 0-.9-.4-.9-.9s.4-.9.9-.9.9.4.9.9-.4.9-.9.9zm10 0c-.5 0-.9-.4-.9-.9s.4-.9.9-.9.9.4.9.9-.4.9-.9.9z"/></svg>
-            </div>
-            <div>
-              <div class="install-step-title">Trên Android</div>
-              <div class="install-step-meta">Chrome / Edge · Android 8+</div>
-            </div>
-          </div>
-          <ol class="install-step-list">
-            <li><strong>Mở Chrome</strong>, vào <code>app.zenifb.com</code></li>
-            <li>Bấm menu <strong>⋮</strong> góc phải trên</li>
-            <li>Chọn <strong>Cài đặt ứng dụng</strong> hoặc <strong>Thêm vào Màn hình chính</strong></li>
-          </ol>
-        </div>
-
-        <div class="install-cta-row">
-          <a href="https://app.zenifb.com" class="install-btn-primary" id="installBtnPrimary">
-            <span>Mở app ngay</span>
-            <svg viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 6.5 L11 6.5 M7 3 L11 6.5 L7 10"/></svg>
-          </a>
-          <button type="button" class="install-btn-secondary" id="installBtnPWA" hidden>
-            <span>Cài thẳng vào máy</span>
-          </button>
-          <div class="install-cta-note">Miễn phí &middot; không cần đăng ký &middot; full-screen như native</div>
+        <div class="install-qr-copy">
+          <div class="install-qr-copy-title">Bạn đang ở máy tính?</div>
+          <div class="install-qr-copy-desc">Quét QR bằng camera điện thoại để cài trực tiếp.</div>
+          <div class="install-qr-copy-url">app.zenifb.com</div>
         </div>
       </div>
     </div>
@@ -5046,7 +5901,7 @@ section {
         <p class="cta-card-desc">
           Prototype v1.2.4 đang live. Click để xem toàn bộ 15 module, 6 AI agent, gamification, $ZENI wallet, và cả admin quest builder &mdash; tất cả chạy thật.
         </p>
-        <a href="zeni-fb-os-prototype.html" class="cta-card-action">
+        <a href="/app/" class="cta-card-action">
           Mở prototype ngay
           <svg viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 6.5 L11 6.5 M7 3 L11 6.5 L7 10"/></svg>
         </a>
@@ -5108,7 +5963,7 @@ section {
       <div>
         <div class="footer-col-title">Sản phẩm</div>
         <ul class="footer-links">
-          <li><a href="zeni-fb-os-prototype.html">Prototype live</a></li>
+          <li><a href="/app/">Prototype live</a></li>
           <li><a href="#solution">Tổng quan</a></li>
           <li><a href="#pricing">Pricing</a></li>
           <li><a href="#tokenomics">$ZENI</a></li>
@@ -5164,6 +6019,170 @@ section {
 </footer>
 
 <script>
+document.documentElement.classList.add('js');
+
+/* ============ Theme toggle (IIFE riêng) ============ */
+(function(){
+  const themeBtn = document.getElementById('themeBtn');
+  if (!themeBtn) return;
+
+  const saved = localStorage.getItem('zeni_theme');
+  if (saved === 'light') document.documentElement.setAttribute('data-theme', 'light');
+
+  themeBtn.addEventListener('click', () => {
+    const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+    if (isLight) {
+      document.documentElement.removeAttribute('data-theme');
+      localStorage.setItem('zeni_theme', 'dark');
+    } else {
+      document.documentElement.setAttribute('data-theme', 'light');
+      localStorage.setItem('zeni_theme', 'light');
+    }
+  });
+})();
+
+/* ============ Language switcher (IIFE riêng) — MyMemory Translation API ============
+ * Flow:
+ *   1. Nhớ VI gốc của mỗi text node trong data-i18n-orig
+ *   2. Khi đổi EN: gọi MyMemory API cho text chưa cache, lưu cache localStorage
+ *   3. Khi về VI: restore từ data-i18n-orig
+ * API: https://api.mymemory.translated.net/get?q=TEXT&langpair=vi|en  (free, no key)
+ * ============================================================================ */
+(function(){
+  const langBtn   = document.getElementById('langBtn');
+  const langLabel = document.getElementById('langLabel');
+  const langMenu  = document.getElementById('langMenu');
+  if (!langBtn || !langMenu) return;
+
+  const CACHE_KEY = 'zeni_i18n_cache_v1';
+  const LANG_KEY  = 'zeni_lang';
+  const API = 'https://api.mymemory.translated.net/get';
+
+  // Selectors: các element chứa text UI cần dịch (bỏ qua code/brand/mono labels)
+  const TRANSLATE_SELECTOR = [
+    'h1','h2','h3','h4',
+    '.hero-lede','.section-lede',
+    '.sh-title','.sh-subtitle','.sh-benefit-title','.sh-benefit-desc',
+    '.roadmap-title','.roadmap-desc','.roadmap-phase',
+    '.token-role-title','.token-role-desc',
+    '.price-name','.price-sub','.price-cta',
+    '.cta-title','.cta-lede','.cta-card-title','.cta-card-desc','.cta-card-action',
+    '.stream-title','.stream-desc','.stream-example',
+    '.install-cta-big','.install-guide-title','.install-step',
+    '.proof-stat-label','.tree-label',
+    '.footer-tagline','.footer-col-title',
+    '.btn-primary','.btn-ghost',
+    '.tnr-login-label'
+  ].join(',');
+
+  function getCache(){ try { return JSON.parse(localStorage.getItem(CACHE_KEY) || '{}'); } catch { return {}; } }
+  function saveCache(c){ localStorage.setItem(CACHE_KEY, JSON.stringify(c)); }
+
+  async function translateOne(text, from, to){
+    const url = `${API}?q=${encodeURIComponent(text)}&langpair=${from}|${to}&de=zenifb@zeni.holdings`;
+    const res = await fetch(url);
+    if (!res.ok) throw new Error('MyMemory API ' + res.status);
+    const data = await res.json();
+    const out = data?.responseData?.translatedText;
+    if (!out || typeof out !== 'string') throw new Error('No translation returned');
+    return out;
+  }
+
+  async function translateAll(targetLang){
+    const nodes = document.querySelectorAll(TRANSLATE_SELECTOR);
+    const cache = getCache();
+    let pending = [];
+
+    nodes.forEach(el => {
+      // Skip nodes containing HTML children only (no direct text)
+      const hasDirectText = Array.from(el.childNodes).some(n => n.nodeType === 3 && n.textContent.trim().length > 2);
+      if (!hasDirectText && el.children.length > 0) return;
+
+      // Save original once
+      if (!el.dataset.i18nOrig) el.dataset.i18nOrig = el.innerHTML;
+
+      const source = el.dataset.i18nOrig;
+      const trimmed = source.replace(/<[^>]+>/g, '').trim();
+      if (trimmed.length < 2) return;
+
+      const key = `vi|${targetLang}|${trimmed}`;
+      if (cache[key]) {
+        el.innerHTML = cache[key];
+      } else if (targetLang !== 'vi') {
+        pending.push({ el, source, trimmed, key });
+      }
+    });
+
+    if (targetLang === 'vi' || pending.length === 0) return;
+
+    // Show loading state on button
+    langLabel.textContent = '...';
+
+    // Parallel with concurrency limit (batch of 8) — balance speed vs rate limit
+    const CONCURRENCY = 8;
+    let cursor = 0;
+    async function worker(){
+      while (cursor < pending.length){
+        const p = pending[cursor++];
+        try {
+          const translated = await translateOne(p.trimmed, 'vi', targetLang);
+          cache[p.key] = translated;
+          p.el.innerHTML = translated;
+        } catch (err) {
+          console.warn('[i18n] failed:', p.trimmed.slice(0, 40), err.message);
+        }
+      }
+    }
+    await Promise.all(Array.from({length: CONCURRENCY}, worker));
+    saveCache(cache);
+    langLabel.textContent = targetLang.toUpperCase();
+  }
+
+  function restoreOriginal(){
+    document.querySelectorAll('[data-i18n-orig]').forEach(el => {
+      el.innerHTML = el.dataset.i18nOrig;
+    });
+  }
+
+  function applyLang(l){
+    langLabel.textContent = l.toUpperCase();
+    document.documentElement.setAttribute('lang', l);
+    langMenu.querySelectorAll('.tnr-lang-opt').forEach(b => {
+      b.classList.toggle('active', b.dataset.lang === l);
+    });
+  }
+
+  // Init — nếu saved là en, chạy dịch ngay sau load
+  const saved = localStorage.getItem(LANG_KEY) || 'vi';
+  applyLang(saved);
+  if (saved === 'en') {
+    window.addEventListener('load', () => translateAll('en'));
+  }
+
+  langBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    langMenu.classList.toggle('open');
+  });
+  document.addEventListener('click', (e) => {
+    if (!langMenu.contains(e.target) && e.target !== langBtn) langMenu.classList.remove('open');
+  });
+
+  langMenu.querySelectorAll('.tnr-lang-opt').forEach(b => {
+    b.addEventListener('click', async () => {
+      const lang = b.dataset.lang;
+      localStorage.setItem(LANG_KEY, lang);
+      applyLang(lang);
+      langMenu.classList.remove('open');
+
+      if (lang === 'vi') {
+        restoreOriginal();
+      } else {
+        await translateAll(lang);
+      }
+    });
+  });
+})();
+
 // Scroll-triggered topnav
 const topnav = document.getElementById('topnav');
 window.addEventListener('scroll', () => {
@@ -5173,6 +6192,76 @@ window.addEventListener('scroll', () => {
     topnav.classList.remove('scrolled');
   }
 }, { passive: true });
+
+/* ============ Sidebar (GitHub-style folder tree) ============ */
+(function(){
+  const sidenav   = document.getElementById('sidenav');
+  const backdrop  = document.getElementById('sidenavBackdrop');
+  const closeBtn  = document.getElementById('sidenavClose');
+  if (!sidenav || !topnav || !backdrop) return;
+
+  function openNav(){
+    document.body.classList.add('sidebar-open');
+    topnav.setAttribute('aria-expanded', 'true');
+    sidenav.setAttribute('aria-hidden', 'false');
+  }
+  function closeNav(){
+    document.body.classList.remove('sidebar-open');
+    topnav.setAttribute('aria-expanded', 'false');
+    sidenav.setAttribute('aria-hidden', 'true');
+  }
+  function toggleNav(e){
+    if (e) e.stopPropagation();
+    document.body.classList.contains('sidebar-open') ? closeNav() : openNav();
+  }
+
+  topnav.addEventListener('click', toggleNav);
+  topnav.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleNav(); }
+  });
+  closeBtn.addEventListener('click', closeNav);
+  backdrop.addEventListener('click', closeNav);
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeNav(); });
+
+  // Folder expand/collapse
+  sidenav.querySelectorAll('.tree-item > .tree-row').forEach(row => {
+    if (row.classList.contains('leaf')) return;
+    row.addEventListener('click', (e) => {
+      e.preventDefault();
+      row.parentElement.classList.toggle('open');
+    });
+  });
+
+  // Leaf link → smooth scroll + close
+  sidenav.querySelectorAll('.tree-row.leaf, .sidenav-cta').forEach(a => {
+    a.addEventListener('click', (e) => {
+      const href = a.getAttribute('href');
+      if (!href || !href.startsWith('#')) return;
+      const target = document.querySelector(href);
+      if (!target) return;
+      e.preventDefault();
+      closeNav();
+      setTimeout(() => target.scrollIntoView({ behavior: 'smooth', block: 'start' }), 200);
+    });
+  });
+
+  // Scrollspy — highlight active section
+  const sections = [...sidenav.querySelectorAll('.tree-row.leaf[href^="#"]')]
+    .map(a => ({ link: a, el: document.querySelector(a.getAttribute('href')) }))
+    .filter(x => x.el);
+  if ('IntersectionObserver' in window && sections.length) {
+    const spy = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          sections.forEach(s => s.link.classList.remove('active'));
+          const hit = sections.find(s => s.el === entry.target);
+          if (hit) hit.link.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-30% 0px -60% 0px', threshold: 0 });
+    sections.forEach(s => spy.observe(s.el));
+  }
+})();
 
 // Smooth scroll for anchor links
 document.querySelectorAll('a[href^="#"]').forEach(a => {
@@ -5200,27 +6289,77 @@ const io = new IntersectionObserver(entries => {
 }, { threshold: 0.12, rootMargin: '-40px 0px' });
 fadeEls.forEach(el => io.observe(el));
 
-/* ============ PWA install prompt ============ */
-let deferredPrompt = null;
-const installBtn = document.getElementById('installBtnPWA');
-window.addEventListener('beforeinstallprompt', (e) => {
-  e.preventDefault();
-  deferredPrompt = e;
-  if (installBtn) installBtn.hidden = false;
-});
-if (installBtn) {
-  installBtn.addEventListener('click', async () => {
-    if (!deferredPrompt) { window.location.href = 'https://app.zenifb.com'; return; }
-    deferredPrompt.prompt();
-    await deferredPrompt.userChoice;
-    deferredPrompt = null;
-    installBtn.hidden = true;
+/* ============ Smart install · 1-tap ============ */
+(function initSmartInstall() {
+  const btn       = document.getElementById('installBtnSmart');
+  const btnLabel  = document.getElementById('installBtnLabel');
+  const guideIOS  = document.getElementById('guideIOS');
+  const guideAnd  = document.getElementById('guideAndroid');
+  const qrBox     = document.getElementById('qrCompact');
+  if (!btn) return;
+
+  const ua         = navigator.userAgent || '';
+  const isIOS      = /iPhone|iPad|iPod/i.test(ua) && !window.MSStream;
+  const isAndroid  = /Android/i.test(ua);
+  const isMobile   = isIOS || isAndroid || /Mobi|Opera Mini/i.test(ua);
+  const isStandalone = window.matchMedia('(display-mode: standalone)').matches
+                    || window.navigator.standalone === true;
+
+  let deferredPrompt = null;
+
+  // Already installed → swap CTA to "Mở app"
+  if (isStandalone) {
+    if (btnLabel) btnLabel.textContent = 'Mở Zeni Captain';
+    btn.addEventListener('click', () => { window.location.href = 'https://app.zenifb.com'; });
+    return;
+  }
+
+  // iOS Safari: no beforeinstallprompt → show guide + route to app
+  if (isIOS) {
+    if (guideIOS) guideIOS.classList.add('active');
+    if (btnLabel) btnLabel.textContent = 'Mở trong Safari để cài';
+    btn.addEventListener('click', () => { window.location.href = 'https://app.zenifb.com'; });
+    return;
+  }
+
+  // Desktop: show QR prominently
+  if (!isMobile) {
+    if (qrBox) qrBox.classList.add('show');
+    if (btnLabel) btnLabel.textContent = 'Mở app.zenifb.com';
+    btn.addEventListener('click', () => { window.open('https://app.zenifb.com', '_blank'); });
+    return;
+  }
+
+  // Android (default): wait for PWA prompt, fallback to guide
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    if (btnLabel) btnLabel.textContent = 'Cài Zeni Captain ngay';
   });
-}
-window.addEventListener('appinstalled', () => {
-  if (installBtn) installBtn.hidden = true;
-  deferredPrompt = null;
-});
+
+  // Fallback guide for Android if prompt doesn't fire within 1.5s
+  let guideTimer = setTimeout(() => {
+    if (!deferredPrompt && guideAnd) guideAnd.classList.add('active');
+  }, 1500);
+
+  btn.addEventListener('click', async () => {
+    if (deferredPrompt) {
+      deferredPrompt.prompt();
+      const choice = await deferredPrompt.userChoice;
+      deferredPrompt = null;
+      if (choice.outcome === 'accepted' && btnLabel) btnLabel.textContent = 'Đã cài · Mở app';
+    } else {
+      if (guideAnd) guideAnd.classList.add('active');
+      window.location.href = 'https://app.zenifb.com';
+    }
+  });
+
+  window.addEventListener('appinstalled', () => {
+    deferredPrompt = null;
+    if (btnLabel) btnLabel.textContent = 'Đã cài · Mở app';
+    clearTimeout(guideTimer);
+  });
+})();
 </script>
 </body>
 </html>

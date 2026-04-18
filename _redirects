@@ -1,10 +1,30 @@
-# Subdomain-to-path mapping (Cloudflare Pages)
-https://app.zenifb.com/*   /app/:splat   200
-https://docs.zenifb.com/*  /docs/:splat  200
+# ================================================
+# Zeni F&B OS · Cloudflare Pages redirects
+# Order: specific → generic. Cloudflare applies first match.
+# ================================================
 
-# www -> apex
-https://www.zenifb.com/*   https://zenifb.com/:splat   301
+# --- Subdomain → path mapping (rewrite, 200) ---
+https://app.zenifb.com/*    /app/:splat    200
+https://docs.zenifb.com/*   /docs/:splat   200
 
-# Redirect old prototype paths
-/prototype   /app/   301
-/landing     /       301
+# --- www → apex (canonical) ---
+https://www.zenifb.com/*    https://zenifb.com/:splat    301
+
+# --- Legacy / alias routes ---
+/prototype    /app/    301
+/landing      /        301
+
+# --- Security: hide file extensions + force canonical URLs ---
+# Strip /index.html from any path
+/index.html              /              301
+/app/index.html          /app/          301
+/docs/index.html         /docs/         301
+
+# Strip .html extension (catch-all at path tail)
+/*.html                  /:splat        301!
+
+# Block direct access to source artefacts
+/_headers                /              404
+/_redirects              /              404
+/node_modules/*          /              404
+/build-app/*             /              404
