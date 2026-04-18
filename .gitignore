@@ -13,6 +13,5 @@ build/
 .claude/scheduled_tasks.lock
 .claude/memory/
 
-# Cloudflare wrangler cache + generated app build
-.wrangler/
+# Generated app build
 build-app/
